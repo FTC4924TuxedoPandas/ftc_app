@@ -23,15 +23,15 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         if (gamepad1.a) {
 
-            throwingArm.setPower(ARM_POWER);
+            throwingArmPowerLevel = ARM_POWER;
 
         } else if (gamepad1.b) {
 
-            throwingArm.setPower(-ARM_POWER);
+           throwingArmPowerLevel = -ARM_POWER;
 
         } else {
 
-            throwingArm.setPower(0.0f);
+            throwingArmPowerLevel = 0.0f;
         }
 
         isStrafingLeft = gamepad1.left_bumper;

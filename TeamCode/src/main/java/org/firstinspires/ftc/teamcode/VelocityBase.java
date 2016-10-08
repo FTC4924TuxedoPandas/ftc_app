@@ -25,6 +25,7 @@ public abstract class VelocityBase extends OpMode {
     boolean isStrafingRight = false;
 
     PowerLevels powerLevels = new PowerLevels();
+    float throwingArmPowerLevel = 0.0f;
 
     public final float ARM_POWER = 1.0f;
     public final float BASE_HOLONOMIC_DRIVE_POWER = 0.5f;
@@ -94,6 +95,7 @@ public abstract class VelocityBase extends OpMode {
 
     public void clipPowerLevels() {
 
+        throwingArmPowerLevel = Range.clip (throwingArmPowerLevel,-1.0f,1.0f);
         powerLevels.backRightPower = Range.clip(powerLevels.backRightPower, -1.0f, 1.0f);
         powerLevels.backLeftPower = Range.clip(powerLevels.backLeftPower, -1.0f, 1.0f);
         powerLevels.frontRightPower = Range.clip(powerLevels.frontRightPower, -1.0f, 1.0f);
@@ -102,6 +104,7 @@ public abstract class VelocityBase extends OpMode {
 
     public void setMotorPowerLevels(PowerLevels PowerLevels) {
 
+        throwingArm.setPower(throwingArmPowerLevel);
         frontLeftMotor.setPower(PowerLevels.frontLeftPower);
         backLeftMotor.setPower(PowerLevels.backLeftPower);
         backRightMotor.setPower(PowerLevels.backRightPower);
