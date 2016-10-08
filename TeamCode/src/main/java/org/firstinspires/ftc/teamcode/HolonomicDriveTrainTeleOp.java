@@ -12,11 +12,11 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
     @Override
     public void loop() {
 
-        if (AIsPressed()) {
+        if (aIsPressed()) {
 
             RaiseThrowingArm();
 
-        } else if (BIsPressed()) {
+        } else if (bIsPressed()) {
 
             LowerThrowingArm();
 
@@ -45,11 +45,11 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         return gamepad1.left_bumper || gamepad1.right_bumper;
     }
 
-    private boolean BIsPressed() {
+    private boolean bIsPressed() {
         return gamepad1.b;
     }
 
-    private boolean AIsPressed() {
+    private boolean aIsPressed() {
         return gamepad1.a;
     }
 
