@@ -1,12 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.Range;
-
-import static android.R.attr.name;
 
 /**
  * Created by 4924_Users on 10/8/2016.
@@ -15,29 +9,23 @@ import static android.R.attr.name;
 @TeleOp(name = "HolonomicDriveTrainTeleOp")
 public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
-
-
-
     @Override
     public void loop() {
 
-        if (gamepad1.a) {
+        if (AIsPressed()) {
 
-            throwingArmPowerLevel = ARM_POWER;
+            RaiseThrowingArm();
 
-        } else if (gamepad1.b) {
+        } else if (BIsPressed()) {
 
-           throwingArmPowerLevel = -ARM_POWER;
+            LowerThrowingArm();
 
         } else {
 
-            throwingArmPowerLevel = 0.0f;
+            StopMovingThrowingArm();
         }
 
-        isStrafingLeft = gamepad1.left_bumper;
-        isStrafingRight = gamepad1.right_bumper;
-
-        if (isStrafingLeft || isStrafingRight) {
+        if (isStrafing()) {
 
             setPowerForMecanumStrafe();
 
@@ -48,6 +36,18 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
+    }
+
+    private boolean isStrafing() {
+        return gamepad1.left_bumper || gamepad1.right_bumper;
+    }
+
+    private boolean BIsPressed() {
+        return gamepad1.b;
+    }
+
+    private boolean AIsPressed() {
+        return gamepad1.a;
     }
 
 

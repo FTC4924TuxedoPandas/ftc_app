@@ -110,4 +110,16 @@ public abstract class VelocityBase extends OpMode {
         backRightMotor.setPower(PowerLevels.backRightPower);
         frontRightMotor.setPower(PowerLevels.frontRightPower);
     }
+
+    protected void StopMovingThrowingArm() {
+        throwingArmPowerLevel = 0.0f;
+    }
+
+    protected void LowerThrowingArm() {
+        throwingArmPowerLevel = -ARM_POWER;
+    }
+
+    protected void RaiseThrowingArm() {
+        throwingArmPowerLevel = ARM_POWER;
+    }
 }
