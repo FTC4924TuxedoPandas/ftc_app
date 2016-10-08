@@ -116,7 +116,7 @@ public abstract class VelocityBase extends OpMode {
     }
 
     protected void LowerThrowingArm() {
-        throwingArmPowerLevel = -ARM_POWER;
+        throwingArmPowerLevel = -ARM_POWER/10.0f;
     }
 
     protected void RaiseThrowingArm() {

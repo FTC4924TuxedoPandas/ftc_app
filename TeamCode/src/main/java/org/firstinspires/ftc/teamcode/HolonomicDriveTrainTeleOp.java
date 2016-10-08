@@ -25,6 +25,9 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             StopMovingThrowingArm();
         }
 
+        isStrafingLeft = gamepad1.left_bumper;
+        isStrafingRight = gamepad1.right_bumper;
+
         if (isStrafing()) {
 
             setPowerForMecanumStrafe();
