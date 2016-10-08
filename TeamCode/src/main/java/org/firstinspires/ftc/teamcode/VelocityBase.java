@@ -62,11 +62,16 @@ public abstract class VelocityBase extends OpMode {
     }
 
     public void setPowerForTankDrive() {
+        float leftStick = 0.0f;
+        float rightStick = 0.0f;
 
-        powerLevels.frontLeftPower = gamepad1.left_stick_y;
-        powerLevels.backLeftPower = gamepad1.left_stick_y;
-        powerLevels.backRightPower = gamepad1.right_stick_y;
-        powerLevels.frontRightPower = gamepad1.right_stick_y;
+        leftStick = Range.clip(gamepad1.left_stick_y,-1.0f,1.0f);
+        rightStick = Range.clip(gamepad1.right_stick_y,-1.0f,1.0f);
+
+        powerLevels.frontLeftPower = leftStick;
+        powerLevels.backLeftPower = leftStick;
+        powerLevels.backRightPower = rightStick;
+        powerLevels.frontRightPower = rightStick;
     }
 
     public void setPowerForMecanumStrafe() {
