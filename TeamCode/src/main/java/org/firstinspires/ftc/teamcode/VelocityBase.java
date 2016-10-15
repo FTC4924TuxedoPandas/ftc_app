@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import static android.R.attr.name;
@@ -29,6 +31,16 @@ public abstract class VelocityBase extends OpMode {
 
     public final float ARM_POWER = 1.0f;
     public final float BASE_HOLONOMIC_DRIVE_POWER = 0.5f;
+    public int currentPathSegmentIndex = 0;
+    DrivePathSegment segment;
+    public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
+    EncoderTargets currentEncoderTargets = zeroEncoderTargets;
+    public DrivePathSegment[] currentPath;
+    double countsPerInch;
+    public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
+    int turnStartValueLeft;
+    int turnStartValueRight;
+    GyroSensor turningGyro;
 
     @Override
     public void init() {
@@ -44,6 +56,8 @@ public abstract class VelocityBase extends OpMode {
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
     }
 
     @Override
@@ -121,5 +135,111 @@ public abstract class VelocityBase extends OpMode {
 
     protected void RaiseThrowingArm() {
         throwingArmPowerLevel = ARM_POWER;
+    }
+
+    public void startSeg() {
+
+        segment = currentPath[currentPathSegmentIndex];
+
+        elapsedTimeForCurrentSegment.reset();
+
+        if (currentPath != null) {
+
+            if (segment.isTurn) {
+
+                turnStartValueLeft = getLeftPosition();
+                turnStartValueRight = getRightPosition();
+
+                runWithoutEncoders();
+                double currentAngle = turningGyro.getHeading();
+
+                if (counterclockwiseTurnNeeded(currentAngle)) {
+
+                    segment.rightPower = 0.0f;
+
+                } else {
+
+                    segment.leftPower = 0.0f;
+                }
+
+            } else {
+
+                if (segment.isDelay) {
+
+                    runWithoutEncoders();
+                    segment.leftPower = 0.0f;
+                    segment.rightPower = 0.0f;
+
+                } else {
+
+                    int moveCounts = (int) (segment.LeftSideDistance * countsPerInch);
+
+                    useRunUsingEncoders();
+                    addEncoderTarget(moveCounts, moveCounts);
+
+                    if (moveCounts < 0) {
+
+                        segment.leftPower *= -1;
+                        segment.rightPower *= -1;
+                    }
+                }
+            }
+
+            FourWheelDrivePowerLevels powerLevels =
+                    new FourWheelDrivePowerLevels(segment.leftPower, segment.rightPower);
+            SetDriveMotorPowerLevels(powerLevels);
+
+            currentPathSegmentIndex++;
+        }
+    }
+
+    public void runWithoutEncoders() {
+
+        setDriveMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void setDriveMode(DcMotor.RunMode mode) {
+
+        if (frontLeftMotor.getMode() != mode)
+            frontLeftMotor.setMode(mode);
+    }
+
+    public void useRunUsingEncoders() {
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void SetDriveMotorPowerLevels(FourWheelDrivePowerLevels levels) {
+
+        frontRightMotor.setPower(levels.frontRight);
+        frontLeftMotor.setPower(levels.frontLeft);
+    }
+
+    public void addEncoderTarget(int leftEncoderAdder, int rightEncoderAdder) {
+
+        currentEncoderTargets.LeftTarget += leftEncoderAdder;
+        currentEncoderTargets.RightTarget += rightEncoderAdder;
+    }
+
+    private boolean counterclockwiseTurnNeeded(double currentAngle) {
+
+        telemetry.addData("Angle: ", currentAngle);
+
+        if (currentAngle < Math.abs(segment.Angle)) {
+
+            return (Math.abs(segment.Angle) - currentAngle) >= 180.0f;
+        }
+
+        return (currentAngle - Math.abs(segment.Angle)) <= 180.0f;
+    }
+
+    public int getRightPosition() {
+
+        return frontRightMotor.getCurrentPosition();
+    }
+
+    public int getLeftPosition() {
+
+        return frontLeftMotor.getCurrentPosition();
     }
 }
