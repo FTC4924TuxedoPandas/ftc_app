@@ -17,6 +17,12 @@ import static android.R.attr.name;
 
 public abstract class VelocityBase extends OpMode {
 
+    public enum State {
+
+        STATE_INITIAL,
+        STATE_STOP,
+    }
+
     DcMotor frontRightMotor;
     DcMotor frontLeftMotor;
     DcMotor backRightMotor;
@@ -26,7 +32,7 @@ public abstract class VelocityBase extends OpMode {
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
 
-    PowerLevels powerLevels = new PowerLevels();
+    PowerLevels powerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     float throwingArmPowerLevel = 0.0f;
 
     public final float ARM_POWER = 1.0f;
@@ -35,12 +41,23 @@ public abstract class VelocityBase extends OpMode {
     DrivePathSegment segment;
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
-    public DrivePathSegment[] currentPath;
+    public DrivePathSegment[] currentPath = new DrivePathSegment[]{
+
+        new DrivePathSegment(20.0f, 20.0f, 50.0f),
+        //new DrivePathSegment(90.0f, 50.0f),
+        //new DrivePathSegment(5.0f),
+        //new DrivePathSegment(-90.0f, 50.0f),
+        //new DrivePathSegment(-20.0f, -20.0f, 50.0f)
+    };
     double countsPerInch;
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     int turnStartValueLeft;
     int turnStartValueRight;
     GyroSensor turningGyro;
+    public State currentState;
+    static final float TURNING_ANGLE_MARGIN = 2.0f;
+    static final int ENCODER_TARGET_MARGIN = 10;
+    public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
 
     @Override
     public void init() {
@@ -58,6 +75,9 @@ public abstract class VelocityBase extends OpMode {
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
+        currentState = State.STATE_INITIAL;
+
+
     }
 
     @Override
@@ -138,21 +158,21 @@ public abstract class VelocityBase extends OpMode {
     }
 
     public void startSeg() {
-
+        telemetry.addData("1", 0);
         segment = currentPath[currentPathSegmentIndex];
-
+        telemetry.addData("2", 0);
         elapsedTimeForCurrentSegment.reset();
-
+        telemetry.addData("3", 0);
         if (currentPath != null) {
 
             if (segment.isTurn) {
-
+                telemetry.addData("4", 0);
                 turnStartValueLeft = getLeftPosition();
                 turnStartValueRight = getRightPosition();
 
                 runWithoutEncoders();
                 double currentAngle = turningGyro.getHeading();
-
+                telemetry.addData("5", 0);
                 if (counterclockwiseTurnNeeded(currentAngle)) {
 
                     segment.rightPower = 0.0f;
@@ -163,7 +183,7 @@ public abstract class VelocityBase extends OpMode {
                 }
 
             } else {
-
+                telemetry.addData("6", 0);
                 if (segment.isDelay) {
 
                     runWithoutEncoders();
@@ -171,7 +191,7 @@ public abstract class VelocityBase extends OpMode {
                     segment.rightPower = 0.0f;
 
                 } else {
-
+                    telemetry.addData("7", 0);
                     int moveCounts = (int) (segment.LeftSideDistance * countsPerInch);
 
                     useRunUsingEncoders();
@@ -184,9 +204,9 @@ public abstract class VelocityBase extends OpMode {
                     }
                 }
             }
-
-            FourWheelDrivePowerLevels powerLevels =
-                    new FourWheelDrivePowerLevels(segment.leftPower, segment.rightPower);
+            telemetry.addData("8", 0);
+            PowerLevels powerLevels =
+                    new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
             SetDriveMotorPowerLevels(powerLevels);
 
             currentPathSegmentIndex++;
@@ -206,19 +226,26 @@ public abstract class VelocityBase extends OpMode {
 
     public void useRunUsingEncoders() {
 
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void SetDriveMotorPowerLevels(FourWheelDrivePowerLevels levels) {
+    public void SetDriveMotorPowerLevels(PowerLevels levels) {
 
-        frontRightMotor.setPower(levels.frontRight);
-        frontLeftMotor.setPower(levels.frontLeft);
+        frontRightMotor.setPower(levels.frontRightPower);
+        frontLeftMotor.setPower(levels.frontLeftPower);
+        backRightMotor.setPower(levels.backRightPower);
+        backLeftMotor.setPower(levels.backLeftPower);
     }
 
     public void addEncoderTarget(int leftEncoderAdder, int rightEncoderAdder) {
 
-        currentEncoderTargets.LeftTarget += leftEncoderAdder;
-        currentEncoderTargets.RightTarget += rightEncoderAdder;
+        currentEncoderTargets.frontLeftTarget += leftEncoderAdder;
+        currentEncoderTargets.frontRightTarget += rightEncoderAdder;
+        currentEncoderTargets.backLeftTarget += leftEncoderAdder;
+        currentEncoderTargets.backRightTarget += rightEncoderAdder;
     }
 
     private boolean counterclockwiseTurnNeeded(double currentAngle) {
@@ -241,5 +268,115 @@ public abstract class VelocityBase extends OpMode {
     public int getLeftPosition() {
 
         return frontLeftMotor.getCurrentPosition();
+    }
+
+    public void startPath(DrivePathSegment[] path) {
+
+        telemetry.addData("currentPath", 0);
+        currentPath = path;
+        telemetry.addData("currentPathSegmentIndex", 0);
+        currentPathSegmentIndex = 0;
+        telemetry.addData("setEncoderTargetsToCurrentPosition", 0);
+        setEncoderTargetsToCurrentPosition();
+        telemetry.addData("useRunUsingEncoders", 0);
+        useRunUsingEncoders();
+        telemetry.addData("startSeg", 0);
+        startSeg();
+    }
+
+    public void setEncoderTargetsToCurrentPosition() {
+
+        currentEncoderTargets.frontLeftTarget = getLeftPosition();
+        currentEncoderTargets.frontRightTarget = getRightPosition();
+        currentEncoderTargets.backLeftTarget = getLeftPosition();
+        currentEncoderTargets.backRightTarget = getRightPosition();
+    }
+
+    public boolean pathComplete() {
+        // Wait for this Segement to end and then see what's next.
+        if (segmentComplete()) {
+            // Start next Segment if there is one.
+            if (currentPathSegmentIndex < currentPath.length) {
+
+                TurnOffAllDriveMotors();
+                startSeg();
+
+            } else {
+
+                currentPath = null;
+                currentPathSegmentIndex = 0;
+                TurnOffAllDriveMotors();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean segmentComplete() {
+
+        if (segment.isTurn) {
+
+            return turnComplete();
+
+        } else {
+
+            if (segment.isDelay) {
+
+                return delayComplete();
+
+            } else {
+
+                return linearMoveComplete();
+            }
+        }
+    }
+
+    public boolean turnComplete() {
+
+        return Math.abs(segment.Angle) <= turningGyro.getHeading() + TURNING_ANGLE_MARGIN &&
+                Math.abs(segment.Angle) >= turningGyro.getHeading() - TURNING_ANGLE_MARGIN;
+    }
+
+    public boolean delayComplete() {
+
+        return elapsedTimeForCurrentSegment.time() >= segment.delayTime;
+    }
+
+    public boolean linearMoveComplete() {
+
+        int leftPosition = getLeftPosition();
+        int leftTarget = currentEncoderTargets.frontLeftTarget;
+        int rightPosition = getRightPosition();
+        int rightTarget = currentEncoderTargets.frontRightTarget;
+
+        return (isPositionClose(leftPosition, leftTarget, segment.LeftSideDistance) &&
+                isPositionClose(rightPosition, rightTarget, segment.LeftSideDistance)) ||
+                (isPastTarget(leftPosition, leftTarget, segment.LeftSideDistance) &&
+                        isPastTarget(rightPosition, rightTarget, segment.LeftSideDistance));
+    }
+
+    public boolean isPositionClose(int position, int target, float distanceToMove) {
+
+        if (distanceToMove < 0) {
+
+            return position - target < ENCODER_TARGET_MARGIN;
+        }
+
+        return target - position < ENCODER_TARGET_MARGIN;
+    }
+
+    public boolean isPastTarget(int position, int target, float distanceToMove) {
+
+        if (distanceToMove < 0) {
+
+            return position < target;
+        }
+
+        return position > target;
+    }
+
+    public void TurnOffAllDriveMotors() {
+        SetDriveMotorPowerLevels(zeroPowerLevels);
     }
 }

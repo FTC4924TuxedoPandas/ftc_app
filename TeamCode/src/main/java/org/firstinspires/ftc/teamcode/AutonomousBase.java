@@ -138,9 +138,9 @@ public abstract class AutonomousBase extends OpMode {
     public void addTelemetry() {
 
         telemetry.addData("IR Reading: ", sharpIRSensor.getDistance());
-        telemetry.addData("L Target: ", currentEncoderTargets.LeftTarget);
+        telemetry.addData("L Target: ", currentEncoderTargets.frontLeftTarget);
         telemetry.addData("L Pos: ", getLeftPosition());
-        telemetry.addData("R Target: ", currentEncoderTargets.RightTarget);
+        telemetry.addData("R Target: ", currentEncoderTargets.frontRightTarget);
         telemetry.addData("R Pos: ", getRightPosition());
         telemetry.addData("State: ", currentState);
     }
@@ -166,8 +166,8 @@ public abstract class AutonomousBase extends OpMode {
 
     public void setEncoderTargetsToCurrentPosition() {
 
-        currentEncoderTargets.LeftTarget = getLeftPosition();
-        currentEncoderTargets.RightTarget = getRightPosition();
+        currentEncoderTargets.frontLeftTarget = getLeftPosition();
+        currentEncoderTargets.frontRightTarget = getRightPosition();
     }
 
     public void useRunUsingEncoders() {
@@ -255,8 +255,8 @@ public abstract class AutonomousBase extends OpMode {
 
     public void addEncoderTarget(int leftEncoderAdder, int rightEncoderAdder) {
 
-        currentEncoderTargets.LeftTarget += leftEncoderAdder;
-        currentEncoderTargets.RightTarget += rightEncoderAdder;
+        currentEncoderTargets.frontLeftTarget += leftEncoderAdder;
+        currentEncoderTargets.frontRightTarget += rightEncoderAdder;
     }
 
     public void SetDriveMotorPowerLevels(FourWheelDrivePowerLevels levels) {
@@ -289,9 +289,9 @@ public abstract class AutonomousBase extends OpMode {
     public boolean linearMoveComplete() {
 
         int leftPosition = getLeftPosition();
-        int leftTarget = currentEncoderTargets.LeftTarget;
+        int leftTarget = currentEncoderTargets.frontLeftTarget;
         int rightPosition = getRightPosition();
-        int rightTarget = currentEncoderTargets.RightTarget;
+        int rightTarget = currentEncoderTargets.frontRightTarget;
 
         return (isPositionClose(leftPosition, leftTarget, segment.LeftSideDistance) &&
                 isPositionClose(rightPosition, rightTarget, segment.LeftSideDistance)) ||
@@ -324,8 +324,8 @@ public abstract class AutonomousBase extends OpMode {
     }
 
     public void SetEncoderTargets() {
-        frontLeftMotor.setTargetPosition(currentEncoderTargets.LeftTarget);
-        frontRightMotor.setTargetPosition(currentEncoderTargets.RightTarget);
+        frontLeftMotor.setTargetPosition(currentEncoderTargets.frontLeftTarget);
+        frontRightMotor.setTargetPosition(currentEncoderTargets.frontRightTarget);
     }
 
     public boolean turnComplete() {

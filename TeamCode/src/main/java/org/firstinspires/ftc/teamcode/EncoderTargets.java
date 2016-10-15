@@ -4,11 +4,17 @@ package org.firstinspires.ftc.teamcode;
  * Created by 4924_Users on 10/18/2015.
  */
 public class EncoderTargets {
-    public int LeftTarget;
-    public int RightTarget;
+
+    public int frontRightTarget;
+    public int frontLeftTarget;
+    public int backRightTarget;
+    public int backLeftTarget;
 
     public EncoderTargets(int left, int right) {
-        LeftTarget = left;
-        RightTarget = right;
+
+        frontLeftTarget = left;
+        frontRightTarget = right;
+        backLeftTarget = left;
+        backRightTarget = right;
     }
 }
