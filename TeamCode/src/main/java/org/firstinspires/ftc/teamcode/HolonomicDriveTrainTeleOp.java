@@ -39,13 +39,19 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
+        telemetry.addData("FrontRight: ", powerLevels.frontRightPower);
+        telemetry.addData("FrontLeft: ", powerLevels.frontLeftPower);
+        telemetry.addData("BackRight: ", powerLevels.backRightPower);
+        telemetry.addData("BackLeft: ", powerLevels.backLeftPower);
     }
 
     private boolean isStrafing() {
+
         return gamepad1.left_bumper || gamepad1.right_bumper;
     }
 
     private boolean bIsPressed() {
+
         return gamepad1.b;
     }
 
