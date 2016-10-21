@@ -35,6 +35,7 @@ public class TestAutonomous extends VelocityBase {
             case STATE_LAUNCH:
 
                 telemetry.addData("STATE_LAUNCH", 0);
+                throwingArmLaunch();
 
                 break;
             
