@@ -39,7 +39,7 @@ public class TestAutonomous extends VelocityBase {
                     TurnOffAllDriveMotors();
                     currentState = State.STATE_STOP;
                 }
-                
+
                 break;
 
             case STATE_STOP:
