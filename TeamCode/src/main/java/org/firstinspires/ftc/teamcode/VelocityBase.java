@@ -21,6 +21,7 @@ public abstract class VelocityBase extends OpMode {
 
         STATE_INITIAL,
         STATE_STOP,
+        STATE_LAUNCH,
     }
 
     DcMotor frontRightMotor;
@@ -378,5 +379,18 @@ public abstract class VelocityBase extends OpMode {
 
     public void TurnOffAllDriveMotors() {
         SetDriveMotorPowerLevels(zeroPowerLevels);
+    }
+
+    public void throwingArmLaunch() {
+        raiseAutoThrowingArm();
+        lowerAutoThrowingArm();
+    }
+
+    public void raiseAutoThrowingArm() {
+
+    }
+
+    public void lowerAutoThrowingArm() {
+
     }
 }
