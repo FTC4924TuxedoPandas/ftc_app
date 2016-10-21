@@ -20,6 +20,7 @@ public abstract class VelocityBase extends OpMode {
     public enum State {
 
         STATE_INITIAL,
+        STATE_DRIVE,
         STATE_STOP,
     }
 
@@ -77,7 +78,7 @@ public abstract class VelocityBase extends OpMode {
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
         currentState = State.STATE_INITIAL;
 
-
+        runWithoutEncoders();
     }
 
     @Override
@@ -136,13 +137,13 @@ public abstract class VelocityBase extends OpMode {
         powerLevels.frontLeftPower = Range.clip(powerLevels.frontLeftPower, -1.0f, 1.0f);
     }
 
-    public void setMotorPowerLevels(PowerLevels PowerLevels) {
+    public void setMotorPowerLevels(PowerLevels powerLevels) {
 
         throwingArm.setPower(throwingArmPowerLevel);
-        frontLeftMotor.setPower(PowerLevels.frontLeftPower);
-        backLeftMotor.setPower(PowerLevels.backLeftPower);
-        backRightMotor.setPower(PowerLevels.backRightPower);
-        frontRightMotor.setPower(PowerLevels.frontRightPower);
+        frontLeftMotor.setPower(powerLevels.frontLeftPower);
+        backLeftMotor.setPower(powerLevels.backLeftPower);
+        backRightMotor.setPower(powerLevels.backRightPower);
+        frontRightMotor.setPower(powerLevels.frontRightPower);
     }
 
     protected void StopMovingThrowingArm() {
@@ -222,6 +223,12 @@ public abstract class VelocityBase extends OpMode {
 
         if (frontLeftMotor.getMode() != mode)
             frontLeftMotor.setMode(mode);
+        if (frontRightMotor.getMode() != mode)
+            frontRightMotor.setMode(mode);
+        if (backLeftMotor.getMode() != mode)
+            backLeftMotor.setMode(mode);
+        if (backRightMotor.getMode() != mode)
+            backRightMotor.setMode(mode);
     }
 
     public void useRunUsingEncoders() {
