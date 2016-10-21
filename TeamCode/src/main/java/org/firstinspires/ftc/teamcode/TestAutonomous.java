@@ -32,6 +32,13 @@ public class TestAutonomous extends VelocityBase {
 
                 break;
 
+            case STATE_LAUNCH:
+
+                telemetry.addData("STATE_LAUNCH", 0);
+
+                break;
+
+            case STATE_STOP:
             case STATE_DRIVE:
 
                 if (pathComplete()) {
