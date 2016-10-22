@@ -22,7 +22,7 @@ public abstract class VelocityBase extends OpMode {
         STATE_INITIAL,
         STATE_DRIVE,
         STATE_STOP,
-        STATE_LAUNCH,
+        STATE_LAUNCH_BALL,
     }
 
     DcMotor frontRightMotor;
@@ -53,6 +53,7 @@ public abstract class VelocityBase extends OpMode {
     };
     double countsPerInch;
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
+    public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
     int turnStartValueLeft;
     int turnStartValueRight;
     GyroSensor turningGyro;
@@ -60,6 +61,10 @@ public abstract class VelocityBase extends OpMode {
     static final float TURNING_ANGLE_MARGIN = 2.0f;
     static final int ENCODER_TARGET_MARGIN = 10;
     public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
+    final int COUNTS_PER_REVOLUTION = 1120;
+    final double WHEEL_DIAMETER = 4.0f;
+    final double GEAR_RATIO = 1.0f;
+    final double CALIBRATION_FACTOR = 1.93f;
 
     @Override
     public void init() {
@@ -70,16 +75,17 @@ public abstract class VelocityBase extends OpMode {
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
 
-        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
         currentState = State.STATE_INITIAL;
 
         runWithoutEncoders();
+        countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
     }
 
     @Override
@@ -102,8 +108,8 @@ public abstract class VelocityBase extends OpMode {
         float leftStick = 0.0f;
         float rightStick = 0.0f;
 
-        leftStick = Range.clip(gamepad1.left_stick_y,-1.0f,1.0f);
-        rightStick = Range.clip(gamepad1.right_stick_y,-1.0f,1.0f);
+        leftStick = Range.clip(-gamepad1.left_stick_y,-1.0f,1.0f);
+        rightStick = Range.clip(-gamepad1.right_stick_y,-1.0f,1.0f);
 
         powerLevels.frontLeftPower = leftStick;
         powerLevels.backLeftPower = leftStick;

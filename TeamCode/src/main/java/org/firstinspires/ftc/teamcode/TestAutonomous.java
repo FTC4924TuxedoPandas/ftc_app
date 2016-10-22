@@ -15,11 +15,11 @@ public class TestAutonomous extends VelocityBase {
 
         currentPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(200.0f, 200.0f, 50.0f),
-                //new DrivePathSegment(90.0f, 50.0f),
-                //new DrivePathSegment(5.0f),
-                //new DrivePathSegment(-90.0f, 50.0f),
-                //new DrivePathSegment(-20.0f, -20.0f, 50.0f)
+                new DrivePathSegment(20.0f, 20.0f, 50.0f),
+                new DrivePathSegment(90.0f, 50.0f),
+                new DrivePathSegment(5.0f),
+                new DrivePathSegment(0.0f, 50.0f),
+                new DrivePathSegment(-20.0f, -20.0f, 50.0f)
         };
     }
 
