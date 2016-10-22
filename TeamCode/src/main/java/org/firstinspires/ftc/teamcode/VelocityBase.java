@@ -31,14 +31,17 @@ public abstract class VelocityBase extends OpMode {
     DcMotor backRightMotor;
     DcMotor backLeftMotor;
     DcMotor throwingArm;
+    DcMotor collectionMotor;
 
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
 
     PowerLevels powerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     float throwingArmPowerLevel = 0.0f;
+    float collectionPowerLevel = 0.0f;
 
     public final float ARM_POWER = 1.0f;
+    public final float COLLECTION_POWER = 0.5f;
     public final float BASE_HOLONOMIC_DRIVE_POWER = 0.5f;
     public int currentPathSegmentIndex = 0;
     DrivePathSegment segment;
@@ -83,12 +86,14 @@ public abstract class VelocityBase extends OpMode {
         backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
+        collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
+        collectionMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
         currentState = State.STATE_INITIAL;
@@ -146,34 +151,44 @@ public abstract class VelocityBase extends OpMode {
 
     public void clipPowerLevels() {
 
-        throwingArmPowerLevel = Range.clip (throwingArmPowerLevel,-1.0f,1.0f);
         powerLevels.backRightPower = Range.clip(powerLevels.backRightPower, -1.0f, 1.0f);
         powerLevels.backLeftPower = Range.clip(powerLevels.backLeftPower, -1.0f, 1.0f);
         powerLevels.frontRightPower = Range.clip(powerLevels.frontRightPower, -1.0f, 1.0f);
         powerLevels.frontLeftPower = Range.clip(powerLevels.frontLeftPower, -1.0f, 1.0f);
+        throwingArmPowerLevel = Range.clip (throwingArmPowerLevel,-1.0f,1.0f);
+        collectionPowerLevel = Range.clip (collectionPowerLevel,-1.0f,1.0f);
     }
 
     public void setMotorPowerLevels(PowerLevels powerLevels) {
 
-        throwingArm.setPower(throwingArmPowerLevel);
         frontLeftMotor.setPower(powerLevels.frontLeftPower);
         backLeftMotor.setPower(powerLevels.backLeftPower);
         backRightMotor.setPower(powerLevels.backRightPower);
         frontRightMotor.setPower(powerLevels.frontRightPower);
+        throwingArm.setPower(throwingArmPowerLevel);
+        collectionMotor.setPower(collectionPowerLevel);
     }
 
     protected void StopMovingThrowingArm() {
         throwingArmPowerLevel = 0.0f;
     }
-
+        //stops the throwing arm motor for the throwing arm (sets power to 0)
     protected void LowerThrowingArm() {
         throwingArmPowerLevel = -ARM_POWER/10.0f;
     }
-
+        //lowers the throwing arm motor (set to negative, 1/10 of raising power)
     protected void RaiseThrowingArm() {
         throwingArmPowerLevel = ARM_POWER;
     }
 
+    protected void collectionIntake() {
+        collectionPowerLevel = COLLECTION_POWER;
+    }
+    protected void collectionRelease() {
+        collectionPowerLevel = -COLLECTION_POWER;
+    }
+
+        //raises (to shoot) the throwing arm motor (high positive power)
     public void startSeg() {
 
         segment = currentPath[currentPathSegmentIndex];
@@ -270,7 +285,7 @@ public abstract class VelocityBase extends OpMode {
         currentEncoderTargets.backRightTarget += rightEncoderAdder;
     }
 
-    private boolean counterclockwiseTurnNeeded(double currentAngle) {
+    public boolean counterclockwiseTurnNeeded(double currentAngle) {
 
         telemetry.addData("Angle: ", currentAngle);
 

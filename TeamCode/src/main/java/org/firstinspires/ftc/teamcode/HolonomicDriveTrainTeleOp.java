@@ -35,6 +35,17 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else {
 
             setPowerForTankDrive();
+
+        }
+
+        if (collectionIn()) {
+
+            collectionIntake();
+
+        } else if (collectionOut()) {
+
+            collectionRelease();
+
         }
 
         clipPowerLevels();
@@ -59,5 +70,12 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         return gamepad1.a;
     }
 
+    private boolean collectionIn() {
+        return gamepad2.right_bumper;
+    }
+
+    private boolean collectionOut() {
+        return gamepad2.left_bumper;
+    }
 
 }
