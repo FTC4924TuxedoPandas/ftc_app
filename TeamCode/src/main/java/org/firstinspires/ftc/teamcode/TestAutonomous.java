@@ -11,9 +11,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "TestAutonomous")
 public class TestAutonomous extends VelocityBase {
 
-
     public TestAutonomous() {
 
+        currentPath = new DrivePathSegment[]{
+
+                new DrivePathSegment(200.0f, 200.0f, 50.0f),
+                //new DrivePathSegment(90.0f, 50.0f),
+                //new DrivePathSegment(5.0f),
+                //new DrivePathSegment(-90.0f, 50.0f),
+                //new DrivePathSegment(-20.0f, -20.0f, 50.0f)
+        };
     }
 
     @Override
@@ -26,18 +33,10 @@ public class TestAutonomous extends VelocityBase {
             case STATE_INITIAL:
 
                 startPath(currentPath);
-                telemetry.addData("startPath complete", 0);
-                currentState = State.STATE_STOP;
-                telemetry.addData("set state to stop", 0);
+                currentState = State.STATE_DRIVE;
 
                 break;
 
-            case STATE_LAUNCH:
-
-                telemetry.addData("STATE_LAUNCH", 0);
-
-                break;
-            
             case STATE_DRIVE:
 
                 if (pathComplete()) {
