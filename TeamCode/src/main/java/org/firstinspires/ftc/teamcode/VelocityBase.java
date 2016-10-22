@@ -166,32 +166,31 @@ public abstract class VelocityBase extends OpMode {
     }
 
     public void startSeg() {
-        telemetry.addData("1", 0);
+
         segment = currentPath[currentPathSegmentIndex];
-        telemetry.addData("2", 0);
         elapsedTimeForCurrentSegment.reset();
-        telemetry.addData("3", 0);
+
         if (currentPath != null) {
 
             if (segment.isTurn) {
-                telemetry.addData("4", 0);
+
                 turnStartValueLeft = getLeftPosition();
                 turnStartValueRight = getRightPosition();
 
                 runWithoutEncoders();
                 double currentAngle = turningGyro.getHeading();
-                telemetry.addData("5", 0);
+
                 if (counterclockwiseTurnNeeded(currentAngle)) {
 
-                    segment.rightPower = 0.0f;
+                    segment.rightPower = -segment.leftPower;
 
                 } else {
 
-                    segment.leftPower = 0.0f;
+                    segment.leftPower = -segment.rightPower;
                 }
 
             } else {
-                telemetry.addData("6", 0);
+
                 if (segment.isDelay) {
 
                     runWithoutEncoders();
@@ -199,7 +198,7 @@ public abstract class VelocityBase extends OpMode {
                     segment.rightPower = 0.0f;
 
                 } else {
-                    telemetry.addData("7", 0);
+
                     int moveCounts = (int) (segment.LeftSideDistance * countsPerInch);
 
                     useRunUsingEncoders();
@@ -212,7 +211,7 @@ public abstract class VelocityBase extends OpMode {
                     }
                 }
             }
-            telemetry.addData("8", 0);
+
             PowerLevels powerLevels =
                     new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
             SetDriveMotorPowerLevels(powerLevels);
