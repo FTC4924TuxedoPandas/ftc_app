@@ -45,12 +45,17 @@ public abstract class VelocityBase extends OpMode {
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
 
-    public DrivePathSegment[] currentPath = new DrivePathSegment[]{
+    public DrivePathSegment[] currentPath = new DrivePathSegment[] {
 
             new DrivePathSegment(0.0f, 0.0f, 0.0f),
     };
 
-    public DrivePathSegment[] launchPositioningPath = new DrivePathSegment[]{
+    public DrivePathSegment[] launchPositioningPath = new DrivePathSegment[] {
+
+            new DrivePathSegment(0.0f, 0.0f, 0.0f),
+    };
+
+    public DrivePathSegment[] beaconPath = new DrivePathSegment[] {
 
             new DrivePathSegment(0.0f, 0.0f, 0.0f),
     };
@@ -289,15 +294,10 @@ public abstract class VelocityBase extends OpMode {
 
     public void startPath(DrivePathSegment[] path) {
 
-        telemetry.addData("currentPath", 0);
         currentPath = path;
-        telemetry.addData("currentPathSegmentIndex", 0);
         currentPathSegmentIndex = 0;
-        telemetry.addData("setEncoderTargetsToCurrentPosition", 0);
         setEncoderTargetsToCurrentPosition();
-        telemetry.addData("useRunUsingEncoders", 0);
         useRunUsingEncoders();
-        telemetry.addData("startSeg", 0);
         startSeg();
     }
 

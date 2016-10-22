@@ -39,7 +39,7 @@ public class LaunchAndBeaconBase extends VelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= THROWING_TIME * 2) {
 
-                    startPath(currentPath);
+                    startPath(beaconPath);
                     currentState = State.STATE_DRIVE;
                 }
 
