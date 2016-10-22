@@ -119,14 +119,14 @@ public abstract class VelocityBase extends OpMode {
 
     public void setPowerForMecanumStrafe() {
 
-        if (isStrafingLeft) {
+        if (isStrafingRight) {
 
             powerLevels.frontLeftPower = BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.backLeftPower = -BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.backRightPower = BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.frontRightPower = -BASE_HOLONOMIC_DRIVE_POWER;
 
-        } else if (isStrafingRight) {
+        } else if (isStrafingLeft) {
 
             powerLevels.frontLeftPower = -BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.backLeftPower = BASE_HOLONOMIC_DRIVE_POWER;
