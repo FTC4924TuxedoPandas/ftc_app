@@ -23,6 +23,7 @@ public abstract class VelocityBase extends OpMode {
         STATE_DRIVE,
         STATE_STOP,
         STATE_LAUNCH_BALL,
+        STATE_POSITION_FOR_BALL
     }
 
     DcMotor frontRightMotor;
@@ -43,14 +44,17 @@ public abstract class VelocityBase extends OpMode {
     DrivePathSegment segment;
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
+
     public DrivePathSegment[] currentPath = new DrivePathSegment[]{
 
-        new DrivePathSegment(20.0f, 20.0f, 50.0f),
-        //new DrivePathSegment(90.0f, 50.0f),
-        //new DrivePathSegment(5.0f),
-        //new DrivePathSegment(-90.0f, 50.0f),
-        //new DrivePathSegment(-20.0f, -20.0f, 50.0f)
+            new DrivePathSegment(0.0f, 0.0f, 0.0f),
     };
+
+    public DrivePathSegment[] launchPositioningPath = new DrivePathSegment[]{
+
+            new DrivePathSegment(0.0f, 0.0f, 0.0f),
+    };
+
     double countsPerInch;
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
@@ -393,16 +397,27 @@ public abstract class VelocityBase extends OpMode {
         SetDriveMotorPowerLevels(zeroPowerLevels);
     }
 
-    public void throwingArmLaunch() {
-        raiseAutoThrowingArm();
-        lowerAutoThrowingArm();
+    public void throwBall(ElapsedTime ElapsedThrowingTime, float throwingTime) {
+
+        if (ElapsedThrowingTime.time() >= throwingTime) {
+
+            lowerAutoThrowingArm(ElapsedThrowingTime, throwingTime);
+
+        } else {
+
+            throwingArm.setPower(ARM_POWER);
+        }
     }
 
-    public void raiseAutoThrowingArm() {
+    public void lowerAutoThrowingArm(ElapsedTime ElapsedThrowingTime, float throwingTime) {
 
-    }
+        if (ElapsedThrowingTime.time() >= throwingTime * 2) {
 
-    public void lowerAutoThrowingArm() {
+            throwingArm.setPower(0.0f);
 
+        } else {
+
+            throwingArm.setPower(-ARM_POWER);
+        }
     }
 }
