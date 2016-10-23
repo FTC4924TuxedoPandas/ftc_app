@@ -52,8 +52,8 @@ public abstract class VelocityBase extends OpMode {
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
 
-    public final float SERVO_POSITION_OUT = 1.0f;
-    public final float SERVO_POSITION_IN = 0.0f;
+    public final float BEACON_SERVO_POSITION_OUT = 0.5f;
+    public final float BEACON_SERVO_POSITION_IN = 0.0f;
 
     public DrivePathSegment[] currentPath = new DrivePathSegment[] {
 
@@ -448,21 +448,21 @@ public abstract class VelocityBase extends OpMode {
 
     public void leftBeaconServoOut() {
 
-        leftBeaconServo.setPosition(SERVO_POSITION_OUT);
+        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_OUT);
     }
 
     public void rightBeaconServoOut() {
 
-        leftBeaconServo.setPosition(SERVO_POSITION_OUT);
+        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_OUT);
     }
 
     public void leftBeaconServoIn() {
 
-        leftBeaconServo.setPosition(SERVO_POSITION_IN);
+        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
     }
 
     public void rightBeaconServoIn() {
 
-        rightBeaconServo.setPosition(SERVO_POSITION_IN);
+        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
     }
 }
