@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -33,6 +34,9 @@ public abstract class VelocityBase extends OpMode {
     DcMotor throwingArm;
     DcMotor collectionMotor;
 
+    Servo leftBeaconServo;
+    Servo rightBeaconServo;
+
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
 
@@ -47,6 +51,9 @@ public abstract class VelocityBase extends OpMode {
     DrivePathSegment segment;
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
+
+    public final float SERVO_POSITION_OUT = 1.0f;
+    public final float SERVO_POSITION_IN = 0.0f;
 
     public DrivePathSegment[] currentPath = new DrivePathSegment[] {
 
@@ -88,12 +95,15 @@ public abstract class VelocityBase extends OpMode {
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
 
+        leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
+        rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
+
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
-        collectionMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
         currentState = State.STATE_INITIAL;
@@ -434,5 +444,25 @@ public abstract class VelocityBase extends OpMode {
 
             throwingArm.setPower(-ARM_POWER);
         }
+    }
+
+    public void leftBeaconServoOut() {
+
+        leftBeaconServo.setPosition(SERVO_POSITION_OUT);
+    }
+
+    public void rightBeaconServoOut() {
+
+        leftBeaconServo.setPosition(SERVO_POSITION_OUT);
+    }
+
+    public void leftBeaconServoIn() {
+
+        leftBeaconServo.setPosition(SERVO_POSITION_IN);
+    }
+
+    public void rightBeaconServoIn() {
+
+        rightBeaconServo.setPosition(SERVO_POSITION_IN);
     }
 }

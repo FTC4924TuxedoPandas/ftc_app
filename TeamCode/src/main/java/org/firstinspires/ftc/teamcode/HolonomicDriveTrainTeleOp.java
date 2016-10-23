@@ -35,7 +35,6 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else {
 
             setPowerForTankDrive();
-
         }
 
         if (collectionIn()) {
@@ -45,8 +44,26 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else if (collectionOut()) {
 
             collectionRelease();
-
         }
+
+        if (extendLeftBeaconBumper()) {
+
+            leftBeaconServoOut();
+
+        } else if (resetLeftBeaconBumper()) {
+
+            leftBeaconServoIn();
+        }
+
+        if (extendRightBeaconBumper()) {
+
+            rightBeaconServoOut();
+
+        } else if (resetRightBeaconBumper()) {
+
+            rightBeaconServoIn();
+        }
+
 
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
@@ -78,4 +95,19 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         return gamepad2.left_bumper;
     }
 
+    private boolean extendLeftBeaconBumper() {
+        return gamepad2.x;
+    }
+
+    private boolean extendRightBeaconBumper() {
+        return gamepad2.a;
+    }
+
+    private boolean resetLeftBeaconBumper() {
+        return gamepad2.y;
+    }
+
+    private boolean resetRightBeaconBumper() {
+        return gamepad2.b;
+    }
 }
