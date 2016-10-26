@@ -13,7 +13,7 @@ public class RedRampLaunchAndBeacon extends LaunchAndBeaconBase {
 
         beaconPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(37.0f, 37.0f, 1.0f),
+                new DrivePathSegment(0.0f, 0.0f, 0.0f),
         };
 
         launchPositioningPath = new DrivePathSegment[]{

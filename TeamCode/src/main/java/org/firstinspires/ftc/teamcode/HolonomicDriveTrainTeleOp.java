@@ -46,20 +46,20 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             collectionRelease();
         }
 
-        if (extendLeftBeaconBumper()) {
+        if (d2XIsPressed()) {
 
             leftBeaconServoOut();
 
-        } else if (resetLeftBeaconBumper()) {
+        } else if (d2YIsPressed()) {
 
             leftBeaconServoIn();
         }
 
-        if (extendRightBeaconBumper()) {
+        if (d2AIsPressed()) {
 
             rightBeaconServoOut();
 
-        } else if (resetRightBeaconBumper()) {
+        } else if (d2BIsPressed()) {
 
             rightBeaconServoIn();
         }
@@ -95,19 +95,19 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         return gamepad2.left_bumper;
     }
 
-    private boolean extendLeftBeaconBumper() {
+    private boolean d2XIsPressed() {
         return gamepad2.x;
     }
 
-    private boolean extendRightBeaconBumper() {
+    private boolean d2AIsPressed() {
         return gamepad2.a;
     }
 
-    private boolean resetLeftBeaconBumper() {
+    private boolean d2YIsPressed() {
         return gamepad2.y;
     }
 
-    private boolean resetRightBeaconBumper() {
+    private boolean d2BIsPressed() {
         return gamepad2.b;
     }
 }
