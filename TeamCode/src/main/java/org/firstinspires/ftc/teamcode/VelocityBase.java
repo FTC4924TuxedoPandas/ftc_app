@@ -25,7 +25,8 @@ public abstract class VelocityBase extends OpMode {
         STATE_DRIVE,
         STATE_STOP,
         STATE_LAUNCH_BALL,
-        STATE_POSITION_FOR_BALL
+        STATE_POSITION_FOR_BALL,
+        STATE_KNOCKCAP
     }
 
     DcMotor frontRightMotor;
@@ -67,6 +68,11 @@ public abstract class VelocityBase extends OpMode {
     };
 
     public DrivePathSegment[] beaconPath = new DrivePathSegment[] {
+
+            new DrivePathSegment(0.0f, 0.0f, 0.0f),
+    };
+
+    public DrivePathSegment[] knockCapBallPath = new DrivePathSegment[] {
 
             new DrivePathSegment(0.0f, 0.0f, 0.0f),
     };
@@ -197,6 +203,9 @@ public abstract class VelocityBase extends OpMode {
     }
     protected void collectionRelease() {
         collectionPowerLevel = -COLLECTION_POWER;
+    }
+    protected void collectionOff() {
+        collectionPowerLevel = 0;
     }
 
         //raises (to shoot) the throwing arm motor (high positive power)

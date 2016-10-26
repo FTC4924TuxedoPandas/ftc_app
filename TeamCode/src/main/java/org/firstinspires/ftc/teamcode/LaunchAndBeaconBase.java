@@ -50,6 +50,17 @@ public class LaunchAndBeaconBase extends VelocityBase {
                 if (pathComplete()) {
 
                     TurnOffAllDriveMotors();
+                    startPath(knockCapBallPath);
+                    currentState = State.STATE_KNOCKCAP;
+                }
+
+                break;
+
+            case STATE_KNOCKCAP:
+
+                if (pathComplete()) {
+
+                    TurnOffAllDriveMotors();
                     currentState = State.STATE_STOP;
                 }
 

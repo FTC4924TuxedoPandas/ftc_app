@@ -44,6 +44,10 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else if (collectionOut()) {
 
             collectionRelease();
+
+        } else {
+
+            collectionOff();
         }
 
         if (d2XIsPressed()) {
