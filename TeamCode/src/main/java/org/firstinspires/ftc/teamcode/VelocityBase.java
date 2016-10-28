@@ -105,10 +105,10 @@ public abstract class VelocityBase extends OpMode {
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
 
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -136,11 +136,12 @@ public abstract class VelocityBase extends OpMode {
     }
 
     public void setPowerForTankDrive() {
+
         float leftStick = 0.0f;
         float rightStick = 0.0f;
 
-        leftStick = Range.clip(-gamepad1.left_stick_y,-1.0f,1.0f);
-        rightStick = Range.clip(-gamepad1.right_stick_y,-1.0f,1.0f);
+        leftStick = Range.clip(gamepad1.left_stick_y,-1.0f,1.0f);
+        rightStick = Range.clip(gamepad1.right_stick_y,-1.0f,1.0f);
 
         powerLevels.frontLeftPower = leftStick;
         powerLevels.backLeftPower = leftStick;
@@ -150,14 +151,14 @@ public abstract class VelocityBase extends OpMode {
 
     public void setPowerForMecanumStrafe() {
 
-        if (isStrafingRight) {
+        if (isStrafingLeft) {
 
             powerLevels.frontLeftPower = BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.backLeftPower = -BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.backRightPower = BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.frontRightPower = -BASE_HOLONOMIC_DRIVE_POWER;
 
-        } else if (isStrafingLeft) {
+        } else if (isStrafingRight) {
 
             powerLevels.frontLeftPower = -BASE_HOLONOMIC_DRIVE_POWER;
             powerLevels.backLeftPower = BASE_HOLONOMIC_DRIVE_POWER;
@@ -172,8 +173,8 @@ public abstract class VelocityBase extends OpMode {
         powerLevels.backLeftPower = Range.clip(powerLevels.backLeftPower, -1.0f, 1.0f);
         powerLevels.frontRightPower = Range.clip(powerLevels.frontRightPower, -1.0f, 1.0f);
         powerLevels.frontLeftPower = Range.clip(powerLevels.frontLeftPower, -1.0f, 1.0f);
-        throwingArmPowerLevel = Range.clip (throwingArmPowerLevel,-1.0f,1.0f);
-        collectionPowerLevel = Range.clip (collectionPowerLevel,-1.0f,1.0f);
+        throwingArmPowerLevel = Range.clip(throwingArmPowerLevel, -1.0f, 1.0f);
+        collectionPowerLevel = Range.clip(collectionPowerLevel, -1.0f, 1.0f);
     }
 
     public void setMotorPowerLevels(PowerLevels powerLevels) {
@@ -201,9 +202,11 @@ public abstract class VelocityBase extends OpMode {
     protected void collectionIntake() {
         collectionPowerLevel = COLLECTION_POWER;
     }
+
     protected void collectionRelease() {
         collectionPowerLevel = -COLLECTION_POWER;
     }
+
     protected void collectionOff() {
         collectionPowerLevel = 0.0f;
     }

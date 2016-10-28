@@ -18,16 +18,16 @@ public class DrivePathSegment {
     public DrivePathSegment(float left, float right, float power) {
         LeftSideDistance = left;
         RightSideDistance = right;
-        leftPower = power;
-        rightPower = power;
+        leftPower = -power;
+        rightPower = -power;
         isTurn = false;
         isDelay = false;
     }
 
     public DrivePathSegment(float angle, float power) {
         Angle = angle;
-        leftPower = power;
-        rightPower = power;
+        leftPower = -power;
+        rightPower = -power;
         isTurn = true;
         isDelay = false;
     }
