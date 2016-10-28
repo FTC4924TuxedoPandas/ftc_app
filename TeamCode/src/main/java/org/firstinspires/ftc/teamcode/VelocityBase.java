@@ -205,7 +205,7 @@ public abstract class VelocityBase extends OpMode {
         collectionPowerLevel = -COLLECTION_POWER;
     }
     protected void collectionOff() {
-        collectionPowerLevel = 0;
+        collectionPowerLevel = 0.0f;
     }
 
         //raises (to shoot) the throwing arm motor (high positive power)
