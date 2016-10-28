@@ -38,6 +38,7 @@ public abstract class VelocityBase extends OpMode {
 
     Servo leftBeaconServo;
     Servo rightBeaconServo;
+    Servo collectionGateServo;
 
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
@@ -56,6 +57,9 @@ public abstract class VelocityBase extends OpMode {
 
     public final float BEACON_SERVO_POSITION_OUT = 0.5f;
     public final float BEACON_SERVO_POSITION_IN = 0.0f;
+
+    public final float GATE_SERVO_POSITION_OUT = 0.5f;
+    public final float GATE_SERVO_POSITION_IN = 0.0f;
 
     public DrivePathSegment[] currentPath = new DrivePathSegment[] {
 
@@ -104,6 +108,7 @@ public abstract class VelocityBase extends OpMode {
 
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
+        collectionGateServo = hardwareMap.servo.get("collectionGateServo");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -477,5 +482,15 @@ public abstract class VelocityBase extends OpMode {
     public void rightBeaconServoIn() {
 
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+    }
+
+    public void openGate() {
+
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_OUT);
+    }
+
+    public void closeGate() {
+
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_IN);
     }
 }

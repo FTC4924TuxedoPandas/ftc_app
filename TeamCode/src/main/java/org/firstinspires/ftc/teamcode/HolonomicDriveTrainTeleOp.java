@@ -37,6 +37,16 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             setPowerForTankDrive();
         }
 
+        if (d1AIsPressed()) {
+
+            openGate();
+
+        } else if (d1BIsPressed()) {
+
+            closeGate();
+
+        }
+
         if (collectionIn()) {
 
             collectionIntake();
@@ -115,4 +125,8 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
     private boolean d2BIsPressed() {
         return gamepad2.b;
     }
-}
+
+    private boolean d1AIsPressed() { return gamepad1.a; }
+
+    private boolean d1BIsPressed() { return gamepad1.b; }
+    }
