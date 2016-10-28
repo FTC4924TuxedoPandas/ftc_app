@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by 4924_Users on 10/22/2016.
  */
 
-@Autonomous(name = "RedRampLaunchAndBeacon")
+@Autonomous(name = "BlueRampLaunchAndBeacon")
 public class BlueRampLaunchAndBeacon extends LaunchAndBeaconBase {
 
     public BlueRampLaunchAndBeacon() {
