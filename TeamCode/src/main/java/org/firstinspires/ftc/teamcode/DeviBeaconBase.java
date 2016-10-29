@@ -12,9 +12,9 @@ public abstract class DeviBeaconBase extends AutonomousBase {
 
     public DrivePathSegment[] objectivePath = {
 
-            new DrivePathSegment(105.0f, 105.0f, 0.9f),
-            new DrivePathSegment(315.0f, 0.7f),
-            new DrivePathSegment(8.0f, 8.0f, 0.9f)
+            new DrivePathSegment(105.0f, 0.9f, DrivePathSegment.LINEAR),
+            new DrivePathSegment(315.0f, 0.7f, DrivePathSegment.TURN),
+            new DrivePathSegment(8.0f, 0.9f, DrivePathSegment.LINEAR)
     };
 
     private float COLOR_THRESHOLD = 2.0f;
@@ -159,12 +159,12 @@ public abstract class DeviBeaconBase extends AutonomousBase {
 
                             objectivePath = new DrivePathSegment[] {
 
-                                    new DrivePathSegment(distanceToNewTarget, distanceToNewTarget, 1.0f),
-                                    new DrivePathSegment(47.0f, 0.7f),
-                                    new DrivePathSegment(25.0f, 25.0f, 1.0f),
-                                    new DrivePathSegment(47.0f, 0.7f),
-                                    new DrivePathSegment(25.0f, 25.0f, 1.0f),
-                                    new DrivePathSegment(47.0f, 0.7f)
+                                    new DrivePathSegment(distanceToNewTarget, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(47.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(25.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(47.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(25.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(47.0f, 0.7f, DrivePathSegment.TURN)
                             };
 
                         } else {
@@ -173,12 +173,12 @@ public abstract class DeviBeaconBase extends AutonomousBase {
 
                             objectivePath = new DrivePathSegment[] {
 
-                                    new DrivePathSegment(distanceToNewTarget, distanceToNewTarget, 1.0f),
-                                    new DrivePathSegment(317.0f, 0.7f),
-                                    new DrivePathSegment(25.0f, 35.0f, 1.0f),
-                                    new DrivePathSegment(317.0f, 0.7f),
-                                    new DrivePathSegment(25.0f, 35.0f, 1.0f),
-                                    new DrivePathSegment(317.0f, 0.7f)
+                                    new DrivePathSegment(distanceToNewTarget, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(317.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(25.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(317.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(25.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(317.0f, 0.7f, DrivePathSegment.TURN)
                             };
                         }
 
@@ -190,26 +190,26 @@ public abstract class DeviBeaconBase extends AutonomousBase {
 
                             objectivePath = new DrivePathSegment[] {
 
-                                    new DrivePathSegment(0.0f, 0.7f),
-                                    new DrivePathSegment(distanceToNewTarget, distanceToNewTarget, 1.0f),
-                                    new DrivePathSegment(92.0f, 0.7f),
-                                    new DrivePathSegment(20.0f, 20.0f, 1.0f),
-                                    new DrivePathSegment(92.0f, 0.7f),
-                                    new DrivePathSegment(20.0f, 20.0f, 1.0f),
-                                    new DrivePathSegment(92.0f, 0.7f)
+                                    new DrivePathSegment(0.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(distanceToNewTarget, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(92.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(20.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(92.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(20.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(92.0f, 0.7f, DrivePathSegment.TURN)
                             };
 
                         } else {
 
                             objectivePath = new DrivePathSegment[] {
 
-                                    new DrivePathSegment(0.0f, 0.7f),
-                                    new DrivePathSegment(distanceToNewTarget, distanceToNewTarget, 1.0f),
-                                    new DrivePathSegment(272.0f, 0.7f),
-                                    new DrivePathSegment(20.0f, 20.0f, 1.0f),
-                                    new DrivePathSegment(272.0f, 0.7f),
-                                    new DrivePathSegment(20.0f, 20.0f, 1.0f),
-                                    new DrivePathSegment(272.0f, 0.7f)
+                                    new DrivePathSegment(0.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(distanceToNewTarget, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(272.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(20.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(272.0f, 0.7f, DrivePathSegment.TURN),
+                                    new DrivePathSegment(20.0f, 1.0f, DrivePathSegment.LINEAR),
+                                    new DrivePathSegment(272.0f, 0.7f, DrivePathSegment.TURN)
                             };
                         }
                     }

@@ -13,13 +13,22 @@ public class RedRampLaunchAndBeacon extends LaunchAndBeaconBase {
 
         launchPositioningPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(0.0f, 0.0f, 0.0f),
+                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
         };
 
         beaconPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(40.0f, 40.0f, 1.0f),
-                new DrivePathSegment(-40.0f, -40.0f, 1.0f),
+                new DrivePathSegment(45.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(-20.0f, 1.0f, DrivePathSegment.HOLONOMIC),
+                new DrivePathSegment(180.0f, 1.0f, DrivePathSegment.TURN),
+                new DrivePathSegment(20.0f, 1.0f, DrivePathSegment.LINEAR),
         };
+    }
+
+
+    @Override
+    public boolean isRed() {
+
+        return true;
     }
 }

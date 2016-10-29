@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by 4924_Users on 10/22/2016.
  */
 
-public class LaunchAndBeaconBase extends VelocityBase {
+public abstract class LaunchAndBeaconBase extends VelocityBase {
 
     final float THROWING_TIME = 0.5f;
 
@@ -27,17 +27,33 @@ public class LaunchAndBeaconBase extends VelocityBase {
                 if (pathComplete()) {
 
                     TurnOffAllDriveMotors();
-                    currentState = State.STATE_LAUNCH_BALL;
+                    currentState = State.STATE_LAUNCH_FIRST_BALL;
                     elapsedTimeForCurrentState.reset();
                 }
 
                 break;
 
-            case STATE_LAUNCH_BALL:
+            case STATE_LAUNCH_FIRST_BALL:
 
                 throwBall(elapsedTimeForCurrentState, THROWING_TIME);
 
-                if (elapsedTimeForCurrentState.time() >= THROWING_TIME * 2) {
+                if (elapsedTimeForCurrentState.time() >= 3.0f) {
+
+                    currentState = State.STATE_LAUNCH_SECOND_BALL;
+                    collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+                    elapsedTimeForCurrentState.reset();
+                }
+
+                break;
+
+            case STATE_LAUNCH_SECOND_BALL:
+
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+
+                    throwBall(elapsedTimeForCurrentState, THROWING_TIME + 1.0f);
+                }
+
+                if (elapsedTimeForCurrentState.time() >= 3.0f) {
 
                     startPath(beaconPath);
                     currentState = State.STATE_DRIVE;
@@ -50,8 +66,7 @@ public class LaunchAndBeaconBase extends VelocityBase {
                 if (pathComplete()) {
 
                     TurnOffAllDriveMotors();
-                    startPath(knockCapBallPath);
-                    currentState = State.STATE_KNOCK_CAP_BALL;
+                    currentState = State.STATE_FIND_WHITE_LINE;
                 }
 
                 telemetry.addData("RightPosition", getRightPosition());
@@ -61,13 +76,26 @@ public class LaunchAndBeaconBase extends VelocityBase {
 
                 break;
 
-            case STATE_KNOCK_CAP_BALL:
+            case STATE_FIND_WHITE_LINE:
 
-                if (pathComplete()) {
+                if (lineSensor.getRawLightDetected() >= 1.0f) {
 
                     TurnOffAllDriveMotors();
                     currentState = State.STATE_STOP;
+
+                } else {
+
+                    if (isRed()) {
+
+                        powerLevels = new PowerLevels(-1.0f, -1.0f, -1.0f, -1.0f);
+
+                    } else {
+
+                        powerLevels = new PowerLevels(1.0f, 1.0f, 1.0f, 1.0f);
+                    }
                 }
+
+                setMotorPowerLevels(powerLevels);
 
                 break;
 
@@ -77,4 +105,6 @@ public class LaunchAndBeaconBase extends VelocityBase {
                 break;
         }
     }
+
+    public abstract boolean isRed();
 }

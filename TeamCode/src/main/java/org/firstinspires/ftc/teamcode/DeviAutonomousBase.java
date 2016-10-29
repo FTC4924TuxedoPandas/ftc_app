@@ -39,7 +39,7 @@ public abstract class DeviAutonomousBase extends OpMode {
 
     final DrivePathSegment[] emptyPath = {
 
-            new DrivePathSegment(0.0f, 0.0f, 0.0f)
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR)
     };
 
     private State currentState;

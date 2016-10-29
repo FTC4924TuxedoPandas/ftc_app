@@ -4,6 +4,11 @@ package org.firstinspires.ftc.teamcode;
  * Created by 4924_Users on 10/18/2015.
  */
 public class DrivePathSegment {
+
+    public static final int LINEAR = 0;
+    public static final int TURN = 1;
+    public static final int HOLONOMIC = 2;
+
     public float LeftSideDistance;
     public float RightSideDistance;
     public float Angle;
@@ -11,28 +16,48 @@ public class DrivePathSegment {
     public float rightPower;
     public float delayTime;
     public boolean isTurn = false;
+    public boolean isHolonomic = false;
     public boolean isDelay = false;
 
     public DrivePathSegment() {}
 
-    public DrivePathSegment(float left, float right, float power) {
-        LeftSideDistance = left;
-        RightSideDistance = right;
-        leftPower = -power;
-        rightPower = -power;
-        isTurn = false;
-        isDelay = false;
-    }
+    public DrivePathSegment(float moveTarget, float power, int type) {
 
-    public DrivePathSegment(float angle, float power) {
-        Angle = angle;
-        leftPower = -power;
-        rightPower = -power;
-        isTurn = true;
-        isDelay = false;
+        if (type == LINEAR) {
+
+            LeftSideDistance = moveTarget;
+            RightSideDistance = moveTarget;
+            leftPower = -power;
+            rightPower = -power;
+            isTurn = false;
+            isHolonomic = false;
+            isDelay = false;
+        }
+
+        if (type == TURN) {
+
+            Angle = moveTarget;
+            leftPower = -power;
+            rightPower = -power;
+            isTurn = true;
+            isHolonomic = false;
+            isDelay = false;
+        }
+
+        if (type == HOLONOMIC) {
+
+            LeftSideDistance = moveTarget;
+            RightSideDistance = moveTarget;
+            leftPower = power;
+            rightPower = power;
+            isTurn = false;
+            isHolonomic = true;
+            isDelay = false;
+        }
     }
 
     public DrivePathSegment(float timeDelay) {
+
         delayTime = timeDelay;
         isDelay = true;
     }

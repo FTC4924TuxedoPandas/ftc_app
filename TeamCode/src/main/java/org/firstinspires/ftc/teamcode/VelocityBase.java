@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
-import static android.R.attr.name;
 
 /**
  * Created by 4924_Users on 10/8/2016.
@@ -24,9 +21,11 @@ public abstract class VelocityBase extends OpMode {
         STATE_INITIAL,
         STATE_DRIVE,
         STATE_STOP,
-        STATE_LAUNCH_BALL,
+        STATE_LAUNCH_FIRST_BALL,
+        STATE_LAUNCH_SECOND_BALL,
         STATE_POSITION_FOR_BALL,
-        STATE_KNOCK_CAP_BALL
+        STATE_KNOCK_CAP_BALL,
+        STATE_FIND_WHITE_LINE
     }
 
     DcMotor frontRightMotor;
@@ -39,6 +38,8 @@ public abstract class VelocityBase extends OpMode {
     Servo leftBeaconServo;
     Servo rightBeaconServo;
     Servo collectionGateServo;
+
+    OpticalDistanceSensor lineSensor;
 
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
@@ -55,30 +56,31 @@ public abstract class VelocityBase extends OpMode {
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
 
-    public final float BEACON_SERVO_POSITION_OUT = 0.5f;
     public final float BEACON_SERVO_POSITION_IN = 0.0f;
+    public final float BEACON_SERVO_POSITION_OUT = 0.5f;
 
-    public final float GATE_SERVO_POSITION_OUT = 0.5f;
-    public final float GATE_SERVO_POSITION_IN = 0.0f;
+    public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
+    public final float GATE_SERVO_POSITION_LOW = 0.5f;
+    public final float GATE_SERVO_POSITION_HIGH = 1.0f;
 
     public DrivePathSegment[] currentPath = new DrivePathSegment[] {
 
-            new DrivePathSegment(0.0f, 0.0f, 0.0f),
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
 
     public DrivePathSegment[] launchPositioningPath = new DrivePathSegment[] {
 
-            new DrivePathSegment(0.0f, 0.0f, 0.0f),
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
 
     public DrivePathSegment[] beaconPath = new DrivePathSegment[] {
 
-            new DrivePathSegment(0.0f, 0.0f, 0.0f),
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
 
     public DrivePathSegment[] knockCapBallPath = new DrivePathSegment[] {
 
-            new DrivePathSegment(0.0f, 0.0f, 0.0f),
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
 
     double countsPerInch;
@@ -109,6 +111,7 @@ public abstract class VelocityBase extends OpMode {
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
+        lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -122,6 +125,7 @@ public abstract class VelocityBase extends OpMode {
 
         runWithoutEncoders();
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
+        turningGyro.calibrate();
     }
 
     @Override
@@ -154,21 +158,21 @@ public abstract class VelocityBase extends OpMode {
         powerLevels.frontRightPower = rightStick;
     }
 
-    public void setPowerForMecanumStrafe() {
+    public void setPowerForMecanumStrafe(float power) {
 
         if (isStrafingLeft) {
 
-            powerLevels.frontLeftPower = BASE_HOLONOMIC_DRIVE_POWER;
-            powerLevels.backLeftPower = -BASE_HOLONOMIC_DRIVE_POWER;
-            powerLevels.backRightPower = BASE_HOLONOMIC_DRIVE_POWER;
-            powerLevels.frontRightPower = -BASE_HOLONOMIC_DRIVE_POWER;
+            powerLevels.frontLeftPower = power;
+            powerLevels.backLeftPower = -power;
+            powerLevels.backRightPower = power;
+            powerLevels.frontRightPower = -power;
 
         } else if (isStrafingRight) {
 
-            powerLevels.frontLeftPower = -BASE_HOLONOMIC_DRIVE_POWER;
-            powerLevels.backLeftPower = BASE_HOLONOMIC_DRIVE_POWER;
-            powerLevels.backRightPower = -BASE_HOLONOMIC_DRIVE_POWER;
-            powerLevels.frontRightPower = BASE_HOLONOMIC_DRIVE_POWER;
+            powerLevels.frontLeftPower = -power;
+            powerLevels.backLeftPower = power;
+            powerLevels.backRightPower = -power;
+            powerLevels.frontRightPower = power;
         }
     }
 
@@ -241,6 +245,8 @@ public abstract class VelocityBase extends OpMode {
                     segment.leftPower = -segment.rightPower;
                 }
 
+                powerLevels = new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
+
             } else {
 
                 if (segment.isDelay) {
@@ -249,23 +255,48 @@ public abstract class VelocityBase extends OpMode {
                     segment.leftPower = 0.0f;
                     segment.rightPower = 0.0f;
 
+                    powerLevels = new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
+
                 } else {
 
-                    int moveCounts = (int) (segment.LeftSideDistance * countsPerInch);
+                    if (segment.isHolonomic) {
 
-                    useRunUsingEncoders();
-                    addEncoderTarget(moveCounts, moveCounts);
+                        int moveCounts = (int) (segment.LeftSideDistance * countsPerInch);
 
-                    if (moveCounts < 0) {
+                        useRunUsingEncoders();
+                        addEncoderTarget(moveCounts, moveCounts);
 
-                        segment.leftPower *= -1;
-                        segment.rightPower *= -1;
+                        if (segment.RightSideDistance < 0.0f) {
+
+                            isStrafingLeft = true;
+                            isStrafingRight = false;
+
+                        } else {
+
+                            isStrafingLeft = false;
+                            isStrafingRight = true;
+                        }
+
+                        setPowerForMecanumStrafe(segment.rightPower);
+
+                    } else {
+
+                        int moveCounts = (int) (segment.LeftSideDistance * countsPerInch);
+
+                        useRunUsingEncoders();
+                        addEncoderTarget(moveCounts, moveCounts);
+
+                        if (moveCounts < 0) {
+
+                            segment.leftPower *= -1;
+                            segment.rightPower *= -1;
+                        }
+
+                        powerLevels = new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
                     }
                 }
             }
 
-            PowerLevels powerLevels =
-                    new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
             SetDriveMotorPowerLevels(powerLevels);
 
             currentPathSegmentIndex++;
@@ -410,9 +441,9 @@ public abstract class VelocityBase extends OpMode {
         int rightPosition = getRightPosition();
         int rightTarget = currentEncoderTargets.frontRightTarget;
 
-        return (isPositionClose(leftPosition, leftTarget, segment.LeftSideDistance) &&
+        return (isPositionClose(leftPosition, leftTarget, segment.LeftSideDistance) ||
                 isPositionClose(rightPosition, rightTarget, segment.LeftSideDistance)) ||
-                (isPastTarget(leftPosition, leftTarget, segment.LeftSideDistance) &&
+                (isPastTarget(leftPosition, leftTarget, segment.LeftSideDistance) ||
                         isPastTarget(rightPosition, rightTarget, segment.LeftSideDistance));
     }
 
@@ -454,7 +485,7 @@ public abstract class VelocityBase extends OpMode {
 
     public void lowerAutoThrowingArm(ElapsedTime ElapsedThrowingTime, float throwingTime) {
 
-        if (ElapsedThrowingTime.time() >= throwingTime * 2) {
+        if (ElapsedThrowingTime.time() >= throwingTime * 4) {
 
             throwingArm.setPower(0.0f);
 
@@ -484,13 +515,19 @@ public abstract class VelocityBase extends OpMode {
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
     }
 
-    public void openGate() {
-
-        collectionGateServo.setPosition(GATE_SERVO_POSITION_OUT);
-    }
-
     public void closeGate() {
 
-        collectionGateServo.setPosition(GATE_SERVO_POSITION_IN);
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
     }
+
+    public void openGateLow() {
+
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+    }
+
+    public void openGateHigh() {
+
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_HIGH);
+    }
+
 }

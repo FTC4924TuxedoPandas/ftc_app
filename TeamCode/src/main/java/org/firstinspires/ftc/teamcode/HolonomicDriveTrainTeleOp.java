@@ -30,7 +30,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         if (isStrafing()) {
 
-            setPowerForMecanumStrafe();
+            setPowerForMecanumStrafe(BASE_HOLONOMIC_DRIVE_POWER);
 
         } else {
 
@@ -39,7 +39,11 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         if (d1AIsPressed()) {
 
-            openGate();
+            openGateLow();
+
+        } else if (d1YIsPressed()) {
+
+            openGateHigh();
 
         } else if (d1BIsPressed()) {
 
@@ -129,4 +133,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
     private boolean d1AIsPressed() { return gamepad1.a; }
 
     private boolean d1BIsPressed() { return gamepad1.b; }
+
+    private boolean d1YIsPressed() { return gamepad1.y; }
+
     }
