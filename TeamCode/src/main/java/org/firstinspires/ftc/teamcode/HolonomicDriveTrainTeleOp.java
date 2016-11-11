@@ -12,11 +12,11 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
     @Override
     public void loop() {
 
-        if (aIsPressed()) {
+        if (dpadUpIsPressed()) {
 
             RaiseThrowingArm();
 
-        } else if (bIsPressed()) {
+        } else if (dpadDownIsPressed()) {
 
             LowerThrowingArm();
 
@@ -37,6 +37,16 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             setPowerForTankDrive();
         }
 
+        if (d1AIsPressed()) {
+
+            openGate();
+
+        } else if (d1BIsPressed()) {
+
+            closeGate();
+
+        }
+
         if (collectionIn()) {
 
             collectionIntake();
@@ -44,22 +54,26 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else if (collectionOut()) {
 
             collectionRelease();
+
+        } else {
+
+            collectionOff();
         }
 
-        if (extendLeftBeaconBumper()) {
+        if (d2XIsPressed()) {
 
             leftBeaconServoOut();
 
-        } else if (resetLeftBeaconBumper()) {
+        } else if (d2YIsPressed()) {
 
             leftBeaconServoIn();
         }
 
-        if (extendRightBeaconBumper()) {
+        if (d2AIsPressed()) {
 
             rightBeaconServoOut();
 
-        } else if (resetRightBeaconBumper()) {
+        } else if (d2BIsPressed()) {
 
             rightBeaconServoIn();
         }
@@ -81,13 +95,14 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         return gamepad1.left_bumper || gamepad1.right_bumper;
     }
 
-    private boolean bIsPressed() {
+    private boolean dpadDownIsPressed() {
 
-        return gamepad1.b;
+        return gamepad2.dpad_down;
     }
 
-    private boolean aIsPressed() {
-        return gamepad1.a;
+    private boolean dpadUpIsPressed() {
+
+        return gamepad2.dpad_up;
     }
 
     private boolean collectionIn() {
@@ -98,19 +113,23 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         return gamepad2.left_bumper;
     }
 
-    private boolean extendLeftBeaconBumper() {
+    private boolean d2XIsPressed() {
         return gamepad2.x;
     }
 
-    private boolean extendRightBeaconBumper() {
+    private boolean d2AIsPressed() {
         return gamepad2.a;
     }
 
-    private boolean resetLeftBeaconBumper() {
+    private boolean d2YIsPressed() {
         return gamepad2.y;
     }
 
-    private boolean resetRightBeaconBumper() {
+    private boolean d2BIsPressed() {
         return gamepad2.b;
     }
-}
+
+    private boolean d1AIsPressed() { return gamepad1.a; }
+
+    private boolean d1BIsPressed() { return gamepad1.b; }
+    }

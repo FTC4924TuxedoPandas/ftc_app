@@ -50,6 +50,22 @@ public class LaunchAndBeaconBase extends VelocityBase {
                 if (pathComplete()) {
 
                     TurnOffAllDriveMotors();
+                    startPath(knockCapBallPath);
+                    currentState = State.STATE_KNOCK_CAP_BALL;
+                }
+
+                telemetry.addData("RightPosition", getRightPosition());
+                telemetry.addData("RightTarget", currentEncoderTargets.frontRightTarget);
+                telemetry.addData("LeftPosition", getLeftPosition());
+                telemetry.addData("LeftTarget", currentEncoderTargets.frontLeftTarget);
+
+                break;
+
+            case STATE_KNOCK_CAP_BALL:
+
+                if (pathComplete()) {
+
+                    TurnOffAllDriveMotors();
                     currentState = State.STATE_STOP;
                 }
 
