@@ -84,6 +84,9 @@ public abstract class VelocityBase extends OpMode {
     final double WHEEL_DIAMETER = 4.0f;
     final double GEAR_RATIO = 1.0f;
     final double CALIBRATION_FACTOR = 1.93f;
+    static final float DELAY = 1.0f;
+    boolean reversed;
+    ElapsedTime time = new ElapsedTime();
 
     @Override
     public void init() {
@@ -465,4 +468,7 @@ public abstract class VelocityBase extends OpMode {
 
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
     }
+
+
 }
+
