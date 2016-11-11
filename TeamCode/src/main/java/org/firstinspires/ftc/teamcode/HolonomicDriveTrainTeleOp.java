@@ -77,7 +77,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
             rightBeaconServoIn();
         }
-        if (gamepad1.right_bumper && (time.time() > DELAY)){
+        if (gamepad1.dpad_down && (time.time() > DELAY)){
             reversed = !reversed;
             time.reset();
         }
