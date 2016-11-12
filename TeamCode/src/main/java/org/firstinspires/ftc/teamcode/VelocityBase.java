@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
@@ -8,6 +10,8 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import static android.R.attr.name;
 
 /**
  * Created by 4924_Users on 10/8/2016.
@@ -97,6 +101,9 @@ public abstract class VelocityBase extends OpMode {
     final double WHEEL_DIAMETER = 4.0f;
     final double GEAR_RATIO = 1.0f;
     final double CALIBRATION_FACTOR = 1.93f;
+    static final float DELAY = 1.0f;
+    boolean reversed;
+    ElapsedTime time = new ElapsedTime();
 
     @Override
     public void init() {
@@ -297,7 +304,7 @@ public abstract class VelocityBase extends OpMode {
                 }
             }
 
-            SetDriveMotorPowerLevels(powerLevels);
+           SetDriveMotorPowerLevels(powerLevels);
 
             currentPathSegmentIndex++;
         }
@@ -531,3 +538,4 @@ public abstract class VelocityBase extends OpMode {
     }
 
 }
+

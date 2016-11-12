@@ -81,7 +81,10 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
             rightBeaconServoIn();
         }
-
+        if (gamepad1.dpad_down && (time.time() > DELAY)){
+            reversed = !reversed;
+            time.reset();
+        }
 
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
