@@ -12,6 +12,19 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
     @Override
     public void loop() {
 
+        driveStickX = gamepad1.left_stick_x;
+        driveStickY = gamepad1.left_stick_y;
+
+        if (leftTriggerValue() > 0.0f) {
+
+            setPowerForTurning(leftTriggerValue());
+        }
+
+        if (rightTriggerValue() > 0.0f) {
+
+            setPowerForTurning(rightTriggerValue());
+        }
+
         if (dpadUpIsPressed()) {
 
             RaiseThrowingArm();
@@ -25,16 +38,17 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             StopMovingThrowingArm();
         }
 
-        isStrafingLeft = gamepad1.left_bumper;
-        isStrafingRight = gamepad1.right_bumper;
+        if (isDiagonal()) {
 
-        if (isStrafing()) {
+            setPowerForDiagonalMove((Math.abs(driveStickX) + Math.abs(driveStickY)) / 2);
 
-            setPowerForMecanumStrafe(BASE_HOLONOMIC_DRIVE_POWER);
+        } else if (isStrafing()) {
+
+            setPowerForMecanumStrafe(driveStickX);
 
         } else {
 
-            setPowerForTankDrive();
+            setPowerForLinearMove(driveStickY);
         }
 
         if (d1AIsPressed()) {
@@ -48,7 +62,6 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else if (d1BIsPressed()) {
 
             closeGate();
-
         }
 
         if (collectionIn()) {
@@ -81,6 +94,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
             rightBeaconServoIn();
         }
+
         if (gamepad1.dpad_down && (time.time() > DELAY)){
             reversed = !reversed;
             time.reset();
@@ -92,51 +106,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         telemetry.addData("FrontLeft: ", powerLevels.frontLeftPower);
         telemetry.addData("BackRight: ", powerLevels.backRightPower);
         telemetry.addData("BackLeft: ", powerLevels.backLeftPower);
+        telemetry.addData("isDiagonal: ", isDiagonal());
+        telemetry.addData("isStrafing: ", isStrafing());
     }
-
-    private boolean isStrafing() {
-
-        return gamepad1.left_bumper || gamepad1.right_bumper;
-    }
-
-    private boolean dpadDownIsPressed() {
-
-        return gamepad2.dpad_down;
-    }
-
-    private boolean dpadUpIsPressed() {
-
-        return gamepad2.dpad_up;
-    }
-
-    private boolean collectionIn() {
-        return gamepad2.right_bumper;
-    }
-
-    private boolean collectionOut() {
-        return gamepad2.left_bumper;
-    }
-
-    private boolean d2XIsPressed() {
-        return gamepad2.x;
-    }
-
-    private boolean d2AIsPressed() {
-        return gamepad2.a;
-    }
-
-    private boolean d2YIsPressed() {
-        return gamepad2.y;
-    }
-
-    private boolean d2BIsPressed() {
-        return gamepad2.b;
-    }
-
-    private boolean d1AIsPressed() { return gamepad1.a; }
-
-    private boolean d1BIsPressed() { return gamepad1.b; }
-
-    private boolean d1YIsPressed() { return gamepad1.y; }
-
-    }
+}

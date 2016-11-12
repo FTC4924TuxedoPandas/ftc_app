@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
@@ -10,8 +8,6 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
-import static android.R.attr.name;
 
 /**
  * Created by 4924_Users on 10/8/2016.
@@ -66,6 +62,8 @@ public abstract class VelocityBase extends OpMode {
     public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
     public final float GATE_SERVO_POSITION_LOW = 0.5f;
     public final float GATE_SERVO_POSITION_HIGH = 1.0f;
+    public final float DIAGONAL_MARGIN_OF_ERROR = 1.0f;
+    public final float STICK_THRESHOLD = 0.1f;
 
     public DrivePathSegment[] currentPath = new DrivePathSegment[] {
 
@@ -102,6 +100,8 @@ public abstract class VelocityBase extends OpMode {
     final double GEAR_RATIO = 1.0f;
     final double CALIBRATION_FACTOR = 1.93f;
     static final float DELAY = 1.0f;
+    public float driveStickX = 0.0f;
+    public float driveStickY = 0.0f;
     boolean reversed;
     ElapsedTime time = new ElapsedTime();
 
@@ -167,20 +167,64 @@ public abstract class VelocityBase extends OpMode {
 
     public void setPowerForMecanumStrafe(float power) {
 
-        if (isStrafingLeft) {
+        powerLevels.frontLeftPower = power;
+        powerLevels.backLeftPower = -power;
+        powerLevels.backRightPower = power;
+        powerLevels.frontRightPower = -power;
+    }
 
-            powerLevels.frontLeftPower = power;
-            powerLevels.backLeftPower = -power;
-            powerLevels.backRightPower = power;
-            powerLevels.frontRightPower = -power;
+    public void setPowerForLinearMove(float power) {
 
-        } else if (isStrafingRight) {
+        powerLevels.frontLeftPower = power;
+        powerLevels.backLeftPower = power;
+        powerLevels.backRightPower = power;
+        powerLevels.frontRightPower = power;
+    }
 
-            powerLevels.frontLeftPower = -power;
-            powerLevels.backLeftPower = power;
-            powerLevels.backRightPower = -power;
-            powerLevels.frontRightPower = power;
+    public void setPowerForDiagonalMove(float power) {
+
+        if (driveStickX > 0.0f && driveStickY > 0.0f || driveStickX < 0.0f && driveStickY < 0.0f) {
+
+            if (driveStickY > 0.0f) {
+
+                powerLevels.frontLeftPower = 0.0f;
+                powerLevels.backLeftPower = power;
+                powerLevels.backRightPower = 0.0f;
+                powerLevels.frontRightPower = power;
+
+            } else {
+
+                powerLevels.frontLeftPower = 0.0f;
+                powerLevels.backLeftPower = -power;
+                powerLevels.backRightPower = 0.0f;
+                powerLevels.frontRightPower = -power;
+            }
+
+        } else {
+
+            if (driveStickY > 0.0f) {
+
+                powerLevels.frontLeftPower = power;
+                powerLevels.backLeftPower = 0.0f;
+                powerLevels.backRightPower = power;
+                powerLevels.frontRightPower = 0.0f;
+
+            } else {
+
+                powerLevels.frontLeftPower = -power;
+                powerLevels.backLeftPower = 0.0f;
+                powerLevels.backRightPower = -power;
+                powerLevels.frontRightPower = 0.0f;
+            }
         }
+    }
+
+    public void setPowerForTurning(float power) {
+
+        powerLevels.frontLeftPower = power;
+        powerLevels.backLeftPower = power;
+        powerLevels.backRightPower = -power;
+        powerLevels.frontRightPower = -power;
     }
 
     public void clipPowerLevels() {
@@ -537,5 +581,58 @@ public abstract class VelocityBase extends OpMode {
         collectionGateServo.setPosition(GATE_SERVO_POSITION_HIGH);
     }
 
+    public boolean dpadDownIsPressed() { return gamepad2.dpad_down; }
+
+    public boolean dpadUpIsPressed() { return gamepad2.dpad_up; }
+
+    public boolean collectionIn() {
+        return gamepad2.right_bumper;
+    }
+
+    public boolean collectionOut() {
+        return gamepad2.left_bumper;
+    }
+
+    public boolean d2XIsPressed() {
+        return gamepad2.x;
+    }
+
+    public boolean d2AIsPressed() {
+        return gamepad2.a;
+    }
+
+    public boolean d2YIsPressed() {
+        return gamepad2.y;
+    }
+
+    public boolean d2BIsPressed() {
+        return gamepad2.b;
+    }
+
+    public boolean d1AIsPressed() { return gamepad1.a; }
+
+    public boolean d1BIsPressed() { return gamepad1.b; }
+
+    public boolean d1YIsPressed() { return gamepad1.y; }
+
+    public float leftTriggerValue() { return gamepad1.left_trigger; }
+
+    public float rightTriggerValue() { return gamepad1.right_trigger; }
+
+    public boolean isDiagonal() {
+
+        if (Math.abs(driveStickX) >= STICK_THRESHOLD || Math.abs(driveStickY) >= STICK_THRESHOLD) {
+
+            return Math.abs(Math.abs(driveStickX) - Math.abs(driveStickY)) <=
+                    DIAGONAL_MARGIN_OF_ERROR * ((Math.abs(driveStickX) + Math.abs(driveStickY)) / 2);
+        }
+
+        return false;
+    }
+
+    public boolean isStrafing() {
+
+        return Math.abs(driveStickX) >= STICK_THRESHOLD;
+    }
 }
 
