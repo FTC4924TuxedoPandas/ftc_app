@@ -167,10 +167,10 @@ public abstract class VelocityBase extends OpMode {
 
     public void setPowerForMecanumStrafe(float power) {
 
-        powerLevels.frontLeftPower = power;
-        powerLevels.backLeftPower = -power;
-        powerLevels.backRightPower = power;
-        powerLevels.frontRightPower = -power;
+        powerLevels.frontLeftPower = -power;
+        powerLevels.backLeftPower = power;
+        powerLevels.backRightPower = -power;
+        powerLevels.frontRightPower = power;
     }
 
     public void setPowerForLinearMove(float power) {

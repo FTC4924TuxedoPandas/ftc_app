@@ -15,16 +15,6 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         driveStickX = gamepad1.left_stick_x;
         driveStickY = gamepad1.left_stick_y;
 
-        if (leftTriggerValue() > 0.0f) {
-
-            setPowerForTurning(leftTriggerValue());
-        }
-
-        if (rightTriggerValue() > 0.0f) {
-
-            setPowerForTurning(rightTriggerValue());
-        }
-
         if (dpadUpIsPressed()) {
 
             RaiseThrowingArm();
@@ -49,6 +39,16 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else {
 
             setPowerForLinearMove(driveStickY);
+
+            if (leftTriggerValue() > 0.1f) {
+
+                setPowerForTurning(leftTriggerValue());
+            }
+
+            if (rightTriggerValue() > 0.1f) {
+
+                setPowerForTurning(-rightTriggerValue());
+            }
         }
 
         if (d1AIsPressed()) {
