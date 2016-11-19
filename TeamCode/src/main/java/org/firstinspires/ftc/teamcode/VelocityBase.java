@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
@@ -41,6 +42,8 @@ public abstract class VelocityBase extends OpMode {
     Servo collectionGateServo;
 
     OpticalDistanceSensor lineSensor;
+    ColorSensor rightBeaconSensor;
+    ColorSensor leftBeaconSensor;
 
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
@@ -119,7 +122,10 @@ public abstract class VelocityBase extends OpMode {
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
+
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
+        rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
+        leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -630,6 +636,33 @@ public abstract class VelocityBase extends OpMode {
     public boolean isStrafing() {
 
         return Math.abs(driveStickX) >= STICK_THRESHOLD;
+    }
+
+    public void pushBeaconButton(int leftSensorRead, int rightSensorRead) {
+
+        if (rightSensorRead >= 3 && leftSensorRead >= 3) {
+
+            return;
+
+        } else {
+
+            if (rightSensorRead >= 3 && leftSensorRead >= 3) {
+
+                if (rightSensorRead >= 3) {
+
+                    rightBeaconServo.setPosition(1.0f);
+
+                } else {
+
+                    leftBeaconServo.setPosition(1.0f);
+                }
+
+            } else {
+
+                rightBeaconServo.setPosition(1.0f);
+                leftBeaconServo.setPosition(1.0f);
+            }
+        }
     }
 }
 

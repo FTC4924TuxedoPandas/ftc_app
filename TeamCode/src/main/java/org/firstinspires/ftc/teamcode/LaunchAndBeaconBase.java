@@ -101,7 +101,16 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
             case STATE_PUSH_BEACON:
 
+                if (isRed()) {
 
+                    pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+
+                } else {
+
+                    pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                }
+
+                currentState = State.STATE_STOP;
 
                 break;
 
