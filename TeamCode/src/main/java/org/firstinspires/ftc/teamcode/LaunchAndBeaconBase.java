@@ -99,6 +99,12 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
                 break;
 
+            case STATE_PUSH_BEACON:
+
+
+
+                break;
+
             case STATE_STOP:
 
 

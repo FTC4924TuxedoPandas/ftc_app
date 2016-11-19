@@ -25,7 +25,8 @@ public abstract class VelocityBase extends OpMode {
         STATE_LAUNCH_SECOND_BALL,
         STATE_POSITION_FOR_BALL,
         STATE_KNOCK_CAP_BALL,
-        STATE_FIND_WHITE_LINE
+        STATE_FIND_WHITE_LINE,
+        STATE_PUSH_BEACON
     }
 
     DcMotor frontRightMotor;
