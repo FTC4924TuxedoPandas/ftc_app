@@ -17,15 +17,15 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         if (dpadUpIsPressed()) {
 
-            RaiseThrowingArm();
+            raiseThrowingArm();
 
         } else if (dpadDownIsPressed()) {
 
-            LowerThrowingArm();
+            lowerThrowingArm();
 
         } else {
 
-            StopMovingThrowingArm();
+            stopMovingThrowingArm();
         }
 
         if (isDiagonal()) {

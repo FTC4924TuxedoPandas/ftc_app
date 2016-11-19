@@ -247,17 +247,13 @@ public abstract class VelocityBase extends OpMode {
         collectionMotor.setPower(collectionPowerLevel);
     }
 
-    protected void StopMovingThrowingArm() {
-        throwingArmPowerLevel = 0.0f;
-    }
+    protected void stopMovingThrowingArm() { throwingArmPowerLevel = 0.0f; }
         //stops the throwing arm motor for the throwing arm (sets power to 0)
-    protected void LowerThrowingArm() {
+    protected void lowerThrowingArm() {
         throwingArmPowerLevel = -ARM_POWER/10.0f;
     }
         //lowers the throwing arm motor (set to negative, 1/10 of raising power)
-    protected void RaiseThrowingArm() {
-        throwingArmPowerLevel = ARM_POWER;
-    }
+    protected void raiseThrowingArm() { throwingArmPowerLevel = ARM_POWER; }
 
     protected void collectionIntake() {
         collectionPowerLevel = COLLECTION_POWER;
