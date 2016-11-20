@@ -17,8 +17,19 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
             case STATE_INITIAL:
 
-                currentState = State.STATE_POSITION_FOR_BALL;
+                currentState = State.STATE_DRIVE_TO_BALL_POSITION;
                 startPath(launchPositioningPath);
+
+                break;
+
+            case STATE_DRIVE_TO_BALL_POSITION:
+
+                if (pathComplete()) {
+
+                    new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR);
+                    currentState = State.STATE_POSITION_FOR_BALL;
+                    elapsedTimeForCurrentState.reset();
+                }
 
                 break;
 
