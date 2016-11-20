@@ -6,8 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by 4924_Users on 10/8/2016.
  */
 
-@TeleOp(name = "HolonomicDriveTrainTeleOp")
+@TeleOp(name = "HolonomicDriveTrainTeleOp") //hello
 public class HolonomicDriveTrainTeleOp extends VelocityBase {
+
+    protected int triggerDirection = 1;
 
     @Override
     public void loop() {
@@ -25,7 +27,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         } else {
 
-            stopMovingThrowingArm();
+            stopMovingThrowingArm(); //be a pessimist
         }
 
         if (isDiagonal()) {
@@ -42,16 +44,16 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
             if (leftTriggerValue() > 0.1f) {
 
-                setPowerForTurning(leftTriggerValue());
+                setPowerForTurning(leftTriggerValue() * triggerDirection);
             }
 
             if (rightTriggerValue() > 0.1f) {
 
-                setPowerForTurning(-rightTriggerValue());
+                setPowerForTurning(-rightTriggerValue() * triggerDirection);
             }
         }
 
-        if (d1AIsPressed()) {
+        if (d1BIsPressed()) {
 
             openGateLow();
 
@@ -59,14 +61,14 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
             openGateHigh();
 
-        } else if (d1BIsPressed()) {
+        } else if (d1AIsPressed()) {
 
             closeGate();
         }
 
         if (collectionIn()) {
 
-            collectionIntake();
+            collectionIntake(); //you're bad
 
         } else if (collectionOut()) {
 
@@ -100,13 +102,20 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             time.reset();
         }
 
+        if (d1DownIsPressed()) {
+
+            driveStickX = -gamepad1.left_stick_x;
+            driveStickY = -gamepad1.left_stick_y;
+            triggerDirection = -triggerDirection;
+        }
+
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
         telemetry.addData("FrontRight: ", powerLevels.frontRightPower);
         telemetry.addData("FrontLeft: ", powerLevels.frontLeftPower);
         telemetry.addData("BackRight: ", powerLevels.backRightPower);
         telemetry.addData("BackLeft: ", powerLevels.backLeftPower);
-        telemetry.addData("isDiagonal: ", isDiagonal());
+        telemetry.addData("isDiagonal: ", isDiagonal()); //ARNAV!!!!
         telemetry.addData("isStrafing: ", isStrafing());
     }
 }

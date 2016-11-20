@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 public abstract class LaunchAndBeaconBase extends VelocityBase {
 
-    final float THROWING_TIME = 0.5f;
+    final float THROWING_TIME = 0.2f;
 
     @Override
     public void loop() {
@@ -39,8 +39,18 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= 3.0f) {
 
-                    currentState = State.STATE_LAUNCH_SECOND_BALL;
+                    currentState = State.STATE_LOAD_BALL;
                     collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+                    elapsedTimeForCurrentState.reset();
+                }
+
+                break;
+
+            case STATE_LOAD_BALL:
+
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+
+                    currentState = State.STATE_LOAD_BALL;
                     elapsedTimeForCurrentState.reset();
                 }
 
@@ -50,7 +60,7 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
-                    throwBall(elapsedTimeForCurrentState, THROWING_TIME + 1.0f);
+                    throwBall(elapsedTimeForCurrentState, THROWING_TIME);
                 }
 
                 if (elapsedTimeForCurrentState.time() >= 3.0f) {
@@ -80,42 +90,49 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
                 if (lineSensor.getRawLightDetected() >= 1.0f) {
 
+                    elapsedTimeForCurrentState.reset();
                     TurnOffAllDriveMotors();
-                    currentState = State.STATE_STOP;
+                    currentState = State.STATE_PUSH_BEACON;
 
                 } else {
 
                     if (isRed()) {
 
-                        powerLevels = new PowerLevels(-1.0f, -1.0f, -1.0f, -1.0f);
+                        setPowerForMecanumStrafe(-1.0f);
 
                     } else {
 
-                        powerLevels = new PowerLevels(1.0f, 1.0f, 1.0f, 1.0f);
+                        setPowerForMecanumStrafe(1.0f);
                     }
-                }
 
-                setMotorPowerLevels(powerLevels);
+                    setMotorPowerLevels(powerLevels);
+                }
 
                 break;
 
             case STATE_PUSH_BEACON:
 
-                if (isRed()) {
+                if (elapsedTimeForCurrentState.time() <= 3.0f) {
 
-                    pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+                    if (isRed()) {
+
+                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+
+                    } else {
+
+                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                    }
 
                 } else {
 
-                    pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                    rightBeaconServo.setPosition(0.0f);
+                    leftBeaconServo.setPosition(0.0f);
+                    currentState = State.STATE_STOP;
                 }
-
-                currentState = State.STATE_STOP;
 
                 break;
 
             case STATE_STOP:
-
 
                 break;
         }

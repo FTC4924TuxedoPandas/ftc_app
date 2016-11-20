@@ -27,7 +27,8 @@ public abstract class VelocityBase extends OpMode {
         STATE_POSITION_FOR_BALL,
         STATE_KNOCK_CAP_BALL,
         STATE_FIND_WHITE_LINE,
-        STATE_PUSH_BEACON
+        STATE_PUSH_BEACON,
+        STATE_LOAD_BALL
     }
 
     DcMotor frontRightMotor;
@@ -127,10 +128,10 @@ public abstract class VelocityBase extends OpMode {
         rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
         leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
 
-        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -163,8 +164,8 @@ public abstract class VelocityBase extends OpMode {
         float leftStick = 0.0f;
         float rightStick = 0.0f;
 
-        leftStick = Range.clip(gamepad1.left_stick_y,-1.0f,1.0f);
-        rightStick = Range.clip(gamepad1.right_stick_y,-1.0f,1.0f);
+        leftStick = Range.clip(-gamepad1.left_stick_y,-1.0f,1.0f);
+        rightStick = Range.clip(-gamepad1.right_stick_y,-1.0f,1.0f);
 
         powerLevels.frontLeftPower = leftStick;
         powerLevels.backLeftPower = leftStick;
@@ -174,18 +175,18 @@ public abstract class VelocityBase extends OpMode {
 
     public void setPowerForMecanumStrafe(float power) {
 
-        powerLevels.frontLeftPower = -power;
-        powerLevels.backLeftPower = power;
-        powerLevels.backRightPower = -power;
-        powerLevels.frontRightPower = power;
+        powerLevels.frontLeftPower = power;
+        powerLevels.backLeftPower = -power;
+        powerLevels.backRightPower = power;
+        powerLevels.frontRightPower = -power;
     }
 
     public void setPowerForLinearMove(float power) {
 
-        powerLevels.frontLeftPower = power;
-        powerLevels.backLeftPower = power;
-        powerLevels.backRightPower = power;
-        powerLevels.frontRightPower = power;
+        powerLevels.frontLeftPower = -power;
+        powerLevels.backLeftPower = -power;
+        powerLevels.backRightPower = -power;
+        powerLevels.frontRightPower = -power;
     }
 
     public void setPowerForDiagonalMove(float power) {
@@ -195,32 +196,32 @@ public abstract class VelocityBase extends OpMode {
             if (driveStickY > 0.0f) {
 
                 powerLevels.frontLeftPower = 0.0f;
-                powerLevels.backLeftPower = power;
+                powerLevels.backLeftPower = -power;
                 powerLevels.backRightPower = 0.0f;
-                powerLevels.frontRightPower = power;
+                powerLevels.frontRightPower = -power;
 
             } else {
 
                 powerLevels.frontLeftPower = 0.0f;
-                powerLevels.backLeftPower = -power;
+                powerLevels.backLeftPower = power;
                 powerLevels.backRightPower = 0.0f;
-                powerLevels.frontRightPower = -power;
+                powerLevels.frontRightPower = power;
             }
 
         } else {
 
             if (driveStickY > 0.0f) {
 
-                powerLevels.frontLeftPower = power;
+                powerLevels.frontLeftPower = -power;
                 powerLevels.backLeftPower = 0.0f;
-                powerLevels.backRightPower = power;
+                powerLevels.backRightPower = -power;
                 powerLevels.frontRightPower = 0.0f;
 
             } else {
 
-                powerLevels.frontLeftPower = -power;
+                powerLevels.frontLeftPower = power;
                 powerLevels.backLeftPower = 0.0f;
-                powerLevels.backRightPower = -power;
+                powerLevels.backRightPower = power;
                 powerLevels.frontRightPower = 0.0f;
             }
         }
@@ -228,10 +229,10 @@ public abstract class VelocityBase extends OpMode {
 
     public void setPowerForTurning(float power) {
 
-        powerLevels.frontLeftPower = power;
-        powerLevels.backLeftPower = power;
-        powerLevels.backRightPower = -power;
-        powerLevels.frontRightPower = -power;
+        powerLevels.frontLeftPower = -power;
+        powerLevels.backLeftPower = -power;
+        powerLevels.backRightPower = power;
+        powerLevels.frontRightPower = power;
     }
 
     public void clipPowerLevels() {
@@ -600,9 +601,7 @@ public abstract class VelocityBase extends OpMode {
         return gamepad2.x;
     }
 
-    public boolean d2AIsPressed() {
-        return gamepad2.a;
-    }
+    public boolean d2AIsPressed() { return gamepad2.a; }
 
     public boolean d2YIsPressed() {
         return gamepad2.y;
@@ -617,6 +616,10 @@ public abstract class VelocityBase extends OpMode {
     public boolean d1BIsPressed() { return gamepad1.b; }
 
     public boolean d1YIsPressed() { return gamepad1.y; }
+
+    public boolean d1XIsPressed() { return gamepad1.x; }
+
+    public boolean d1DownIsPressed() { return gamepad1.dpad_down; }
 
     public float leftTriggerValue() { return gamepad1.left_trigger; }
 

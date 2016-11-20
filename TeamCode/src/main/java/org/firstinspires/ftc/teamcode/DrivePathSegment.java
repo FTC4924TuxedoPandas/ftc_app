@@ -27,8 +27,8 @@ public class DrivePathSegment {
 
             LeftSideDistance = moveTarget;
             RightSideDistance = moveTarget;
-            leftPower = -power;
-            rightPower = -power;
+            leftPower = power;
+            rightPower = power;
             isTurn = false;
             isHolonomic = false;
             isDelay = false;
@@ -37,8 +37,8 @@ public class DrivePathSegment {
         if (type == TURN) {
 
             Angle = moveTarget;
-            leftPower = -power;
-            rightPower = -power;
+            leftPower = power;
+            rightPower = power;
             isTurn = true;
             isHolonomic = false;
             isDelay = false;
@@ -48,8 +48,8 @@ public class DrivePathSegment {
 
             LeftSideDistance = moveTarget;
             RightSideDistance = moveTarget;
-            leftPower = power;
-            rightPower = power;
+            leftPower = -power;
+            rightPower = -power;
             isTurn = false;
             isHolonomic = true;
             isDelay = false;

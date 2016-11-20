@@ -18,8 +18,11 @@ public class BlueRampLaunchAndBeacon extends LaunchAndBeaconBase {
 
         beaconPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(45.0f, 1.0f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(40.0f, 1.0f, DrivePathSegment.HOLONOMIC),
+                new DrivePathSegment(8.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(45.0f, 1.0f, DrivePathSegment.TURN),
+                new DrivePathSegment(42.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(90.0f, 1.0f, DrivePathSegment.TURN),
+                new DrivePathSegment(35.0f, 1.0f, DrivePathSegment.LINEAR),
         };
     }
 
