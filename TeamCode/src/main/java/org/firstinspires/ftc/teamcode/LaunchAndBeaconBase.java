@@ -58,10 +58,7 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
             case STATE_LAUNCH_SECOND_BALL:
 
-                if (elapsedTimeForCurrentState.time() >= 1.0f) {
-
-                    throwBall(elapsedTimeForCurrentState, THROWING_TIME);
-                }
+                throwBall(elapsedTimeForCurrentState, THROWING_TIME);
 
                 if (elapsedTimeForCurrentState.time() >= 3.0f) {
 
