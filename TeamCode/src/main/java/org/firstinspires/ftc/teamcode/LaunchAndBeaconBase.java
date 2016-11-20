@@ -50,7 +50,7 @@ public abstract class LaunchAndBeaconBase extends VelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
-                    currentState = State.STATE_LOAD_BALL;
+                    currentState = State.STATE_LAUNCH_SECOND_BALL;
                     elapsedTimeForCurrentState.reset();
                 }
 
