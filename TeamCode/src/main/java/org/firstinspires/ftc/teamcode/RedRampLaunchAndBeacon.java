@@ -7,13 +7,13 @@ package org.firstinspires.ftc.teamcode;
  */
 
 @Autonomous(name = "RedRampLaunchAndBeacon")
-public class RedRampLaunchAndBeacon extends LaunchAndBeaconBase {
+public class RedRampLaunchAndBeacon extends LaunchTwiceAndBeaconBase {
 
     public RedRampLaunchAndBeacon() {
 
         launchPositioningPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR),
         };
 
         beaconPath = new DrivePathSegment[]{

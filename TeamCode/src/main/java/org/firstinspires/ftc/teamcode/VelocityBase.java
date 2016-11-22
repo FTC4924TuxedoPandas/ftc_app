@@ -24,7 +24,6 @@ public abstract class VelocityBase extends OpMode {
         STATE_STOP,
         STATE_LAUNCH_FIRST_BALL,
         STATE_LAUNCH_SECOND_BALL,
-        STATE_DRIVE_TO_BALL_POSITION,
         STATE_POSITION_FOR_BALL,
         STATE_KNOCK_CAP_BALL,
         STATE_FIND_WHITE_LINE,

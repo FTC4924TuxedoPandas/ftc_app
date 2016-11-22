@@ -7,13 +7,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name = "BlueRampLaunchAndBeacon")
-public class BlueRampLaunchAndBeacon extends LaunchAndBeaconBase {
+public class BlueRampLaunchAndBeacon extends LaunchTwiceAndBeaconBase {
 
     public BlueRampLaunchAndBeacon() {
 
         launchPositioningPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR),
         };
 
         beaconPath = new DrivePathSegment[]{

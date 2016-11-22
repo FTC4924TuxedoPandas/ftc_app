@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Created by 4924_Users on 10/8/2016.
  */
 
-@TeleOp(name = "HolonomicDriveTrainTeleOp") //hello
+@TeleOp(name = "HolonomicDriveTrainTeleOp")
 public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
     protected int triggerDirection = 1;
@@ -27,7 +27,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         } else {
 
-            stopMovingThrowingArm(); //be a pessimist
+            stopMovingThrowingArm();
         }
 
         if (isDiagonal()) {
@@ -68,7 +68,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         if (collectionIn()) {
 
-            collectionIntake(); //you're bad
+            collectionIntake();
 
         } else if (collectionOut()) {
 
@@ -115,7 +115,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         telemetry.addData("FrontLeft: ", powerLevels.frontLeftPower);
         telemetry.addData("BackRight: ", powerLevels.backRightPower);
         telemetry.addData("BackLeft: ", powerLevels.backLeftPower);
-        telemetry.addData("isDiagonal: ", isDiagonal()); //ARNAV!!!!
+        telemetry.addData("isDiagonal: ", isDiagonal());
         telemetry.addData("isStrafing: ", isStrafing());
     }
 }
