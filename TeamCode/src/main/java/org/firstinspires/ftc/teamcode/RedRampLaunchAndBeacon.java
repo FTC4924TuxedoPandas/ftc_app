@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode;
  */
 
 @Autonomous(name = "RedRampLaunchAndBeacon")
-public class RedRampLaunchAndBeacon extends LaunchTwiceAndBeaconBase {
+public class RedRampLaunchAndBeacon extends LaunchTwiceAndClaimBeacon {
 
     public RedRampLaunchAndBeacon() {
 

@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by 4924_Users on 11/22/2016.
  */
 
-public abstract class LaunchTwiceAndBeaconBase extends AutonomousBase {
+public abstract class LaunchTwiceAndClaimBeacon extends AutonomousBase {
 
     @Override
     public State[] stateList() {
