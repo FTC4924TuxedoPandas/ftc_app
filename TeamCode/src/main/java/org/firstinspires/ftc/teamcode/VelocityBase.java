@@ -148,7 +148,7 @@ public abstract class VelocityBase extends OpMode {
     @Override
     public void init_loop() {
 
-        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_OUT);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
     }
 
