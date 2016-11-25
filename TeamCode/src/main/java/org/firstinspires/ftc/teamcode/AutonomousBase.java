@@ -94,11 +94,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(-0.5f);
+                        setPowerForMecanumStrafe(-0.25f);
 
                     } else {
 
-                        setPowerForMecanumStrafe(0.5f);
+                        setPowerForMecanumStrafe(0.25f);
                     }
 
                     setMotorPowerLevels(powerLevels);
