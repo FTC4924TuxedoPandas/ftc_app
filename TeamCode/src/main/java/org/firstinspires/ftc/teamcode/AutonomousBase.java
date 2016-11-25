@@ -132,6 +132,9 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 break;
         }
+
+        rightBeaconServo.setPosition(rightBeaconServoPosition);
+        leftBeaconServo.setPosition(leftBeaconServoPosition);
     }
 
     public void switchToNextState() {

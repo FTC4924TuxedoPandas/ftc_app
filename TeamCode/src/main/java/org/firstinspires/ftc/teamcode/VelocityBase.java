@@ -556,22 +556,22 @@ public abstract class VelocityBase extends OpMode {
 
     public void leftBeaconServoOut() {
 
-        leftBeaconServoPosition -= 0.1f;
+        leftBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
     }
 
     public void rightBeaconServoOut() {
 
-        rightBeaconServoPosition -= 0.1f;
+        rightBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
     }
 
     public void leftBeaconServoIn() {
 
-        leftBeaconServoPosition += 0.1f;
+        leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     }
 
     public void rightBeaconServoIn() {
 
-        rightBeaconServoPosition += 0.1f;
+        rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     }
 
     public void closeGate() {
@@ -655,17 +655,17 @@ public abstract class VelocityBase extends OpMode {
 
                 if (rightSensorRead >= 3) {
 
-                    rightBeaconServo.setPosition(0.0f);
+                    rightBeaconServoOut();
 
                 } else {
 
-                    leftBeaconServo.setPosition(0.0f);
+                    leftBeaconServoOut();
                 }
 
             } else {
 
-                rightBeaconServo.setPosition(0.0f);
-                leftBeaconServo.setPosition(0.0f);
+                rightBeaconServoOut();
+                leftBeaconServoOut();
             }
         }
     }
