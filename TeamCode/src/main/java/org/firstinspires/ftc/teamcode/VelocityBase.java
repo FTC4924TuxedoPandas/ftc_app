@@ -62,7 +62,7 @@ public abstract class VelocityBase extends OpMode {
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
 
     public final float BEACON_SERVO_POSITION_IN = 0.0f;
-    public final float BEACON_SERVO_POSITION_OUT = 0.5f;
+    public final float BEACON_SERVO_POSITION_OUT = 1.0f;
 
     public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
     public final float GATE_SERVO_POSITION_LOW = 0.5f;
@@ -107,6 +107,8 @@ public abstract class VelocityBase extends OpMode {
     static final float DELAY = 1.0f;
     public float driveStickX = 0.0f;
     public float driveStickY = 0.0f;
+    public float leftBeaconServoPosition = 0.0f;
+    public float rightBeaconServoPosition = 0.0f;
     boolean reversed;
     ElapsedTime time = new ElapsedTime();
 
@@ -141,6 +143,8 @@ public abstract class VelocityBase extends OpMode {
         runWithoutEncoders();
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
         turningGyro.calibrate();
+        rightBeaconServo.setPosition(1.0f);
+        leftBeaconServo.setPosition(1.0f);
     }
 
     @Override
@@ -552,22 +556,22 @@ public abstract class VelocityBase extends OpMode {
 
     public void leftBeaconServoOut() {
 
-        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_OUT);
+        leftBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
     }
 
     public void rightBeaconServoOut() {
 
-        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_OUT);
+        rightBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
     }
 
     public void leftBeaconServoIn() {
 
-        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     }
 
     public void rightBeaconServoIn() {
 
-        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     }
 
     public void closeGate() {
@@ -607,9 +611,7 @@ public abstract class VelocityBase extends OpMode {
         return gamepad2.y;
     }
 
-    public boolean d2BIsPressed() {
-        return gamepad2.b;
-    }
+    public boolean d2BIsPressed() { return gamepad2.b; }
 
     public boolean d1AIsPressed() { return gamepad1.a; }
 
@@ -653,17 +655,17 @@ public abstract class VelocityBase extends OpMode {
 
                 if (rightSensorRead >= 3) {
 
-                    rightBeaconServo.setPosition(1.0f);
+                    rightBeaconServo.setPosition(0.0f);
 
                 } else {
 
-                    leftBeaconServo.setPosition(1.0f);
+                    leftBeaconServo.setPosition(0.0f);
                 }
 
             } else {
 
-                rightBeaconServo.setPosition(1.0f);
-                leftBeaconServo.setPosition(1.0f);
+                rightBeaconServo.setPosition(0.0f);
+                leftBeaconServo.setPosition(0.0f);
             }
         }
     }

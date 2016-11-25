@@ -109,6 +109,9 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             triggerDirection = -triggerDirection;
         }
 
+        rightBeaconServo.setPosition(rightBeaconServoPosition);
+        leftBeaconServo.setPosition(leftBeaconServoPosition);
+
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
         telemetry.addData("FrontRight: ", powerLevels.frontRightPower);

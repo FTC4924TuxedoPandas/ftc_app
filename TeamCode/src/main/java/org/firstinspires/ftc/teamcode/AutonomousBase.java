@@ -28,7 +28,6 @@ public abstract class AutonomousBase extends VelocityBase {
                 if (pathComplete()) {
 
                     TurnOffAllDriveMotors();
-                    elapsedTimeForCurrentState.reset();
                     switchToNextState();
                 }
 
@@ -41,7 +40,6 @@ public abstract class AutonomousBase extends VelocityBase {
                 if (elapsedTimeForCurrentState.time() >= 3.0f) {
 
                     collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
-                    elapsedTimeForCurrentState.reset();
                     switchToNextState();
                 }
 
@@ -51,7 +49,6 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
-                    elapsedTimeForCurrentState.reset();
                     switchToNextState();
                 }
 
@@ -86,9 +83,10 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_FIND_WHITE_LINE:
 
-                if (lineSensor.getRawLightDetected() >= 1.0f) {
+                telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                    elapsedTimeForCurrentState.reset();
+                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.5f) {
+
                     TurnOffAllDriveMotors();
                     switchToNextState();
 
@@ -96,11 +94,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(-1.0f);
+                        setPowerForMecanumStrafe(-0.5f);
 
                     } else {
 
-                        setPowerForMecanumStrafe(1.0f);
+                        setPowerForMecanumStrafe(0.5f);
                     }
 
                     setMotorPowerLevels(powerLevels);
@@ -123,8 +121,8 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 } else {
 
-                    rightBeaconServo.setPosition(0.0f);
-                    leftBeaconServo.setPosition(0.0f);
+                    rightBeaconServo.setPosition(1.0f);
+                    leftBeaconServo.setPosition(1.0f);
                     switchToNextState();
                 }
 
@@ -138,6 +136,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
     public void switchToNextState() {
 
+        elapsedTimeForCurrentState.reset();
         stateIndex++;
 
         if (stateIndex >= stateList().length) {
