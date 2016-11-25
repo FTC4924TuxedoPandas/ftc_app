@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by 4924_Users on 10/8/2016.
@@ -92,6 +93,10 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             driveStickY = -gamepad1.left_stick_y;
             triggerDirection = -triggerDirection;
         }
+
+        // clip servo values
+        rightBeaconServoPosition = Range.clip(rightBeaconServoPosition, -1.0f, 1.0f);
+        leftBeaconServoPosition = Range.clip(leftBeaconServoPosition, -1.0f, 1.0f);
 
         rightBeaconServo.setPosition(rightBeaconServoPosition);
         leftBeaconServo.setPosition(leftBeaconServoPosition);
