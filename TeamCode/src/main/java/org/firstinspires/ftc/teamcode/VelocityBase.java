@@ -61,7 +61,7 @@ public abstract class VelocityBase extends OpMode {
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
 
-    public final float BEACON_SERVO_POSITION_IN = 0.0f;
+    public final float BEACON_SERVO_POSITION_IN = -1.0f;
     public final float BEACON_SERVO_POSITION_OUT = 1.0f;
 
     public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
@@ -93,6 +93,7 @@ public abstract class VelocityBase extends OpMode {
     double countsPerInch;
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
+    public ElapsedTime buttonDelay = new ElapsedTime();
     int turnStartValueLeft;
     int turnStartValueRight;
     GyroSensor turningGyro;
@@ -556,22 +557,22 @@ public abstract class VelocityBase extends OpMode {
 
     public void leftBeaconServoOut() {
 
-        leftBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
+        leftBeaconServoPosition += 0.1f;
     }
 
     public void rightBeaconServoOut() {
 
-        rightBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
+        rightBeaconServoPosition += 0.1f;
     }
 
     public void leftBeaconServoIn() {
 
-        leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
+        leftBeaconServoPosition -= 0.1f;
     }
 
     public void rightBeaconServoIn() {
 
-        rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
+        rightBeaconServoPosition -= 0.1f;
     }
 
     public void closeGate() {
@@ -672,22 +673,26 @@ public abstract class VelocityBase extends OpMode {
 
     public void resolveBeaconServos() {
 
-        if (d2XIsPressed()) {
+        if (d2XIsPressed() && buttonDelay.time() >= 0.3f) {
 
             leftBeaconServoOut();
+            buttonDelay.reset();
 
-        } else if (d2YIsPressed()) {
+        } else if (d2YIsPressed() && buttonDelay.time() >= 0.3f) {
 
             leftBeaconServoIn();
+            buttonDelay.reset();
         }
 
-        if (d2AIsPressed()) {
+        if (d2AIsPressed() && buttonDelay.time() >= 0.3f) {
 
             rightBeaconServoOut();
+            buttonDelay.reset();
 
-        } else if (d2BIsPressed()) {
+        } else if (d2BIsPressed() && buttonDelay.time() >= 0.3f) {
 
             rightBeaconServoIn();
+            buttonDelay.reset();
         }
     }
 }
