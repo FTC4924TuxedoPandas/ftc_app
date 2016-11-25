@@ -94,11 +94,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(-0.25f);
+                        setPowerForMecanumStrafe(0.15f);
 
                     } else {
 
-                        setPowerForMecanumStrafe(0.25f);
+                        setPowerForMecanumStrafe(-0.15f);
                     }
 
                     setMotorPowerLevels(powerLevels);
@@ -108,21 +108,26 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_PUSH_BEACON:
 
+                telemetry.addData("Right Red", rightBeaconSensor.red());
+                telemetry.addData("Right Blue", rightBeaconSensor.blue());
+                telemetry.addData("Left Red", leftBeaconSensor.red());
+                telemetry.addData("Left Blue", leftBeaconSensor.blue());
+
                 if (elapsedTimeForCurrentState.time() <= 3.0f) {
 
                     if (isRed()) {
 
-                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+                        pushBeaconButton(rightBeaconSensor.red());
 
                     } else {
 
-                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                        pushBeaconButton(rightBeaconSensor.blue());
                     }
 
                 } else {
 
-                    rightBeaconServo.setPosition(1.0f);
-                    leftBeaconServo.setPosition(1.0f);
+                    rightBeaconServoIn();
+                    leftBeaconServoIn();
                     switchToNextState();
                 }
 

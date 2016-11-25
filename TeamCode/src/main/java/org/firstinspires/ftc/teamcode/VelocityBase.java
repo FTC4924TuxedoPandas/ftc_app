@@ -61,8 +61,8 @@ public abstract class VelocityBase extends OpMode {
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
 
-    public final float BEACON_SERVO_POSITION_IN = -1.0f;
-    public final float BEACON_SERVO_POSITION_OUT = 1.0f;
+    public final float BEACON_SERVO_POSITION_IN = 0.3f;
+    public final float BEACON_SERVO_POSITION_OUT = 0.7f;
 
     public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
     public final float GATE_SERVO_POSITION_LOW = 0.5f;
@@ -149,7 +149,7 @@ public abstract class VelocityBase extends OpMode {
     @Override
     public void init_loop() {
 
-        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_OUT);
+        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
     }
 
@@ -557,22 +557,22 @@ public abstract class VelocityBase extends OpMode {
 
     public void leftBeaconServoOut() {
 
-        leftBeaconServoPosition += 0.1f;
+        leftBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
     }
 
     public void rightBeaconServoOut() {
 
-        rightBeaconServoPosition += 0.1f;
+        rightBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
     }
 
     public void leftBeaconServoIn() {
 
-        leftBeaconServoPosition -= 0.1f;
+        leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     }
 
     public void rightBeaconServoIn() {
 
-        rightBeaconServoPosition -= 0.1f;
+        rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     }
 
     public void closeGate() {
@@ -644,30 +644,15 @@ public abstract class VelocityBase extends OpMode {
         return Math.abs(driveStickX) >= STICK_THRESHOLD;
     }
 
-    public void pushBeaconButton(int leftSensorRead, int rightSensorRead) {
+    public void pushBeaconButton(int sensorReading) {
 
-        if (rightSensorRead >= 3 && leftSensorRead >= 3) {
+        if (sensorReading >= 3) {
 
-            return;
+            rightBeaconServoOut();
 
         } else {
 
-            if (rightSensorRead >= 3 && leftSensorRead >= 3) {
-
-                if (rightSensorRead >= 3) {
-
-                    rightBeaconServoOut();
-
-                } else {
-
-                    leftBeaconServoOut();
-                }
-
-            } else {
-
-                rightBeaconServoOut();
-                leftBeaconServoOut();
-            }
+            leftBeaconServoOut();
         }
     }
 

@@ -11,12 +11,12 @@ public class BeaconOnly extends BeaconOnlyBase {
 
     public BeaconOnly() {
 
-        launchPositioningPath = new DrivePathSegment[]{
+        launchPositioningPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
         };
 
-        beaconPath = new DrivePathSegment[]{
+        beaconPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
         };
@@ -24,6 +24,7 @@ public class BeaconOnly extends BeaconOnlyBase {
 
     @Override
     public boolean isRed() {
-        return false;
+
+        return true;
     }
 }
