@@ -9,12 +9,12 @@ public class DrivePathSegment {
     public static final int TURN = 1;
     public static final int HOLONOMIC = 2;
 
-    public float LeftSideDistance;
-    public float RightSideDistance;
-    public float Angle;
-    public float leftPower;
-    public float rightPower;
-    public float delayTime;
+    public float LeftSideDistance = 0.0f;
+    public float RightSideDistance = 0.0f;
+    public float Angle = 0.0f;
+    public float leftPower = 0.0f;
+    public float rightPower = 0.0f;
+    public float delayTime = 0.0f;
     public boolean isTurn = false;
     public boolean isHolonomic = false;
     public boolean isDelay = false;

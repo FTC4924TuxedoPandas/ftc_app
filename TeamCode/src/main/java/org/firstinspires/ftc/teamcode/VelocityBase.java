@@ -57,7 +57,7 @@ public abstract class VelocityBase extends OpMode {
     public final float COLLECTION_POWER = 0.5f;
     public final float BASE_HOLONOMIC_DRIVE_POWER = 0.5f;
     public int currentPathSegmentIndex = 0;
-    DrivePathSegment segment;
+    DrivePathSegment segment = new DrivePathSegment();
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
 
@@ -298,11 +298,11 @@ public abstract class VelocityBase extends OpMode {
 
                 if (counterclockwiseTurnNeeded(currentAngle)) {
 
-                    segment.rightPower = -segment.leftPower;
+                    segment.leftPower = -segment.rightPower;
 
                 } else {
 
-                    segment.leftPower = -segment.rightPower;
+                    segment.rightPower = -segment.leftPower;
                 }
 
                 powerLevels = new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
@@ -357,7 +357,7 @@ public abstract class VelocityBase extends OpMode {
                 }
             }
 
-           SetDriveMotorPowerLevels(powerLevels);
+            SetDriveMotorPowerLevels(powerLevels);
 
             currentPathSegmentIndex++;
         }
@@ -485,8 +485,10 @@ public abstract class VelocityBase extends OpMode {
 
     public boolean turnComplete() {
 
-        return Math.abs(segment.Angle) <= turningGyro.getHeading() + TURNING_ANGLE_MARGIN &&
-                Math.abs(segment.Angle) >= turningGyro.getHeading() - TURNING_ANGLE_MARGIN;
+        int heading = turningGyro.getHeading();
+
+        return Math.abs(segment.Angle) <= heading + TURNING_ANGLE_MARGIN &&
+                Math.abs(segment.Angle) >= heading - TURNING_ANGLE_MARGIN;
     }
 
     public boolean delayComplete() {

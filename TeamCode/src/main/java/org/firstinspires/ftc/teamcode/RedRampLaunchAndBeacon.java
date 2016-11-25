@@ -19,9 +19,9 @@ public class RedRampLaunchAndBeacon extends LaunchTwiceAndClaimBeacon {
         beaconPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(315.0f, 1.0f, DrivePathSegment.TURN),
+                new DrivePathSegment(315.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(40.0f, 1.0f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(270.0f, 1.0f, DrivePathSegment.TURN),
+                new DrivePathSegment(270.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(32.0f, 1.0f, DrivePathSegment.LINEAR),
         };
     }
