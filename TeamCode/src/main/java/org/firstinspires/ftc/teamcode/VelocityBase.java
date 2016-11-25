@@ -143,8 +143,8 @@ public abstract class VelocityBase extends OpMode {
         runWithoutEncoders();
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
         turningGyro.calibrate();
-        rightBeaconServo.setPosition(1.0f);
-        leftBeaconServo.setPosition(1.0f);
+        rightBeaconServo.setPosition(rightBeaconServoPosition);
+        leftBeaconServo.setPosition(leftBeaconServoPosition);
     }
 
     @Override
@@ -556,22 +556,22 @@ public abstract class VelocityBase extends OpMode {
 
     public void leftBeaconServoOut() {
 
-        leftBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
+        leftBeaconServoPosition -= 0.1f;
     }
 
     public void rightBeaconServoOut() {
 
-        rightBeaconServoPosition = BEACON_SERVO_POSITION_OUT;
+        rightBeaconServoPosition -= 0.1f;
     }
 
     public void leftBeaconServoIn() {
 
-        leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
+        leftBeaconServoPosition += 0.1f;
     }
 
     public void rightBeaconServoIn() {
 
-        rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
+        rightBeaconServoPosition += 0.1f;
     }
 
     public void closeGate() {
@@ -667,6 +667,27 @@ public abstract class VelocityBase extends OpMode {
                 rightBeaconServo.setPosition(0.0f);
                 leftBeaconServo.setPosition(0.0f);
             }
+        }
+    }
+
+    public void resolveBeaconServos() {
+
+        if (d2XIsPressed()) {
+
+            leftBeaconServoOut();
+
+        } else if (d2YIsPressed()) {
+
+            leftBeaconServoIn();
+        }
+
+        if (d2AIsPressed()) {
+
+            rightBeaconServoOut();
+
+        } else if (d2BIsPressed()) {
+
+            rightBeaconServoIn();
         }
     }
 }

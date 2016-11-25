@@ -79,23 +79,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             collectionOff();
         }
 
-        if (d2XIsPressed()) {
-
-            leftBeaconServoOut();
-
-        } else if (d2YIsPressed()) {
-
-            leftBeaconServoIn();
-        }
-
-        if (d2AIsPressed()) {
-
-            rightBeaconServoOut();
-
-        } else if (d2BIsPressed()) {
-
-            rightBeaconServoIn();
-        }
+        resolveBeaconServos();
 
         if (gamepad1.dpad_down && (time.time() > DELAY)){
             reversed = !reversed;
@@ -114,6 +98,8 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
+        telemetry.addData("Left Servo", leftBeaconServoPosition);
+        telemetry.addData("Right Servo", rightBeaconServoPosition);
         telemetry.addData("FrontRight: ", powerLevels.frontRightPower);
         telemetry.addData("FrontLeft: ", powerLevels.frontLeftPower);
         telemetry.addData("BackRight: ", powerLevels.backRightPower);
