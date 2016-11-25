@@ -107,8 +107,8 @@ public abstract class VelocityBase extends OpMode {
     static final float DELAY = 1.0f;
     public float driveStickX = 0.0f;
     public float driveStickY = 0.0f;
-    public float leftBeaconServoPosition = 0.0f;
-    public float rightBeaconServoPosition = 0.0f;
+    public float leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
+    public float rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     boolean reversed;
     ElapsedTime time = new ElapsedTime();
 
@@ -143,8 +143,8 @@ public abstract class VelocityBase extends OpMode {
         runWithoutEncoders();
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
         turningGyro.calibrate();
-        rightBeaconServo.setPosition(rightBeaconServoPosition);
-        leftBeaconServo.setPosition(leftBeaconServoPosition);
+        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
     }
 
     @Override
