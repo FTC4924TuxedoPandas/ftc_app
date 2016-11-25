@@ -38,7 +38,7 @@ public class DrivePathSegment {
 
             Angle = moveTarget;
             leftPower = power;
-            rightPower = -power;//this could be wrong but turning isn't working
+            rightPower = power;
             isTurn = true;
             isHolonomic = false;
             isDelay = false;
