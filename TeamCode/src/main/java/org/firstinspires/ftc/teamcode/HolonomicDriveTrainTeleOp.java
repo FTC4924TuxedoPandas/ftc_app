@@ -100,6 +100,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         rightBeaconServo.setPosition(rightBeaconServoPosition);
         leftBeaconServo.setPosition(leftBeaconServoPosition);
+        collectionGateServo.setPosition(gateServoPosition);
 
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);

@@ -41,11 +41,25 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 break;
 
+            case STATE_DROP_GATE:
+
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+
+                    collectionMotor.setPower(0.0f);
+                    switchToNextState();
+
+                } else {
+
+                    collectionMotor.setPower(-1.0f);
+                }
+
+                break;
+
             case STATE_LAUNCH_BALL:
 
                 throwBall(elapsedTimeForCurrentState, THROWING_TIME);
 
-                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+                if (elapsedTimeForCurrentState.time() >= 0.8f) {
 
                     switchToNextState();
                 }
@@ -54,7 +68,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_LOAD_BALL:
 
-                collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+                collectionGateServo.setPosition(GATE_SERVO_POSITION_HIGH);
                 switchToNextState();
 
                 break;
@@ -117,27 +131,32 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                telemetry.addData("Right Red", rightBeaconSensor.red());
-                telemetry.addData("Right Blue", rightBeaconSensor.blue());
-                telemetry.addData("Left Red", leftBeaconSensor.red());
-                telemetry.addData("Left Blue", leftBeaconSensor.blue());
+                if (isRed()) {
 
-                if (elapsedTimeForCurrentState.time() <= 3.0f) {
+                    pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
 
-                    if (isRed()) {
+                } else {
 
-                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+                    pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                }
 
-                    } else {
+                if (isRed()) {
 
-                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                    if (leftBeaconSensor.red() >= 3 && rightBeaconSensor.red() >= 3) {
+
+                        rightBeaconServoIn();
+                        leftBeaconServoIn();
+                        switchToNextState();
                     }
 
                 } else {
 
-                    rightBeaconServoIn();
-                    leftBeaconServoIn();
-                    switchToNextState();
+                    if (leftBeaconSensor.blue() >= 3 && rightBeaconSensor.blue() >= 3) {
+
+                        rightBeaconServoIn();
+                        leftBeaconServoIn();
+                        switchToNextState();
+                    }
                 }
 
                 break;

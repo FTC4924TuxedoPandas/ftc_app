@@ -30,7 +30,8 @@ public abstract class VelocityBase extends OpMode {
         STATE_LOAD_BALL,
         STATE_WAIT_FOR_BALL,
         STATE_START_BEACON_PATH,
-        STATE_START_LAUNCH_PATH
+        STATE_START_LAUNCH_PATH,
+        STATE_DROP_GATE
     }
 
     DcMotor frontRightMotor;
@@ -112,6 +113,7 @@ public abstract class VelocityBase extends OpMode {
     public float driveStickY = 0.0f;
     public float leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
+    public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
     boolean reversed;
     ElapsedTime time = new ElapsedTime();
 
@@ -586,12 +588,12 @@ public abstract class VelocityBase extends OpMode {
 
     public void openGateLow() {
 
-        collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+        gateServoPosition = GATE_SERVO_POSITION_LOW;
     }
 
     public void openGateHigh() {
 
-        collectionGateServo.setPosition(GATE_SERVO_POSITION_HIGH);
+        gateServoPosition = GATE_SERVO_POSITION_HIGH;
     }
 
     public boolean dpadDownIsPressed() { return gamepad2.dpad_down; }
@@ -656,7 +658,12 @@ public abstract class VelocityBase extends OpMode {
 
         } else {
 
-            if (rightSensorRead >= 3 && leftSensorRead >= 3) {
+            if (rightSensorRead <= 3 && leftSensorRead <= 3) {
+
+                rightBeaconServo.setPosition(1.0f);
+                leftBeaconServo.setPosition(1.0f);
+
+            } else {
 
                 if (rightSensorRead >= 3) {
 
@@ -666,11 +673,6 @@ public abstract class VelocityBase extends OpMode {
 
                     leftBeaconServo.setPosition(1.0f);
                 }
-
-            } else {
-
-                rightBeaconServo.setPosition(1.0f);
-                leftBeaconServo.setPosition(1.0f);
             }
         }
     }

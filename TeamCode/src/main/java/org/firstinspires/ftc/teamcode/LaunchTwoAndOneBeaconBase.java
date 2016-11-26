@@ -14,6 +14,7 @@ public abstract class LaunchTwoAndOneBeaconBase extends AutonomousBase {
                 State.STATE_INITIAL,
                 State.STATE_START_LAUNCH_PATH,
                 State.STATE_POSITION_FOR_BALL,
+                State.STATE_DROP_GATE,
                 State.STATE_LAUNCH_BALL,
                 State.STATE_LOAD_BALL,
                 State.STATE_WAIT_FOR_BALL,

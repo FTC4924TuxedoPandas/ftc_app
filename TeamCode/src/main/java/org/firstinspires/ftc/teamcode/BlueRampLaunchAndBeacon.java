@@ -14,15 +14,17 @@ public class BlueRampLaunchAndBeacon extends LaunchTwoAndOneBeaconBase {
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(1.0f),
         };
 
         beaconPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(8.0f, 1.0f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(45.0f, 1.0f, DrivePathSegment.TURN),
-                new DrivePathSegment(42.0f, 1.0f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(90.0f, 1.0f, DrivePathSegment.TURN),
+                new DrivePathSegment(45.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(35.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(20.0f, 0.5f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(3.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
 
