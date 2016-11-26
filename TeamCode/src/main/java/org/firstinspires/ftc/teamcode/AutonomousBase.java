@@ -20,6 +20,12 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_INITIAL:
 
+                switchToNextState();
+
+                break;
+
+            case STATE_START_LAUNCH_PATH:
+
                 startPath(launchPositioningPath);
                 switchToNextState();
 
@@ -35,19 +41,9 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 break;
 
-            case STATE_LAUNCH_FIRST_BALL:
+            case STATE_LAUNCH_BALL:
 
                 throwBall(elapsedTimeForCurrentState, THROWING_TIME);
-
-                if (elapsedTimeForCurrentState.time() >= 3.0f) {
-
-                    collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
-                    switchToNextState();
-                }
-
-                break;
-
-            case STATE_LOAD_BALL:
 
                 if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
@@ -56,15 +52,26 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 break;
 
-            case STATE_LAUNCH_SECOND_BALL:
+            case STATE_LOAD_BALL:
 
-                throwBall(elapsedTimeForCurrentState, THROWING_TIME);
+                collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+                switchToNextState();
 
-                if (elapsedTimeForCurrentState.time() >= 3.0f) {
+                break;
 
-                    startPath(beaconPath);
+            case STATE_WAIT_FOR_BALL:
+
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+
                     switchToNextState();
                 }
+
+                break;
+
+            case STATE_START_BEACON_PATH:
+
+                startPath(beaconPath);
+                switchToNextState();
 
                 break;
 
@@ -119,11 +126,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        pushBeaconButton(rightBeaconSensor.red());
+                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
 
                     } else {
 
-                        pushBeaconButton(rightBeaconSensor.blue());
+                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
                     }
 
                 } else {

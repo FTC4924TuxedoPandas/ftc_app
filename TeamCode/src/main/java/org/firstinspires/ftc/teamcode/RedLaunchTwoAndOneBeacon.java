@@ -6,23 +6,23 @@ package org.firstinspires.ftc.teamcode;
  * Created by 4924_Users on 10/22/2016.
  */
 
-@Autonomous(name = "RedRampLaunchAndBeacon")
-public class RedRampLaunchAndBeacon extends LaunchTwiceAndClaimBeacon {
+@Autonomous(name = "RedLaunchTwoAndOneBeacon")
+public class RedLaunchTwoAndOneBeacon extends LaunchTwoAndOneBeaconBase {
 
-    public RedRampLaunchAndBeacon() {
+    public RedLaunchTwoAndOneBeacon() {
 
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(1.0f),
         };
 
         beaconPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(315.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(40.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(20.0f, 1.0f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(270.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(32.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(20.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
 

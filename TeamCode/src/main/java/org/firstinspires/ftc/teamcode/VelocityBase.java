@@ -22,13 +22,15 @@ public abstract class VelocityBase extends OpMode {
         STATE_INITIAL,
         STATE_DRIVE,
         STATE_STOP,
-        STATE_LAUNCH_FIRST_BALL,
-        STATE_LAUNCH_SECOND_BALL,
+        STATE_LAUNCH_BALL,
         STATE_POSITION_FOR_BALL,
         STATE_KNOCK_CAP_BALL,
         STATE_FIND_WHITE_LINE,
         STATE_PUSH_BEACON,
-        STATE_LOAD_BALL
+        STATE_LOAD_BALL,
+        STATE_WAIT_FOR_BALL,
+        STATE_START_BEACON_PATH,
+        STATE_START_LAUNCH_PATH
     }
 
     DcMotor frontRightMotor;
@@ -646,15 +648,30 @@ public abstract class VelocityBase extends OpMode {
         return Math.abs(driveStickX) >= STICK_THRESHOLD;
     }
 
-    public void pushBeaconButton(int sensorReading) {
+    public void pushBeaconButton(int leftSensorRead, int rightSensorRead) {
 
-        if (sensorReading >= 3) {
+        if (rightSensorRead >= 3 && leftSensorRead >= 3) {
 
-            rightBeaconServoOut();
+            return;
 
         } else {
 
-            leftBeaconServoOut();
+            if (rightSensorRead >= 3 && leftSensorRead >= 3) {
+
+                if (rightSensorRead >= 3) {
+
+                    rightBeaconServo.setPosition(1.0f);
+
+                } else {
+
+                    leftBeaconServo.setPosition(1.0f);
+                }
+
+            } else {
+
+                rightBeaconServo.setPosition(1.0f);
+                leftBeaconServo.setPosition(1.0f);
+            }
         }
     }
 
