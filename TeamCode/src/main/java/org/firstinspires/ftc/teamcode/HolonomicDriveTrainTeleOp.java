@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "HolonomicDriveTrainTeleOp")
 public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
+    public int reverseFactor = 1;
+
     @Override
     public void loop() {
 
@@ -31,22 +33,22 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         if (isDiagonal()) {
 
-            setPowerForDiagonalMove((Math.abs(driveStickX) + Math.abs(driveStickY)) / 2);
+            setPowerForDiagonalMove((Math.abs(driveStickX) + Math.abs(driveStickY)) / 2 * reverseFactor);
 
         } else if (isStrafing()) {
 
-            setPowerForMecanumStrafe(driveStickX);
+            setPowerForMecanumStrafe(driveStickX * reverseFactor);
 
         } else {
 
-            setPowerForLinearMove(driveStickY);
+            setPowerForLinearMove(driveStickY * reverseFactor);
 
-            if (leftTriggerValue() > 0.2f) {
+            if (leftTriggerValue() > 0.1f) {
 
                 setPowerForTurning(leftTriggerValue());
             }
 
-            if (rightTriggerValue() > 0.2f) {
+            if (rightTriggerValue() > 0.1f) {
 
                 setPowerForTurning(-rightTriggerValue());
             }
@@ -81,16 +83,13 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         if (d1DPadLeftIsPressed() && d2DPadLeftIsPressed()) {
 
             shovelLockServo.setPosition(1.0f);
-
-        } else {
-
-            shovelLockServo.setPosition(0.0f);
         }
 
         resolveBeaconServos();
 
         if (gamepad1.dpad_down && (time.time() > DELAY)){
-            reversed = !reversed;
+
+            reverseFactor *= -1;
             time.reset();
         }
 
