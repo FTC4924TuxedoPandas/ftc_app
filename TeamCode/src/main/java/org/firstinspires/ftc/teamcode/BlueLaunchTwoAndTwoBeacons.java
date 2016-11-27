@@ -1,15 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /**
  * Created by 4924_Users on 10/22/2016.
  */
 
-@Autonomous(name = "RedLaunchTwoAndOneBeacon")
-public class RedLaunchTwoAndOneBeacon extends LaunchTwoAndOneBeaconBase {
+@Autonomous(name = "BlueLaunchTwoAndTwoBeacons")
+public class BlueLaunchTwoAndTwoBeacons extends LaunchTwoAndTwoBeaconsBase {
 
-    public RedLaunchTwoAndOneBeacon() {
+    public BlueLaunchTwoAndTwoBeacons() {
 
         launchPositioningPath = new DrivePathSegment[]{
 
@@ -19,11 +19,11 @@ public class RedLaunchTwoAndOneBeacon extends LaunchTwoAndOneBeaconBase {
 
         beaconPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(315.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(45.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(35.0f, 1.0f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(270.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(20.0f, 0.5f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(270.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(3.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
@@ -31,6 +31,6 @@ public class RedLaunchTwoAndOneBeacon extends LaunchTwoAndOneBeaconBase {
     @Override
     public boolean isRed() {
 
-        return true;
+        return false;
     }
 }

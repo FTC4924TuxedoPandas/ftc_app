@@ -31,6 +31,7 @@ public abstract class VelocityBase extends OpMode {
         STATE_WAIT_FOR_BALL,
         STATE_START_BEACON_PATH,
         STATE_START_LAUNCH_PATH,
+        STATE_START_CAP_BALL_PATH,
         STATE_DROP_GATE
     }
 
@@ -68,7 +69,7 @@ public abstract class VelocityBase extends OpMode {
     public final float BEACON_SERVO_POSITION_OUT = 0.7f;
 
     public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
-    public final float GATE_SERVO_POSITION_LOW = 0.5f;
+    public final float GATE_SERVO_POSITION_LOW = 0.6f;
     public final float GATE_SERVO_POSITION_HIGH = 1.0f;
     public final float DIAGONAL_MARGIN_OF_ERROR = 1.0f;
     public final float STICK_THRESHOLD = 0.1f;
@@ -155,6 +156,7 @@ public abstract class VelocityBase extends OpMode {
 
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
     }
 
     @Override
@@ -583,7 +585,7 @@ public abstract class VelocityBase extends OpMode {
 
     public void closeGate() {
 
-        collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
+        gateServoPosition = GATE_SERVO_POSITION_CLOSED;
     }
 
     public void openGateLow() {

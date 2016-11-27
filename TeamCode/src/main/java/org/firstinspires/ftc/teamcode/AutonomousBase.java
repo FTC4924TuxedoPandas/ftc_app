@@ -68,7 +68,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_LOAD_BALL:
 
-                collectionGateServo.setPosition(GATE_SERVO_POSITION_HIGH);
+                collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
                 switchToNextState();
 
                 break;
@@ -77,7 +77,12 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
-                    switchToNextState();
+                    collectionGateServo.setPosition(GATE_SERVO_POSITION_HIGH);
+
+                    if (elapsedTimeForCurrentState.time() >= 2.0f) {
+
+                        switchToNextState();
+                    }
                 }
 
                 break;
@@ -157,6 +162,23 @@ public abstract class AutonomousBase extends VelocityBase {
                         leftBeaconServoIn();
                         switchToNextState();
                     }
+                }
+
+                break;
+
+            case STATE_START_CAP_BALL_PATH:
+
+                startPath(knockCapBallPath);
+                switchToNextState();
+
+                break;
+
+            case STATE_KNOCK_CAP_BALL:
+
+                if (pathComplete()) {
+
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
                 }
 
                 break;

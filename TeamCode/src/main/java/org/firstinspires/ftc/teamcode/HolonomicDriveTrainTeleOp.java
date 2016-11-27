@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "HolonomicDriveTrainTeleOp")
 public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
-    protected int triggerDirection = 1;
-
     @Override
     public void loop() {
 
@@ -45,12 +43,12 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
             if (leftTriggerValue() > 0.1f) {
 
-                setPowerForTurning(leftTriggerValue() * triggerDirection);
+                setPowerForTurning(leftTriggerValue());
             }
 
             if (rightTriggerValue() > 0.1f) {
 
-                setPowerForTurning(-rightTriggerValue() * triggerDirection);
+                setPowerForTurning(-rightTriggerValue());
             }
         }
 
@@ -85,13 +83,6 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         if (gamepad1.dpad_down && (time.time() > DELAY)){
             reversed = !reversed;
             time.reset();
-        }
-
-        if (d1DownIsPressed()) {
-
-            driveStickX = -gamepad1.left_stick_x;
-            driveStickY = -gamepad1.left_stick_y;
-            triggerDirection = -triggerDirection;
         }
 
         // clip servo values
