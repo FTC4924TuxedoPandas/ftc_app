@@ -103,13 +103,16 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         clipPowerLevels();
         setMotorPowerLevels(powerLevels);
-        telemetry.addData("Left Servo", leftBeaconServoPosition);
-        telemetry.addData("Right Servo", rightBeaconServoPosition);
-        telemetry.addData("FrontRight: ", powerLevels.frontRightPower);
-        telemetry.addData("FrontLeft: ", powerLevels.frontLeftPower);
-        telemetry.addData("BackRight: ", powerLevels.backRightPower);
-        telemetry.addData("BackLeft: ", powerLevels.backLeftPower);
-        telemetry.addData("isDiagonal: ", isDiagonal());
-        telemetry.addData("isStrafing: ", isStrafing());
+
+        telemetry.addData("On Line", lineSensor.getRawLightDetected() >= 0.5f);
+
+        //telemetry.addData("Left Servo", leftBeaconServoPosition);
+        //telemetry.addData("Right Servo", rightBeaconServoPosition);
+        //telemetry.addData("FrontRight: ", powerLevels.frontRightPower);
+        //telemetry.addData("FrontLeft: ", powerLevels.frontLeftPower);
+        //telemetry.addData("BackRight: ", powerLevels.backRightPower);
+        //telemetry.addData("BackLeft: ", powerLevels.backLeftPower);
+        //telemetry.addData("isDiagonal: ", isDiagonal());
+        //telemetry.addData("isStrafing: ", isStrafing());
     }
 }

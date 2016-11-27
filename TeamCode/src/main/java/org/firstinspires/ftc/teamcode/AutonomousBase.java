@@ -113,7 +113,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.5f) {
+                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 1.0f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -122,11 +122,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.3f);
+                        setPowerForMecanumStrafe(0.15f);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.3f);
+                        setPowerForMecanumStrafe(-0.15f);
                     }
 
                     setMotorPowerLevels(powerLevels);
