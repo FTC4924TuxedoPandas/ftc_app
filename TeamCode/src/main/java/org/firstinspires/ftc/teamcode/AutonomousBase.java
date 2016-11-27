@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 /**
  * Created by 4924_Users on 10/22/2016.
  */
@@ -8,6 +10,8 @@ public abstract class AutonomousBase extends VelocityBase {
 
     final float THROWING_TIME = 0.2f;
     public int stateIndex = 0;
+    public ElapsedTime elapsedTimeForMove = new ElapsedTime();
+    public boolean isPushing = false;
 
     @Override
     public void loop() {
@@ -115,6 +119,12 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 1.0f) {
 
+                    if (elapsedTimeForMove.time() >= 3.0f) {
+
+                        isPushing = !isPushing;
+                        elapsedTimeForMove.reset();
+                    }
+
                     TurnOffAllDriveMotors();
                     switchToNextState();
 
@@ -127,6 +137,11 @@ public abstract class AutonomousBase extends VelocityBase {
                     } else {
 
                         setPowerForMecanumStrafe(-0.15f);
+                    }
+
+                    if (isPushing && !isRed()) {
+
+                        setPowerForLinearMove(-0.1f);
                     }
 
                     setMotorPowerLevels(powerLevels);
