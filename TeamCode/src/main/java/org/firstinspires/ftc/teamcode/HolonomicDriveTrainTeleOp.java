@@ -41,12 +41,12 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
             setPowerForLinearMove(driveStickY);
 
-            if (leftTriggerValue() > 0.1f) {
+            if (leftTriggerValue() > 0.2f) {
 
                 setPowerForTurning(leftTriggerValue());
             }
 
-            if (rightTriggerValue() > 0.1f) {
+            if (rightTriggerValue() > 0.2f) {
 
                 setPowerForTurning(-rightTriggerValue());
             }
@@ -76,6 +76,15 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         } else {
 
             collectionOff();
+        }
+
+        if (d1LeftBumperIsPressed() && d2LeftBumperIsPressed()) {
+
+            shovelLockServo.setPosition(1.0f);
+
+        } else {
+
+            shovelLockServo.setPosition(0.0f);
         }
 
         resolveBeaconServos();

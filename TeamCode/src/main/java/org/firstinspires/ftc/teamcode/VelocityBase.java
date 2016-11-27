@@ -45,6 +45,7 @@ public abstract class VelocityBase extends OpMode {
     Servo leftBeaconServo;
     Servo rightBeaconServo;
     Servo collectionGateServo;
+    Servo shovelLockServo;
 
     OpticalDistanceSensor lineSensor;
     ColorSensor rightBeaconSensor;
@@ -131,6 +132,7 @@ public abstract class VelocityBase extends OpMode {
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
+        shovelLockServo = hardwareMap.servo.get("shovelLockServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
@@ -157,6 +159,7 @@ public abstract class VelocityBase extends OpMode {
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+        shovelLockServo.setPosition(0.0f);
     }
 
     @Override
@@ -631,6 +634,10 @@ public abstract class VelocityBase extends OpMode {
     public boolean d1XIsPressed() { return gamepad1.x; }
 
     public boolean d1DownIsPressed() { return gamepad1.dpad_down; }
+
+    public boolean d1LeftBumperIsPressed() { return gamepad1.left_bumper; }
+
+    public boolean d2LeftBumperIsPressed() { return gamepad2.left_bumper; }
 
     public float leftTriggerValue() { return gamepad1.left_trigger; }
 

@@ -122,11 +122,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.15f);
+                        setPowerForMecanumStrafe(0.3f);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.15f);
+                        setPowerForMecanumStrafe(-0.3f);
                     }
 
                     setMotorPowerLevels(powerLevels);
@@ -135,6 +135,8 @@ public abstract class AutonomousBase extends VelocityBase {
                 break;
 
             case STATE_PUSH_BEACON:
+
+                setPowerForLinearMove(0.1f);
 
                 if (isRed()) {
 
@@ -151,6 +153,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
                         rightBeaconServoIn();
                         leftBeaconServoIn();
+                        TurnOffAllDriveMotors();
                         switchToNextState();
                     }
 
@@ -160,6 +163,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
                         rightBeaconServoIn();
                         leftBeaconServoIn();
+                        TurnOffAllDriveMotors();
                         switchToNextState();
                     }
                 }
