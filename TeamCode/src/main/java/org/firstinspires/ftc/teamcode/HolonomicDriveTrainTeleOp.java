@@ -54,15 +54,15 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             }
         }
 
-        if (d1BIsPressed()) {
+        if (d2BIsPressed()) {
 
             openGateLow();
 
-        } else if (d1YIsPressed()) {
+        } else if (d2YIsPressed()) {
 
             openGateHigh();
 
-        } else if (d1AIsPressed()) {
+        } else if (d2AIsPressed()) {
 
             closeGate();
         }

@@ -688,23 +688,23 @@ public abstract class VelocityBase extends OpMode {
 
     public void resolveBeaconServos() {
 
-        if (d2XIsPressed() && buttonDelay.time() >= 0.3f) {
+        if (d1XIsPressed() && buttonDelay.time() >= 0.3f) {
 
             leftBeaconServoOut();
             buttonDelay.reset();
 
-        } else if (d2YIsPressed() && buttonDelay.time() >= 0.3f) {
+        } else if (d1YIsPressed() && buttonDelay.time() >= 0.3f) {
 
             leftBeaconServoIn();
             buttonDelay.reset();
         }
 
-        if (d2AIsPressed() && buttonDelay.time() >= 0.3f) {
+        if (d1AIsPressed() && buttonDelay.time() >= 0.3f) {
 
             rightBeaconServoOut();
             buttonDelay.reset();
 
-        } else if (d2BIsPressed() && buttonDelay.time() >= 0.3f) {
+        } else if (d1BIsPressed() && buttonDelay.time() >= 0.3f) {
 
             rightBeaconServoIn();
             buttonDelay.reset();
