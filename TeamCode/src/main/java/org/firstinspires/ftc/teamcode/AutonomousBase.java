@@ -137,6 +137,7 @@ public abstract class AutonomousBase extends VelocityBase {
             case STATE_PUSH_BEACON:
 
                 setPowerForLinearMove(0.1f);
+                setMotorPowerLevels(powerLevels);
 
                 if (isRed()) {
 

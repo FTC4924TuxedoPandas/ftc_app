@@ -635,9 +635,9 @@ public abstract class VelocityBase extends OpMode {
 
     public boolean d1DownIsPressed() { return gamepad1.dpad_down; }
 
-    public boolean d1LeftBumperIsPressed() { return gamepad1.left_bumper; }
+    public boolean d1DPadLeftIsPressed() { return gamepad1.dpad_left; }
 
-    public boolean d2LeftBumperIsPressed() { return gamepad2.left_bumper; }
+    public boolean d2DPadLeftIsPressed() { return gamepad2.dpad_left; }
 
     public float leftTriggerValue() { return gamepad1.left_trigger; }
 
@@ -669,18 +669,18 @@ public abstract class VelocityBase extends OpMode {
 
             if (rightSensorRead <= 3 && leftSensorRead <= 3) {
 
-                rightBeaconServo.setPosition(1.0f);
-                leftBeaconServo.setPosition(1.0f);
+                rightBeaconServoOut();
+                leftBeaconServoOut();
 
             } else {
 
                 if (rightSensorRead >= 3) {
 
-                    rightBeaconServo.setPosition(1.0f);
+                    rightBeaconServoOut();
 
                 } else {
 
-                    leftBeaconServo.setPosition(1.0f);
+                    leftBeaconServoOut();
                 }
             }
         }

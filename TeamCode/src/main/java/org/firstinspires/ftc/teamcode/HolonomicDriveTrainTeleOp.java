@@ -78,7 +78,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
             collectionOff();
         }
 
-        if (d1LeftBumperIsPressed() && d2LeftBumperIsPressed()) {
+        if (d1DPadLeftIsPressed() && d2DPadLeftIsPressed()) {
 
             shovelLockServo.setPosition(1.0f);
 
