@@ -115,16 +115,16 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 1.0f) {
 
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+
+                } else {
+
                     if (elapsedTimeForMove.time() >= 3.0f) {
 
                         isPushing = !isPushing;
                         elapsedTimeForMove.reset();
                     }
-
-                    TurnOffAllDriveMotors();
-                    switchToNextState();
-
-                } else {
 
                     if (isRed()) {
 
@@ -167,6 +167,7 @@ public abstract class AutonomousBase extends VelocityBase {
                         leftBeaconServoIn();
                         TurnOffAllDriveMotors();
                         elapsedTimeForMove.reset();
+                        isPushing = false;
                         switchToNextState();
                     }
 
@@ -178,6 +179,7 @@ public abstract class AutonomousBase extends VelocityBase {
                         leftBeaconServoIn();
                         TurnOffAllDriveMotors();
                         elapsedTimeForMove.reset();
+                        isPushing = false;
                         switchToNextState();
                     }
                 }
