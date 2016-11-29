@@ -46,6 +46,7 @@ public abstract class VelocityBase extends OpMode {
     Servo rightBeaconServo;
     Servo collectionGateServo;
     Servo shovelLockServo;
+    Servo autonomousBallServo;
 
     OpticalDistanceSensor lineSensor;
     ColorSensor rightBeaconSensor;
@@ -133,6 +134,7 @@ public abstract class VelocityBase extends OpMode {
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
         shovelLockServo = hardwareMap.servo.get("shovelLockServo");
+        autonomousBallServo = hardwareMap.servo.get("autonomousBallServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
@@ -160,6 +162,7 @@ public abstract class VelocityBase extends OpMode {
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
         shovelLockServo.setPosition(0.0f);
+        autonomousBallServo.setPosition(0.0f);
     }
 
     @Override

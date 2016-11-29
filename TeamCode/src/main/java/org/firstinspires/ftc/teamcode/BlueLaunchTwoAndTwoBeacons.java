@@ -24,7 +24,7 @@ public class BlueLaunchTwoAndTwoBeacons extends LaunchTwoAndTwoBeaconsBase {
                 new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(20.0f, 0.5f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(3.0f, 0.1f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(7.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
 
