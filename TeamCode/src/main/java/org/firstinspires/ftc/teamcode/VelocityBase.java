@@ -554,7 +554,7 @@ public abstract class VelocityBase extends OpMode {
 
         } else {
 
-            throwingArm.setPower(ARM_POWER);
+            throwingArm.setPower(0.9f);
         }
     }
 
@@ -566,7 +566,7 @@ public abstract class VelocityBase extends OpMode {
 
         } else {
 
-            throwingArm.setPower(-ARM_POWER);
+            throwingArm.setPower(-0.9f);
         }
     }
 
@@ -673,7 +673,6 @@ public abstract class VelocityBase extends OpMode {
 
             if (rightSensorRead <= 3 && leftSensorRead <= 3) {
 
-                rightBeaconServoOut();
                 leftBeaconServoOut();
 
             } else {

@@ -12,6 +12,7 @@ public abstract class AutonomousBase extends VelocityBase {
     public int stateIndex = 0;
     public ElapsedTime elapsedTimeForMove = new ElapsedTime();
     public boolean isPushing = false;
+    public boolean isSecondBeacon = false;
 
     @Override
     public void loop() {
@@ -24,10 +25,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_INITIAL:
 
-                if (elapsedTimeForCurrentState.time() >= 2.0f) {
-
-                    switchToNextState();
-                }
+                switchToNextState();
 
                 break;
 
@@ -82,7 +80,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_WAIT_FOR_BALL:
 
-                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+                if (elapsedTimeForCurrentState.time() >= 0.8f) {
 
                     autonomousBallServo.setPosition(0.0f);
                     switchToNextState();
@@ -133,7 +131,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     } else {
 
-                        if (elapsedTimeForMove.time() >= 6.0f) {
+                        if (elapsedTimeForMove.time() >= 5.0f) {
 
                             isPushing = !isPushing;
                             elapsedTimeForMove.reset();
@@ -142,19 +140,19 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.15f);
+                        setPowerForMecanumStrafe(0.2f);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.15f);
+                        setPowerForMecanumStrafe(-0.2f);
                     }
 
                     if (isPushing && !isRed()) {
 
-                        powerLevels.frontRightPower= 0.2f;
-                        powerLevels.backRightPower= 0.2f;
-                        powerLevels.frontLeftPower= 0.1f;
-                        powerLevels.backLeftPower= 0.1f;
+                        powerLevels.frontRightPower= 0.3f;
+                        powerLevels.backRightPower= 0.3f;
+                        powerLevels.frontLeftPower= 0.2f;
+                        powerLevels.backLeftPower= 0.2f;
                     }
 
                     setMotorPowerLevels(powerLevels);
@@ -164,7 +162,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_lINE_UP_TO_BEACON:
 
-                if (!isRed()) {
+                if (!isRed() && isSecondBeacon) {
 
                     if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
@@ -173,10 +171,10 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     } else {
 
-                        powerLevels.frontRightPower= 0.2f;
-                        powerLevels.backRightPower= 0.2f;
-                        powerLevels.frontLeftPower= 0.1f;
-                        powerLevels.backLeftPower= 0.1f;
+                        powerLevels.frontRightPower= 0.3f;
+                        powerLevels.backRightPower= 0.3f;
+                        powerLevels.frontLeftPower= 0.2f;
+                        powerLevels.backLeftPower= 0.2f;
                         setMotorPowerLevels(powerLevels);
                     }
 
@@ -207,6 +205,7 @@ public abstract class AutonomousBase extends VelocityBase {
                         TurnOffAllDriveMotors();
                         elapsedTimeForMove.reset();
                         isPushing = false;
+                        isSecondBeacon = true;
                         switchToNextState();
                     }
 
@@ -219,6 +218,7 @@ public abstract class AutonomousBase extends VelocityBase {
                         TurnOffAllDriveMotors();
                         elapsedTimeForMove.reset();
                         isPushing = false;
+                        isSecondBeacon = true;
                         switchToNextState();
                     }
                 }
