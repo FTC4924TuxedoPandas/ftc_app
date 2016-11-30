@@ -24,7 +24,10 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_INITIAL:
 
-                switchToNextState();
+                if (elapsedTimeForCurrentState.time() >= 2.0f) {
+
+                    switchToNextState();
+                }
 
                 break;
 
@@ -120,10 +123,21 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 } else {
 
-                    if (elapsedTimeForMove.time() >= 3.0f) {
+                    if (isPushing) {
 
-                        isPushing = !isPushing;
-                        elapsedTimeForMove.reset();
+                        if (elapsedTimeForMove.time() >= 1.0f) {
+
+                            isPushing = !isPushing;
+                            elapsedTimeForMove.reset();
+                        }
+
+                    } else {
+
+                        if (elapsedTimeForMove.time() >= 6.0f) {
+
+                            isPushing = !isPushing;
+                            elapsedTimeForMove.reset();
+                        }
                     }
 
                     if (isRed()) {
@@ -137,7 +151,10 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isPushing && !isRed()) {
 
-                        setPowerForLinearMove(-0.1f);
+                        powerLevels.frontRightPower= 0.2f;
+                        powerLevels.backRightPower= 0.2f;
+                        powerLevels.frontLeftPower= 0.1f;
+                        powerLevels.backLeftPower= 0.1f;
                     }
 
                     setMotorPowerLevels(powerLevels);
@@ -145,10 +162,32 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 break;
 
-            case STATE_PUSH_BEACON:
+            case STATE_lINE_UP_TO_BEACON:
 
-                setPowerForLinearMove(-0.1f);
-                setMotorPowerLevels(powerLevels);
+                if (!isRed()) {
+
+                    if (elapsedTimeForCurrentState.time() >= 1.0f) {
+
+                        TurnOffAllDriveMotors();
+                        switchToNextState();
+
+                    } else {
+
+                        powerLevels.frontRightPower= 0.2f;
+                        powerLevels.backRightPower= 0.2f;
+                        powerLevels.frontLeftPower= 0.1f;
+                        powerLevels.backLeftPower= 0.1f;
+                        setMotorPowerLevels(powerLevels);
+                    }
+
+                } else {
+
+                    switchToNextState();
+                }
+
+                break;
+
+            case STATE_PUSH_BEACON:
 
                 if (isRed()) {
 

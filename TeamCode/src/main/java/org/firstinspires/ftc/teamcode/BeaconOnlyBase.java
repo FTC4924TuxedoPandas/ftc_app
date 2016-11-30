@@ -14,6 +14,7 @@ public abstract class BeaconOnlyBase extends AutonomousBase {
                 State.STATE_INITIAL,
                 State.STATE_DRIVE,
                 State.STATE_FIND_WHITE_LINE,
+                State.STATE_lINE_UP_TO_BEACON,
                 State.STATE_PUSH_BEACON,
                 State.STATE_STOP
         };

@@ -32,7 +32,8 @@ public abstract class VelocityBase extends OpMode {
         STATE_START_BEACON_PATH,
         STATE_START_LAUNCH_PATH,
         STATE_START_CAP_BALL_PATH,
-        STATE_DROP_GATE
+        STATE_DROP_GATE,
+        STATE_lINE_UP_TO_BEACON
     }
 
     DcMotor frontRightMotor;
@@ -105,7 +106,7 @@ public abstract class VelocityBase extends OpMode {
     GyroSensor turningGyro;
     public State currentState;
     static final float TURNING_ANGLE_MARGIN = 2.0f;
-    static final int ENCODER_TARGET_MARGIN = 10;
+    static final int ENCODER_TARGET_MARGIN = 15;
     public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     final int COUNTS_PER_REVOLUTION = 1120;
     final double WHEEL_DIAMETER = 4.0f;
@@ -152,7 +153,6 @@ public abstract class VelocityBase extends OpMode {
 
         runWithoutEncoders();
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
-        turningGyro.calibrate();
     }
 
     @Override
@@ -168,6 +168,7 @@ public abstract class VelocityBase extends OpMode {
     @Override
     public void start() {
 
+        turningGyro.calibrate();
     }
 
     @Override

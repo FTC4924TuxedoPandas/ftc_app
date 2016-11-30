@@ -25,6 +25,6 @@ public class BeaconOnly extends BeaconOnlyBase {
     @Override
     public boolean isRed() {
 
-        return true;
+        return false;
     }
 }

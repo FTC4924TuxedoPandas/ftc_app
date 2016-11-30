@@ -13,18 +13,16 @@ public class BlueLaunchTwoAndTwoBeacons extends LaunchTwoAndTwoBeaconsBase {
 
         launchPositioningPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(12.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(6.0f, 1.0f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(0.5f),
         };
 
         beaconPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(45.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(30.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(45.0f, 1.0f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(20.0f, 0.5f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(7.0f, 0.1f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(10.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
 
