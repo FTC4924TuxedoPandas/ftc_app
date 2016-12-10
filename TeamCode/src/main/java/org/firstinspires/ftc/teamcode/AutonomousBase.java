@@ -80,7 +80,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_WAIT_FOR_BALL:
 
-                if (elapsedTimeForCurrentState.time() >= 0.8f) {
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
                     autonomousBallServo.setPosition(0.0f);
                     switchToNextState();
