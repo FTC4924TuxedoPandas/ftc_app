@@ -48,7 +48,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_DROP_GATE:
 
-                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+                if (elapsedTimeForCurrentState.time() >= 2.0f) {
 
                     collectionMotor.setPower(0.0f);
                     switchToNextState();
@@ -80,7 +80,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_WAIT_FOR_BALL:
 
-                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+                if (elapsedTimeForCurrentState.time() >= 2.0f) {
 
                     autonomousBallServo.setPosition(0.0f);
                     switchToNextState();
