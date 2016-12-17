@@ -55,6 +55,7 @@ public abstract class VelocityBase extends OpMode {
 
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
+    public int steadyHeading = 0;
 
     PowerLevels powerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     float throwingArmPowerLevel = 0.0f;
@@ -251,6 +252,36 @@ public abstract class VelocityBase extends OpMode {
         powerLevels.backLeftPower = -power;
         powerLevels.backRightPower = power;
         powerLevels.frontRightPower = power;
+    }
+
+    public void setPowerForFullRangeHolonomic(float x, float y, int heading) {
+
+        int headingDifference = steadyHeading - heading;
+
+        if (steadyHeading - heading >= 180) {
+
+            headingDifference = steadyHeading - 360 - heading; 
+        }
+
+        if (heading - steadyHeading >= 180) {
+
+            headingDifference = 360 - heading + steadyHeading;
+        }
+
+        if (headingDifference < 0) {
+
+            powerLevels.frontLeftPower = (y - x) - Math.abs(headingDifference / 10);
+            powerLevels.backLeftPower = (y + x) - Math.abs(headingDifference / 10);
+            powerLevels.backRightPower = y - x;
+            powerLevels.frontRightPower = y + x;
+
+        } else {
+
+            powerLevels.frontLeftPower = y - x;
+            powerLevels.backLeftPower = y + x;
+            powerLevels.backRightPower = (y - x) - (headingDifference / 10);
+            powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
+        }
     }
 
     public void clipPowerLevels() {
