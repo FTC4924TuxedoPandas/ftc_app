@@ -27,10 +27,10 @@ public class BlueLaunchTwoAndTwoBeacons extends LaunchTwoAndTwoBeaconsBase {
                 //new DrivePathSegment(5.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
-
     @Override
     public boolean isRed() {
 
         return false;
+
     }
 }
