@@ -55,6 +55,9 @@ public abstract class VelocityBase extends OpMode {
 
     boolean isStrafingLeft = false;
     boolean isStrafingRight = false;
+    public boolean isTurningLeft = false;
+    public boolean isTurningRight = false;
+    public boolean headingSet = false;
     public int steadyHeading = 0;
 
     PowerLevels powerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
@@ -254,33 +257,53 @@ public abstract class VelocityBase extends OpMode {
         powerLevels.frontRightPower = power;
     }
 
-    public void setPowerForFullRangeHolonomic(float x, float y, int heading) {
+    public void setPowerForFullRangeHolonomic(float x, float y, int heading, float turnPower) {
 
         int headingDifference = steadyHeading - heading;
 
-        if (steadyHeading - heading >= 180) {
+        if (isTurningLeft) {
 
-            headingDifference = steadyHeading - 360 - heading; 
-        }
-
-        if (heading - steadyHeading >= 180) {
-
-            headingDifference = 360 - heading + steadyHeading;
-        }
-
-        if (headingDifference < 0) {
-
-            powerLevels.frontLeftPower = (y - x) - Math.abs(headingDifference / 10);
-            powerLevels.backLeftPower = (y + x) - Math.abs(headingDifference / 10);
+            powerLevels.frontLeftPower = y - x - turnPower;
+            powerLevels.backLeftPower = y + x - turnPower;
             powerLevels.backRightPower = y - x;
             powerLevels.frontRightPower = y + x;
 
         } else {
 
-            powerLevels.frontLeftPower = y - x;
-            powerLevels.backLeftPower = y + x;
-            powerLevels.backRightPower = (y - x) - (headingDifference / 10);
-            powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
+            if (isTurningRight) {
+
+                powerLevels.frontLeftPower = y - x;
+                powerLevels.backLeftPower = y + x;
+                powerLevels.backRightPower = y - x - turnPower;
+                powerLevels.frontRightPower = y + x - turnPower;
+
+            } else {
+
+                if (steadyHeading - heading >= 180) {
+
+                    headingDifference = steadyHeading - 360 - heading;
+                }
+
+                if (heading - steadyHeading >= 180) {
+
+                    headingDifference = 360 - heading + steadyHeading;
+                }
+
+                if (headingDifference < 0) {
+
+                    powerLevels.frontLeftPower = (y - x) - Math.abs(headingDifference / 10);
+                    powerLevels.backLeftPower = (y + x) - Math.abs(headingDifference / 10);
+                    powerLevels.backRightPower = y - x;
+                    powerLevels.frontRightPower = y + x;
+
+                } else {
+
+                    powerLevels.frontLeftPower = y - x;
+                    powerLevels.backLeftPower = y + x;
+                    powerLevels.backRightPower = (y - x) - (headingDifference / 10);
+                    powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
+                }
+            }
         }
     }
 
