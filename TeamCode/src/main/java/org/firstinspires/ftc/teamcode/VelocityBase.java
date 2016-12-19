@@ -511,7 +511,7 @@ public abstract class VelocityBase extends OpMode {
     }
 
     public boolean pathComplete() {
-        // Wait for this Segement to end and then see what's next.
+        // Wait for this Segment to end and then see what's next.
         if (segmentComplete()) {
             // Start next Segment if there is one.
             if (currentPathSegmentIndex < currentPath.length) {

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public abstract class AutonomousBase extends VelocityBase {
 
-    final float THROWING_TIME = 0.2f;
+    final float THROWING_TIME = 0.2f; // we are literally the worst
     public int stateIndex = 0;
     public ElapsedTime elapsedTimeForMove = new ElapsedTime();
     public boolean isPushing = false;
@@ -99,7 +99,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 if (pathComplete()) {
 
-                    TurnOffAllDriveMotors();
+                    TurnOffAllDriveMotors(); // TOTAL SILENCE
                     switchToNextState();
                 }
 
@@ -253,7 +253,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
     public void switchToNextState() {
 
-        elapsedTimeForCurrentState.reset();
+        elapsedTimeForCurrentState.reset(); //bye
         stateIndex++;
 
         if (stateIndex >= stateList().length) {
