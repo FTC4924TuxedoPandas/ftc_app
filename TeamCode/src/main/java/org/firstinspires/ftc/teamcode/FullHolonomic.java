@@ -14,23 +14,37 @@ import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 @TeleOp(name = "FullHolonomic")
 public class FullHolonomic extends VelocityBase {
 
-    GyroSensor turningGyro;
-    DcMotor frontRightMotor;
-    DcMotor frontLeftMotor;
-    DcMotor backRightMotor;
-    DcMotor backLeftMotor;
+    @Override
+    public void init() {
 
-    public boolean isTurningLeft = false;
-    public boolean isTurningRight = false;
-    public boolean headingSet = false;
-    public int steadyHeading = 0;
+        frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
+        frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
+        backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
+        backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
 
-    public float leftTriggerValue() { return gamepad1.left_trigger; }
-    public float rightTriggerValue() { return gamepad1.right_trigger; }
-    PowerLevels powerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
-    public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-    public void setPowerForFullRangeHolonomic(float x, float y, int heading, float turnPower) {
+
+        turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
+        currentState = VelocityBase.State.STATE_INITIAL;
+
+        useRunUsingEncoders();
+        countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    @Override
+    public void init_loop() {
+
+    }
+
+    public void setPowerForFullHolonomic(float x, float y, int heading, float turnPower) {
 
         int headingDifference = steadyHeading - heading;
 
@@ -80,52 +94,13 @@ public class FullHolonomic extends VelocityBase {
         }
     }
 
-    public void setMotorPowerLevels(PowerLevels powerLevels) {
+    public void setPowerLevels(PowerLevels powerLevels) {
 
         frontLeftMotor.setPower(powerLevels.frontLeftPower);
         backLeftMotor.setPower(powerLevels.backLeftPower);
         backRightMotor.setPower(powerLevels.backRightPower);
         frontRightMotor.setPower(powerLevels.frontRightPower);
     }
-
-    public void TurnOffAllDriveMotors() {
-        SetDriveMotorPowerLevels(zeroPowerLevels);
-    }
-
-    public void SetDriveMotorPowerLevels(PowerLevels levels) {
-
-        frontRightMotor.setPower(levels.frontRightPower);
-        frontLeftMotor.setPower(levels.frontLeftPower);
-        backRightMotor.setPower(levels.backRightPower);
-        backLeftMotor.setPower(levels.backLeftPower);
-    }
-
-    @Override
-    public void init() {
-
-        frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-        frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-        backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-        backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-
-
-
-
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-
-        turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
-        currentState = VelocityBase.State.STATE_INITIAL;
-
-        runWithoutEncoders();
-        countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
-    }
-
-
-
 
     @Override
     public void loop() {
@@ -162,21 +137,21 @@ public class FullHolonomic extends VelocityBase {
 
             if (isTurningLeft) {
 
-                setPowerForFullRangeHolonomic(x, y, currentHeading, leftTriggerValue());
-                setMotorPowerLevels(powerLevels);
+                setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue());
+                setPowerLevels(powerLevels);
 
             } else {
 
                 if (isTurningRight) {
 
-                    setPowerForFullRangeHolonomic(x, y, currentHeading, rightTriggerValue());
+                    setPowerForFullHolonomic(x, y, currentHeading, rightTriggerValue());
 
                 } else {
 
-                    setPowerForFullRangeHolonomic(x, y, currentHeading, 0.0f);
+                    setPowerForFullHolonomic(x, y, currentHeading, 0.0f);
                 }
 
-                setMotorPowerLevels(powerLevels);
+                setPowerLevels(powerLevels);
             }
 
         } else {
