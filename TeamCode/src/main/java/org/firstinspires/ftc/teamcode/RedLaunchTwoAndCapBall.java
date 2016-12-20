@@ -22,6 +22,11 @@ public class RedLaunchTwoAndCapBall extends LaunchTwoAndCapBallBase {
 
                 new DrivePathSegment(40.0f, 1.0f, DrivePathSegment.LINEAR),
         };
+        beaconPath = new DrivePathSegment[]{
+                new DrivePathSegment(270.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(30.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(1.0f),
+        };
     }
 
     @Override

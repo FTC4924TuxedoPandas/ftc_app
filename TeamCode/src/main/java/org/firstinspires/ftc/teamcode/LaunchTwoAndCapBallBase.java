@@ -21,6 +21,11 @@ public abstract class LaunchTwoAndCapBallBase extends AutonomousBase {
                 State.STATE_LAUNCH_BALL,
                 State.STATE_START_CAP_BALL_PATH,
                 State.STATE_KNOCK_CAP_BALL,
+                State.STATE_START_BEACON_PATH,
+                State.STATE_DRIVE,
+                State.STATE_FIND_WHITE_LINE,
+                State.STATE_lINE_UP_TO_BEACON,
+                State.STATE_PUSH_BEACON,
                 State.STATE_STOP
         };
     }
