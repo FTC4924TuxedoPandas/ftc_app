@@ -7,14 +7,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name = "BlueLaunchTwoAndCapBallAndOneBeacon") //right side of the robot should be on the edge of the 3rd tile from the ramp when starting
-public abstract class BlueLaunchTwoAndCapBallAndOneBeacon extends LaunchTwoAndCapBallAndOneBeaconBase {
+public class BlueLaunchTwoAndCapBallAndOneBeacon extends LaunchTwoAndCapBallAndOneBeaconBase {
 
     public BlueLaunchTwoAndCapBallAndOneBeacon (){
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(4.0f, 1.0f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(45.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(330.0f, 1.0f, DrivePathSegment.TURN),
                 new DrivePathSegment(6.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(1.0f),
         };
         beaconPath = new DrivePathSegment[]{
 

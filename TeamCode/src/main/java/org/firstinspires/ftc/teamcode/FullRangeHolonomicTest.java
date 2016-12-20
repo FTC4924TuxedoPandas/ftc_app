@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
  * Created by 4924_Users on 12/17/2016.
  */
 
-@TeleOp(name = "FullRangeHolonomicTest")
+@TeleOp(name = "FullRangeHolonomicTest ")
 public class FullRangeHolonomicTest extends VelocityBase {
 
     @Override
