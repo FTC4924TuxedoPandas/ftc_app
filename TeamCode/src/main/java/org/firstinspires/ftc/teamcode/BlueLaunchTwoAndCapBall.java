@@ -12,11 +12,13 @@ public class BlueLaunchTwoAndCapBall extends LaunchTwoAndCapBallBase {
     public BlueLaunchTwoAndCapBall (){
         launchPositioningPath = new DrivePathSegment[]{
 
-                //new DrivePathSegment(26.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(5.0f, 1.0f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(45.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(28.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(1.0f),
         };
         knockCapBallPath = new DrivePathSegment[]{
-                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(20.0f, 1.0f, DrivePathSegment.LINEAR),
 
         };
 
