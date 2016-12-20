@@ -157,6 +157,7 @@ public abstract class VelocityBase extends OpMode {
 
         runWithoutEncoders();
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
+        turningGyro.calibrate();
     }
 
     @Override
@@ -172,7 +173,7 @@ public abstract class VelocityBase extends OpMode {
     @Override
     public void start() {
 
-        turningGyro.calibrate();
+
     }
 
     @Override
