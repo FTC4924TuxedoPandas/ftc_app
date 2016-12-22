@@ -88,20 +88,39 @@ public class FullHolonomic extends VelocityBase {
         }
     }
 
-    public void setPowerLevels(PowerLevels powerLevels) {
-
-        frontLeftMotor.setPower(powerLevels.frontLeftPower);
-        backLeftMotor.setPower(powerLevels.backLeftPower);
-        backRightMotor.setPower(powerLevels.backRightPower);
-        frontRightMotor.setPower(powerLevels.frontRightPower);
-    }
-
     @Override
     public void loop() {
         int currentHeading = turningGyro.getHeading();
 
         float x = -gamepad1.left_stick_x;
         float y = -gamepad1.left_stick_y;
+
+        if (dpadUpIsPressed()) {
+
+            raiseThrowingArm();
+
+        } else if (dpadDownIsPressed()) {
+
+            lowerThrowingArm();
+
+        } else {
+
+            stopMovingThrowingArm();
+        }
+
+        if (collectionIn()) {
+
+            collectionIntake();
+
+        } else if (collectionOut()) {
+
+            collectionRelease();
+
+        } else {
+
+            collectionOff();
+        }
+
 
         isTurningLeft = leftTriggerValue() > 0.01f;
         isTurningRight = rightTriggerValue() > 0.01f;
@@ -126,11 +145,13 @@ public class FullHolonomic extends VelocityBase {
         telemetry.addData("x", x);
         telemetry.addData("y", y);
         telemetry.addData("Steady Angle", steadyHeading);
+        telemetry.addData("Collection", collectionIn());
+        telemetry.addData("Throwing Arm", dpadUpIsPressed());
 
-        if (headingSet) {
+        if (headingSet || isTurningLeft || isTurningRight) {
 
-                setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue());
-                setPowerLevels(powerLevels);
+            setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue());
+            setMotorPowerLevels(powerLevels);
 
         } else {
 
