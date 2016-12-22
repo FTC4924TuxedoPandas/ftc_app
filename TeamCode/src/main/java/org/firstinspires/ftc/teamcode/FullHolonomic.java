@@ -48,52 +48,42 @@ public class FullHolonomic extends VelocityBase {
 
     }
 
-    public void setPowerForFullHolonomic(float x, float y, int heading, float turnPower) {
+    public void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower) {
 
         int headingDifference = steadyHeading - heading;
 
-        if (isTurningLeft) {
+        if (isTurningLeft || isTurningRight) {
 
-            powerLevels.frontLeftPower = y - x - turnPower;
-            powerLevels.backLeftPower = y + x - turnPower;
-            powerLevels.backRightPower = y - x + turnPower;
-            powerLevels.frontRightPower = y + x + turnPower;
+            powerLevels.frontLeftPower = y - x - leftTurnPower + rightTurnPower;
+            powerLevels.backLeftPower = y + x - leftTurnPower + rightTurnPower;
+            powerLevels.backRightPower = y - x + leftTurnPower - rightTurnPower;
+            powerLevels.frontRightPower = y + x + leftTurnPower - rightTurnPower;
 
         } else {
 
-            if (isTurningRight) {
+            if (steadyHeading - heading >= 180) {
 
-                powerLevels.frontLeftPower = y - x + turnPower;
-                powerLevels.backLeftPower = y + x + turnPower;
-                powerLevels.backRightPower = y - x - turnPower;
-                powerLevels.frontRightPower = y + x - turnPower;
+                headingDifference = steadyHeading - 360 - heading;
+            }
+
+            if (heading - steadyHeading >= 180) {
+
+                headingDifference = 360 - heading + steadyHeading;
+            }
+
+            if (headingDifference < 0) {
+
+                powerLevels.frontLeftPower = (y - x) - Math.abs(headingDifference / 10);
+                powerLevels.backLeftPower = (y + x) - Math.abs(headingDifference / 10);
+                powerLevels.backRightPower = y - x;
+                powerLevels.frontRightPower = y + x;
 
             } else {
 
-                if (steadyHeading - heading >= 180) {
-
-                    headingDifference = steadyHeading - 360 - heading;
-                }
-
-                if (heading - steadyHeading >= 180) {
-
-                    headingDifference = 360 - heading + steadyHeading;
-                }
-
-                if (headingDifference < 0) {
-
-                    powerLevels.frontLeftPower = (y - x) - Math.abs(headingDifference / 10);
-                    powerLevels.backLeftPower = (y + x) - Math.abs(headingDifference / 10);
-                    powerLevels.backRightPower = y - x;
-                    powerLevels.frontRightPower = y + x;
-
-                } else {
-
-                    powerLevels.frontLeftPower = y - x;
-                    powerLevels.backLeftPower = y + x;
-                    powerLevels.backRightPower = (y - x) - (headingDifference / 10);
-                    powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
-                }
+                powerLevels.frontLeftPower = y - x;
+                powerLevels.backLeftPower = y + x;
+                powerLevels.backRightPower = (y - x) - (headingDifference / 10);
+                powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
             }
         }
     }
@@ -139,24 +129,8 @@ public class FullHolonomic extends VelocityBase {
 
         if (headingSet) {
 
-            if (isTurningLeft) {
-
-                setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue());
+                setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue());
                 setPowerLevels(powerLevels);
-
-            } else {
-
-                if (isTurningRight) {
-
-                    setPowerForFullHolonomic(x, y, currentHeading, rightTriggerValue());
-
-                } else {
-
-                    setPowerForFullHolonomic(x, y, currentHeading, 0.0f);
-                }
-
-                setPowerLevels(powerLevels);
-            }
 
         } else {
 
