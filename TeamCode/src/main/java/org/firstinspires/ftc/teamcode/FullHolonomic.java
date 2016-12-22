@@ -137,6 +137,9 @@ public class FullHolonomic extends VelocityBase {
             TurnOffAllDriveMotors();
         }
     }
+    public boolean dpadDownIsPressed() { return gamepad2.dpad_down; }
+
+    public boolean dpadUpIsPressed() { return gamepad2.dpad_up; }
 
     public boolean collectionIn() {
         return gamepad2.right_bumper;
@@ -145,18 +148,5 @@ public class FullHolonomic extends VelocityBase {
     public boolean collectionOut() {
         return gamepad2.left_bumper;
     }
-
-    public boolean d2XIsPressed() {
-        return gamepad2.x;
-    }
-
-    public boolean d2AIsPressed() { return gamepad2.a; }
-
-    public boolean d2YIsPressed() {
-        return gamepad2.y;
-    }
-
-    public boolean d2BIsPressed() { return gamepad2.b; }
-
 }
 
