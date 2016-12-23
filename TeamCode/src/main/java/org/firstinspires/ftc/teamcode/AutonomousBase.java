@@ -18,8 +18,9 @@ public abstract class AutonomousBase extends VelocityBase {
     public void loop() {
 
         telemetry.addData("currentState: ", currentState);
-        telemetry.addData("Gyro", turningGyro.getHeading());
-        telemetry.addData("Target", segment.Angle);
+        //telemetry.addData("Gyro", turningGyro.getHeading());
+        //telemetry.addData("Target", segment.Angle);
+        int heading = turningGyro.getHeading();
 
         switch (currentState) {
 
@@ -103,10 +104,10 @@ public abstract class AutonomousBase extends VelocityBase {
                     switchToNextState();
                 }
 
-                telemetry.addData("RightPosition", getRightPosition());
-                telemetry.addData("RightTarget", currentEncoderTargets.frontRightTarget);
-                telemetry.addData("LeftPosition", getLeftPosition());
-                telemetry.addData("LeftTarget", currentEncoderTargets.frontLeftTarget);
+                //telemetry.addData("RightPosition", getRightPosition());
+                //telemetry.addData("RightTarget", currentEncoderTargets.frontRightTarget);
+                //telemetry.addData("LeftPosition", getLeftPosition());
+                //telemetry.addData("LeftTarget", currentEncoderTargets.frontLeftTarget);
 
                 break;
 
@@ -140,11 +141,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.2f);
+                        setPowerForMecanumStrafe(0.2f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.2f);
+                        setPowerForMecanumStrafe(-0.2f, heading);
                     }
 
                     if (isPushing && !isRed()) {
