@@ -116,7 +116,7 @@ public class FullHolonomic extends VelocityBase {
         }
     }
 
-    private float getSensitivePowerLevel(float motorPower) {
+    private float getSensitivePowerLevel(float motorPower) { //returns square of value; if below 1, will be lowered exponentially; if above 1, will be clipped to 1 later
         int direction = 1;
         if (motorPower < 0) { direction = -1; }
         return (float) ((Math.pow((double) motorPower, 2.0)) * direction);
