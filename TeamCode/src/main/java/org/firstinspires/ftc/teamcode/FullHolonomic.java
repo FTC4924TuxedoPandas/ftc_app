@@ -37,10 +37,10 @@ public class FullHolonomic extends VelocityBase {
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
 
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -63,17 +63,17 @@ public class FullHolonomic extends VelocityBase {
 
     }
 
-    public void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, float driveDirection) {
+    public void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
 
 
         int headingDifference = steadyHeading - heading;
 
         if (isTurningLeft || isTurningRight) {
 
-            powerLevels.frontLeftPower = driveDirection * (y - x - leftTurnPower + rightTurnPower);
-            powerLevels.backLeftPower = driveDirection * (y + x - leftTurnPower + rightTurnPower);
-            powerLevels.backRightPower = driveDirection * (y - x + leftTurnPower - rightTurnPower);
-            powerLevels.frontRightPower = driveDirection * (y + x + leftTurnPower - rightTurnPower);
+            powerLevels.frontLeftPower = y - x - leftTurnPower + rightTurnPower;
+            powerLevels.backLeftPower = y + x - leftTurnPower + rightTurnPower;
+            powerLevels.backRightPower = y - x + leftTurnPower - rightTurnPower;
+            powerLevels.frontRightPower = y + x + leftTurnPower - rightTurnPower;
 
         } else {
 
@@ -102,6 +102,8 @@ public class FullHolonomic extends VelocityBase {
                 powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
             }
         }
+
+        setCoeffPowerLevels(driveDirection);
     }
 
     @Override
@@ -172,7 +174,7 @@ public class FullHolonomic extends VelocityBase {
         telemetry.addData("Collection", collectionIn());
         telemetry.addData("Throwing Arm", d2DPadUpIsPressed());
         telemetry.addData("Collection", collectionOut());
-        telemetry.addData("Throwing Arm", dpadDownIsPressed());
+        telemetry.addData("Throwing Arm", d2DPadDownIsPressed());
         telemetry.addData("Collection", collectionPowerLevel);
 
 
@@ -190,8 +192,12 @@ public class FullHolonomic extends VelocityBase {
         collectionMotor.setPower(collectionPowerLevel);
     }
 
-    public boolean dpadDownIsPressed() { return gamepad1.dpad_down; }
-
+    public void setCoeffPowerLevels(int driveDirection) {
+        powerLevels.frontLeftPower *= driveDirection;
+        powerLevels.backLeftPower *= driveDirection;
+        powerLevels.frontRightPower *= driveDirection;
+        powerLevels.backRightPower *= driveDirection;
+    }
 
 }
 
