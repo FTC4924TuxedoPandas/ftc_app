@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by 4924_Users on 10/15/2016.
  */
 
-@Autonomous(name = "TestAutonomous")
+//@Autonomous(name = "TestAutonomous")
 public class TestAutonomous extends VelocityBase {
 
     public TestAutonomous() {

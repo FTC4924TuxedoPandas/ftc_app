@@ -122,6 +122,7 @@ public abstract class VelocityBase extends OpMode {
     public float leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
+    public static int angleOffset = 0;
     boolean reversed;
     ElapsedTime time = new ElapsedTime();
 
@@ -173,7 +174,7 @@ public abstract class VelocityBase extends OpMode {
     @Override
     public void start() {
 
-
+        angleOffset = turningGyro.getHeading();
     }
 
     @Override
@@ -196,12 +197,39 @@ public abstract class VelocityBase extends OpMode {
         powerLevels.frontRightPower = rightStick;
     }
 
-    public void setPowerForMecanumStrafe(float power) {
+    public void setPowerForMecanumStrafe(float power, int heading) {
 
-        powerLevels.frontLeftPower = power;
-        powerLevels.backLeftPower = -power;
-        powerLevels.backRightPower = power;
-        powerLevels.frontRightPower = -power;
+        int headingDifference = steadyHeading - heading;
+
+        telemetry.addData("heading", heading);
+        telemetry.addData("steadyHeading", steadyHeading);
+
+        if (steadyHeading - heading >= 180) {
+
+            headingDifference = steadyHeading - 360 - heading;
+        }
+
+        if (heading - steadyHeading >= 180) {
+
+            headingDifference = 360 - heading + steadyHeading;
+        }
+
+        telemetry.addData("difference", headingDifference);
+
+        if (headingDifference < 0) {
+
+            powerLevels.frontLeftPower = power;
+            powerLevels.backLeftPower = -power;
+            powerLevels.backRightPower = power - Math.abs(headingDifference / 10);
+            powerLevels.frontRightPower = -power - Math.abs(headingDifference / 10);
+
+        } else {
+
+            powerLevels.frontLeftPower = power - Math.abs(headingDifference / 10);
+            powerLevels.backLeftPower = -power - Math.abs(headingDifference / 10);
+            powerLevels.backRightPower = power;
+            powerLevels.frontRightPower = -power;
+        }
     }
 
     public void setPowerForLinearMove(float power) {
@@ -354,15 +382,25 @@ public abstract class VelocityBase extends OpMode {
         segment = currentPath[currentPathSegmentIndex];
         elapsedTimeForCurrentSegment.reset();
 
+        int heading = turningGyro.getHeading();
+        steadyHeading = heading;
+
         if (currentPath != null) {
 
             if (segment.isTurn) {
+
+                segment.Angle += angleOffset;
+
+                if (segment.Angle >= 360) {
+
+                    segment.Angle -= 360;
+                }
 
                 turnStartValueLeft = getLeftPosition();
                 turnStartValueRight = getRightPosition();
 
                 runWithoutEncoders();
-                double currentAngle = turningGyro.getHeading();
+                double currentAngle = heading;
 
                 if (counterclockwiseTurnNeeded(currentAngle)) {
 
@@ -405,7 +443,7 @@ public abstract class VelocityBase extends OpMode {
                             isStrafingRight = true;
                         }
 
-                        setPowerForMecanumStrafe(segment.rightPower);
+                        setPowerForMecanumStrafe(segment.rightPower, heading);
 
                     } else {
 
@@ -474,8 +512,6 @@ public abstract class VelocityBase extends OpMode {
 
     public boolean counterclockwiseTurnNeeded(double currentAngle) {
 
-        telemetry.addData("Angle: ", currentAngle);
-
         if (currentAngle < Math.abs(segment.Angle)) {
 
             return (Math.abs(segment.Angle) - currentAngle) >= 180.0f;
@@ -526,6 +562,27 @@ public abstract class VelocityBase extends OpMode {
                 currentPathSegmentIndex = 0;
                 TurnOffAllDriveMotors();
                 return true;
+            }
+
+        } else {
+
+            if (!segment.isTurn) {
+
+                if (segment.isHolonomic) {
+
+                    setPowerForMecanumStrafe(segment.rightPower, turningGyro.getHeading());
+
+                } else {
+
+                    if (segment.isDelay) {
+
+                        TurnOffAllDriveMotors();
+
+                    } else {
+
+                        setPowerForLinearMove(segment.rightPower);
+                    }
+                }
             }
         }
 

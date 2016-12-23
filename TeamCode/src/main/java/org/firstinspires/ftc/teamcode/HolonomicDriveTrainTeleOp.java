@@ -37,7 +37,7 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
 
         } else if (isStrafing()) {
 
-            setPowerForMecanumStrafe(driveStickX * reverseFactor);
+            setPowerForMecanumStrafe(driveStickX * reverseFactor, turningGyro.getHeading());
 
         } else {
 
