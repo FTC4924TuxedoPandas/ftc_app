@@ -124,6 +124,7 @@ public abstract class VelocityBase extends OpMode {
     public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
     public static int angleOffset = 0;
     boolean reversed;
+    boolean lowSensitivity;
     ElapsedTime time = new ElapsedTime();
 
     @Override

@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.GyroSensor;
-import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -53,6 +50,8 @@ public class FullHolonomic extends VelocityBase {
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        lowSensitivity = false;
     }
 
 
@@ -100,6 +99,29 @@ public class FullHolonomic extends VelocityBase {
                 powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
             }
         }
+
+        if (lowSensitivity) {
+            powerLevels.frontLeftPower = getSensitivePowerLevel(powerLevels.frontLeftPower);
+            powerLevels.backLeftPower = getSensitivePowerLevel(powerLevels.backLeftPower);
+            powerLevels.backRightPower = getSensitivePowerLevel(powerLevels.backRightPower);
+            powerLevels.frontRightPower = getSensitivePowerLevel(powerLevels.frontRightPower);
+        }
+    }
+
+    public float getSensitivePowerLevel(float motorPower) {
+        int direction = 1;
+        if (motorPower < 0) { direction = -1; }
+        return (float) ((Math.pow((double) motorPower, 2.0)) * direction);
+    }
+
+    private void setLowSensitivity() {
+
+        lowSensitivity = true;
+    }
+
+    private void resetSensitivity() {
+
+        lowSensitivity = false;
     }
 
     @Override
@@ -111,6 +133,16 @@ public class FullHolonomic extends VelocityBase {
 
         isTurningLeft = leftTriggerValue() > 0.01f;
         isTurningRight = rightTriggerValue() > 0.01f;
+
+        if (d1XIsPressed()) {
+
+            setLowSensitivity();
+        }
+
+        if (d1YIsPressed()) {
+
+            resetSensitivity();
+        }
 
         if (dpadUpIsPressed()) {
 
@@ -162,7 +194,6 @@ public class FullHolonomic extends VelocityBase {
         telemetry.addData("Collection", collectionOut());
         telemetry.addData("Throwing Arm", dpadDownIsPressed());
         telemetry.addData("Collection", collectionPowerLevel);
-
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
