@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by 4924_Users on 12/17/2016.
@@ -13,6 +14,18 @@ import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 
 @TeleOp(name = "FullHolonomic")
 public class FullHolonomic extends VelocityBase {
+
+    @Override
+    public void clipPowerLevels() {
+
+        powerLevels.backRightPower = Range.clip(powerLevels.backRightPower, -1.0f, 1.0f);
+        powerLevels.backLeftPower = Range.clip(powerLevels.backLeftPower, -1.0f, 1.0f);
+        powerLevels.frontRightPower = Range.clip(powerLevels.frontRightPower, -1.0f, 1.0f);
+        powerLevels.frontLeftPower = Range.clip(powerLevels.frontLeftPower, -1.0f, 1.0f);
+        throwingArmPowerLevel = Range.clip(throwingArmPowerLevel, -1.0f, 1.0f);
+        collectionPowerLevel = Range.clip(collectionPowerLevel, -1.0f, 1.0f);
+    }
+
 
     @Override
     public void init() {
@@ -40,8 +53,8 @@ public class FullHolonomic extends VelocityBase {
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
     }
+
 
     @Override
     public void init_loop() {
@@ -49,6 +62,7 @@ public class FullHolonomic extends VelocityBase {
     }
 
     public void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower) {
+
 
         int headingDifference = steadyHeading - heading;
 
@@ -95,6 +109,9 @@ public class FullHolonomic extends VelocityBase {
         float x = -gamepad1.left_stick_x;
         float y = -gamepad1.left_stick_y;
 
+        isTurningLeft = leftTriggerValue() > 0.01f;
+        isTurningRight = rightTriggerValue() > 0.01f;
+
         if (dpadUpIsPressed()) {
 
             raiseThrowingArm();
@@ -121,11 +138,6 @@ public class FullHolonomic extends VelocityBase {
             collectionOff();
         }
 
-
-        isTurningLeft = leftTriggerValue() > 0.01f;
-        isTurningRight = rightTriggerValue() > 0.01f;
-
-
         if (Math.abs(x) > 0.01 || Math.abs(y) > 0.01) {
 
             headingSet = true;
@@ -147,6 +159,10 @@ public class FullHolonomic extends VelocityBase {
         telemetry.addData("Steady Angle", steadyHeading);
         telemetry.addData("Collection", collectionIn());
         telemetry.addData("Throwing Arm", dpadUpIsPressed());
+        telemetry.addData("Collection", collectionOut());
+        telemetry.addData("Throwing Arm", dpadDownIsPressed());
+        telemetry.addData("Collection", collectionPowerLevel);
+
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
@@ -157,17 +173,10 @@ public class FullHolonomic extends VelocityBase {
 
             TurnOffAllDriveMotors();
         }
-    }
-    public boolean dpadDownIsPressed() { return gamepad2.dpad_down; }
 
-    public boolean dpadUpIsPressed() { return gamepad2.dpad_up; }
-
-    public boolean collectionIn() {
-        return gamepad2.right_bumper;
+        throwingArm.setPower(throwingArmPowerLevel);
+        collectionMotor.setPower(collectionPowerLevel);
     }
 
-    public boolean collectionOut() {
-        return gamepad2.left_bumper;
-    }
 }
 
