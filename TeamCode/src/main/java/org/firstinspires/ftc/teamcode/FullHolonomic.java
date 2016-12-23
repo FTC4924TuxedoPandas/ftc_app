@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -52,6 +55,8 @@ public class FullHolonomic extends VelocityBase {
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         lowSensitivity = false;
+
+        driveDirection = 1;
     }
 
 
@@ -60,7 +65,7 @@ public class FullHolonomic extends VelocityBase {
 
     }
 
-    public void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower) {
+    public void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
 
 
         int headingDifference = steadyHeading - heading;
@@ -100,6 +105,8 @@ public class FullHolonomic extends VelocityBase {
             }
         }
 
+        setCoeffPowerLevels(driveDirection);
+
         if (lowSensitivity) {
             powerLevels.frontLeftPower = getSensitivePowerLevel(powerLevels.frontLeftPower);
             powerLevels.backLeftPower = getSensitivePowerLevel(powerLevels.backLeftPower);
@@ -134,21 +141,21 @@ public class FullHolonomic extends VelocityBase {
         isTurningLeft = leftTriggerValue() > 0.01f;
         isTurningRight = rightTriggerValue() > 0.01f;
 
-        if (d1XIsPressed()) {
+        if (d1DPadDownIsPressed()) {
 
-            setLowSensitivity();
+            driveDirection = -1;
+
+        } else if (d1DPadUpIsPressed()) {
+
+            driveDirection = 1;
+
         }
 
-        if (d1YIsPressed()) {
-
-            resetSensitivity();
-        }
-
-        if (dpadUpIsPressed()) {
+        if (d2DPadUpIsPressed()) {
 
             raiseThrowingArm();
 
-        } else if (dpadDownIsPressed()) {
+        } else if (d2DPadDownIsPressed()) {
 
             lowerThrowingArm();
 
@@ -170,6 +177,18 @@ public class FullHolonomic extends VelocityBase {
             collectionOff();
         }
 
+        if (d1XIsPressed()) {
+
+            setLowSensitivity();
+        }
+
+        if (d1YIsPressed()) {
+
+            resetSensitivity();
+        }
+
+        if (dpadUpIsPressed()) {
+
         if (Math.abs(x) > 0.01 || Math.abs(y) > 0.01) {
 
             headingSet = true;
@@ -190,14 +209,14 @@ public class FullHolonomic extends VelocityBase {
         telemetry.addData("y", y);
         telemetry.addData("Steady Angle", steadyHeading);
         telemetry.addData("Collection", collectionIn());
-        telemetry.addData("Throwing Arm", dpadUpIsPressed());
+        telemetry.addData("Throwing Arm", d2DPadUpIsPressed());
         telemetry.addData("Collection", collectionOut());
-        telemetry.addData("Throwing Arm", dpadDownIsPressed());
+        telemetry.addData("Throwing Arm", d2DPadDownIsPressed());
         telemetry.addData("Collection", collectionPowerLevel);
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
-            setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue());
+            setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue(), driveDirection);
             setMotorPowerLevels(powerLevels);
 
         } else {
@@ -207,6 +226,13 @@ public class FullHolonomic extends VelocityBase {
 
         throwingArm.setPower(throwingArmPowerLevel);
         collectionMotor.setPower(collectionPowerLevel);
+    }
+
+    public void setCoeffPowerLevels(int driveDirection) {
+        powerLevels.frontLeftPower *= driveDirection;
+        powerLevels.backLeftPower *= driveDirection;
+        powerLevels.frontRightPower *= driveDirection;
+        powerLevels.backRightPower *= driveDirection;
     }
 
 }

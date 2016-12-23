@@ -18,11 +18,11 @@ public class HolonomicDriveTrainTeleOp extends VelocityBase {
         driveStickX = gamepad1.left_stick_x;
         driveStickY = gamepad1.left_stick_y;
 
-        if (dpadUpIsPressed()) {
+        if (d2DPadUpIsPressed()) {
 
             raiseThrowingArm();
 
-        } else if (dpadDownIsPressed()) {
+        } else if (d2DPadDownIsPressed()) {
 
             lowerThrowingArm();
 

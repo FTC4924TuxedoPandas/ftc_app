@@ -107,6 +107,7 @@ public abstract class VelocityBase extends OpMode {
     public ElapsedTime buttonDelay = new ElapsedTime();
     int turnStartValueLeft;
     int turnStartValueRight;
+    int driveDirection;
     GyroSensor turningGyro;
     public State currentState;
     static final float TURNING_ANGLE_MARGIN = 2.0f;
@@ -202,9 +203,6 @@ public abstract class VelocityBase extends OpMode {
 
         int headingDifference = steadyHeading - heading;
 
-        telemetry.addData("heading", heading);
-        telemetry.addData("steadyHeading", steadyHeading);
-
         if (steadyHeading - heading >= 180) {
 
             headingDifference = steadyHeading - 360 - heading;
@@ -215,21 +213,19 @@ public abstract class VelocityBase extends OpMode {
             headingDifference = 360 - heading + steadyHeading;
         }
 
-        telemetry.addData("difference", headingDifference);
-
         if (headingDifference < 0) {
 
-            powerLevels.frontLeftPower = power;
-            powerLevels.backLeftPower = -power;
-            powerLevels.backRightPower = power - Math.abs(headingDifference / 10);
-            powerLevels.frontRightPower = -power - Math.abs(headingDifference / 10);
+            powerLevels.frontLeftPower = power - Math.abs(headingDifference * power);
+            powerLevels.backLeftPower = -power - Math.abs(headingDifference * power);;
+            powerLevels.backRightPower = power;
+            powerLevels.frontRightPower = -power;
 
         } else {
 
-            powerLevels.frontLeftPower = power - Math.abs(headingDifference / 10);
-            powerLevels.backLeftPower = -power - Math.abs(headingDifference / 10);
-            powerLevels.backRightPower = power;
-            powerLevels.frontRightPower = -power;
+            powerLevels.frontLeftPower = power;
+            powerLevels.backLeftPower = -power;
+            powerLevels.backRightPower = power - Math.abs(headingDifference * power);;
+            powerLevels.frontRightPower = -power - Math.abs(headingDifference * power);;
         }
     }
 
@@ -513,6 +509,8 @@ public abstract class VelocityBase extends OpMode {
 
     public boolean counterclockwiseTurnNeeded(double currentAngle) {
 
+        telemetry.addData("Angle: ", currentAngle);
+
         if (currentAngle < Math.abs(segment.Angle)) {
 
             return (Math.abs(segment.Angle) - currentAngle) >= 180.0f;
@@ -585,6 +583,8 @@ public abstract class VelocityBase extends OpMode {
                     }
                 }
             }
+
+            setMotorPowerLevels(powerLevels);
         }
 
         return false;
@@ -718,9 +718,13 @@ public abstract class VelocityBase extends OpMode {
         gateServoPosition = GATE_SERVO_POSITION_HIGH;
     }
 
-    public boolean dpadDownIsPressed() { return gamepad2.dpad_down; }
+    public boolean d1DPadUpIsPressed() { return gamepad1.dpad_up; }
 
-    public boolean dpadUpIsPressed() { return gamepad2.dpad_up; }
+    public boolean d1DPadDownIsPressed() { return gamepad1.dpad_down; }
+
+    public boolean d2DPadDownIsPressed() { return gamepad2.dpad_down; }
+
+    public boolean d2DPadUpIsPressed() { return gamepad2.dpad_up; }
 
     public boolean collectionIn() {
         return gamepad2.right_bumper;
