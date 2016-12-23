@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by 4924_Users on 12/17/2016.
+ * Latest fixes made on 12/23/2016
  */
 
 @TeleOp(name = "FullHolonomic")
@@ -65,7 +66,7 @@ public class FullHolonomic extends VelocityBase {
 
     }
 
-    public void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
+    private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
 
 
         int headingDifference = steadyHeading - heading;
@@ -115,7 +116,7 @@ public class FullHolonomic extends VelocityBase {
         }
     }
 
-    public float getSensitivePowerLevel(float motorPower) {
+    private float getSensitivePowerLevel(float motorPower) {
         int direction = 1;
         if (motorPower < 0) { direction = -1; }
         return (float) ((Math.pow((double) motorPower, 2.0)) * direction);
@@ -187,8 +188,6 @@ public class FullHolonomic extends VelocityBase {
             resetSensitivity();
         }
 
-        if (dpadUpIsPressed()) {
-
         if (Math.abs(x) > 0.01 || Math.abs(y) > 0.01) {
 
             headingSet = true;
@@ -228,7 +227,7 @@ public class FullHolonomic extends VelocityBase {
         collectionMotor.setPower(collectionPowerLevel);
     }
 
-    public void setCoeffPowerLevels(int driveDirection) {
+    private void setCoeffPowerLevels(int driveDirection) {
         powerLevels.frontLeftPower *= driveDirection;
         powerLevels.backLeftPower *= driveDirection;
         powerLevels.frontRightPower *= driveDirection;
