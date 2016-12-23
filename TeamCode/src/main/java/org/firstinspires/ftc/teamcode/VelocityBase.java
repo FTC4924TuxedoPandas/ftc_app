@@ -201,9 +201,6 @@ public abstract class VelocityBase extends OpMode {
 
         int headingDifference = steadyHeading - heading;
 
-        telemetry.addData("heading", heading);
-        telemetry.addData("steadyHeading", steadyHeading);
-
         if (steadyHeading - heading >= 180) {
 
             headingDifference = steadyHeading - 360 - heading;
@@ -214,21 +211,19 @@ public abstract class VelocityBase extends OpMode {
             headingDifference = 360 - heading + steadyHeading;
         }
 
-        telemetry.addData("difference", headingDifference);
-
         if (headingDifference < 0) {
 
-            powerLevels.frontLeftPower = power;
-            powerLevels.backLeftPower = -power;
-            powerLevels.backRightPower = power - Math.abs(headingDifference / 10);
-            powerLevels.frontRightPower = -power - Math.abs(headingDifference / 10);
+            powerLevels.frontLeftPower = power - Math.abs(headingDifference * power);
+            powerLevels.backLeftPower = -power - Math.abs(headingDifference * power);;
+            powerLevels.backRightPower = power;
+            powerLevels.frontRightPower = -power;
 
         } else {
 
-            powerLevels.frontLeftPower = power - Math.abs(headingDifference / 10);
-            powerLevels.backLeftPower = -power - Math.abs(headingDifference / 10);
-            powerLevels.backRightPower = power;
-            powerLevels.frontRightPower = -power;
+            powerLevels.frontLeftPower = power;
+            powerLevels.backLeftPower = -power;
+            powerLevels.backRightPower = power - Math.abs(headingDifference * power);;
+            powerLevels.frontRightPower = -power - Math.abs(headingDifference * power);;
         }
     }
 
@@ -512,6 +507,8 @@ public abstract class VelocityBase extends OpMode {
 
     public boolean counterclockwiseTurnNeeded(double currentAngle) {
 
+        telemetry.addData("Angle: ", currentAngle);
+
         if (currentAngle < Math.abs(segment.Angle)) {
 
             return (Math.abs(segment.Angle) - currentAngle) >= 180.0f;
@@ -584,6 +581,8 @@ public abstract class VelocityBase extends OpMode {
                     }
                 }
             }
+
+            setMotorPowerLevels(powerLevels);
         }
 
         return false;
