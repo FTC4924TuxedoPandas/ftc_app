@@ -107,6 +107,7 @@ public abstract class VelocityBase extends OpMode {
     public ElapsedTime buttonDelay = new ElapsedTime();
     int turnStartValueLeft;
     int turnStartValueRight;
+    int driveDirection;
     GyroSensor turningGyro;
     public State currentState;
     static final float TURNING_ANGLE_MARGIN = 2.0f;
@@ -717,9 +718,13 @@ public abstract class VelocityBase extends OpMode {
         gateServoPosition = GATE_SERVO_POSITION_HIGH;
     }
 
-    public boolean dpadDownIsPressed() { return gamepad2.dpad_down; }
+    public boolean d1DPadUpIsPressed() { return gamepad1.dpad_up; }
 
-    public boolean dpadUpIsPressed() { return gamepad2.dpad_up; }
+    public boolean d1DPadDownIsPressed() { return gamepad1.dpad_down; }
+
+    public boolean d2DPadDownIsPressed() { return gamepad2.dpad_down; }
+
+    public boolean d2DPadUpIsPressed() { return gamepad2.dpad_up; }
 
     public boolean collectionIn() {
         return gamepad2.right_bumper;
