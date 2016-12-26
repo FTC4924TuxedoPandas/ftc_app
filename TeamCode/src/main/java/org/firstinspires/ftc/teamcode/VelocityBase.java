@@ -42,6 +42,7 @@ public abstract class VelocityBase extends OpMode {
     DcMotor backLeftMotor;
     DcMotor throwingArm;
     DcMotor collectionMotor;
+    DcMotor linearSlideMotor;
 
     Servo leftBeaconServo;
     Servo rightBeaconServo;
@@ -63,6 +64,7 @@ public abstract class VelocityBase extends OpMode {
     PowerLevels powerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     float throwingArmPowerLevel = 0.0f;
     float collectionPowerLevel = 0.0f;
+    float linearSlidePowerLevel = 0.0f;
 
     public final float ARM_POWER = 1.0f;
     public final float COLLECTION_POWER = 0.5f;
@@ -126,6 +128,7 @@ public abstract class VelocityBase extends OpMode {
     public static int angleOffset = 0;
     boolean reversed;
     boolean lowSensitivity;
+    boolean highSensitivity;
     ElapsedTime time = new ElapsedTime();
 
     @Override
@@ -137,6 +140,7 @@ public abstract class VelocityBase extends OpMode {
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
+        collectionMotor = hardwareMap.dcMotor.get("linearSlideMotor");
 
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
@@ -154,6 +158,8 @@ public abstract class VelocityBase extends OpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        linearSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
         currentState = State.STATE_INITIAL;
@@ -726,17 +732,13 @@ public abstract class VelocityBase extends OpMode {
 
     public boolean d2DPadUpIsPressed() { return gamepad2.dpad_up; }
 
-    public boolean collectionIn() {
-        return gamepad2.right_bumper;
-    }
+    public boolean collectionIn() {return gamepad2.right_bumper;}
 
     public boolean collectionOut() {
         return gamepad2.left_bumper;
     }
 
-    public boolean d2XIsPressed() {
-        return gamepad2.x;
-    }
+    public boolean d2XIsPressed() {return gamepad2.x;}
 
     public boolean d2AIsPressed() { return gamepad2.a; }
 
@@ -759,6 +761,8 @@ public abstract class VelocityBase extends OpMode {
     public boolean d1DPadLeftIsPressed() { return gamepad1.dpad_left; }
 
     public boolean d2DPadLeftIsPressed() { return gamepad2.dpad_left; }
+
+    public boolean d2DPadrightIsPressed() { return gamepad2.dpad_right; }
 
     public float leftTriggerValue() { return gamepad1.left_trigger; }
 

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 import com.qualcomm.robotcore.util.Range;
 
@@ -25,6 +26,8 @@ public class FullHolonomic extends VelocityBase {
         powerLevels.frontLeftPower = Range.clip(powerLevels.frontLeftPower, -1.0f, 1.0f);
         throwingArmPowerLevel = Range.clip(throwingArmPowerLevel, -1.0f, 1.0f);
         collectionPowerLevel = Range.clip(collectionPowerLevel, -1.0f, 1.0f);
+        linearSlidePowerLevel = Range.clip(linearSlidePowerLevel, -1.0f, 1.0f);
+
     }
 
 
@@ -37,6 +40,10 @@ public class FullHolonomic extends VelocityBase {
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
+        collectionMotor = hardwareMap.dcMotor.get("linearSlideMotor");
+
+        leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
+        rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -44,6 +51,10 @@ public class FullHolonomic extends VelocityBase {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        linearSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
+        leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
         currentState = VelocityBase.State.STATE_INITIAL;
@@ -55,19 +66,21 @@ public class FullHolonomic extends VelocityBase {
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        highSensitivity = false;
         lowSensitivity = false;
 
         driveDirection = 1;
     }
 
-
     @Override
     public void init_loop() {
+
+        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
 
     }
 
     private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
-
 
         int headingDifference = steadyHeading - heading;
 
@@ -114,11 +127,20 @@ public class FullHolonomic extends VelocityBase {
             powerLevels.backRightPower = getSensitivePowerLevel(powerLevels.backRightPower);
             powerLevels.frontRightPower = getSensitivePowerLevel(powerLevels.frontRightPower);
         }
+
+        if (highSensitivity) {
+            powerLevels.frontLeftPower = getSensitivePowerLevel(powerLevels.frontLeftPower);
+            powerLevels.backLeftPower = getSensitivePowerLevel(powerLevels.backLeftPower);
+            powerLevels.backRightPower = getSensitivePowerLevel(powerLevels.backRightPower);
+            powerLevels.frontRightPower = getSensitivePowerLevel(powerLevels.frontRightPower);
+        }
     }
 
     private float getSensitivePowerLevel(float motorPower) { //returns square of value; if below 1, will be lowered exponentially; if above 1, will be clipped to 1 later
         int direction = 1;
-        if (motorPower < 0) { direction = -1; }
+        if (motorPower < 0) {
+            direction = -1;
+        }
         return (float) ((Math.pow((double) motorPower, 2.0)) * direction);
     }
 
@@ -127,9 +149,15 @@ public class FullHolonomic extends VelocityBase {
         lowSensitivity = true;
     }
 
+    private void setHighSensitivity() {
+
+        highSensitivity = true;
+    }
+
     private void resetSensitivity() {
 
         lowSensitivity = false;
+        highSensitivity = false;
     }
 
     @Override
@@ -149,6 +177,26 @@ public class FullHolonomic extends VelocityBase {
         } else if (d1DPadUpIsPressed()) {
 
             driveDirection = 1;
+
+        }
+
+        if (d2XIsPressed()) {
+
+            leftBeaconServoOut();
+
+        } else if (d2YIsPressed()) {
+
+            leftBeaconServoIn();
+
+        }
+
+        if (d2AIsPressed()) {
+
+            rightBeaconServoOut();
+
+        } else if (d2BIsPressed()) {
+
+            rightBeaconServoIn();
 
         }
 
@@ -183,6 +231,11 @@ public class FullHolonomic extends VelocityBase {
             setLowSensitivity();
         }
 
+        if (d1BIsPressed()) {
+
+            setHighSensitivity();
+        }
+
         if (d1YIsPressed()) {
 
             resetSensitivity();
@@ -212,6 +265,17 @@ public class FullHolonomic extends VelocityBase {
         telemetry.addData("Collection", collectionOut());
         telemetry.addData("Throwing Arm", d2DPadDownIsPressed());
         telemetry.addData("Collection", collectionPowerLevel);
+        telemetry.addData("leftBeaconServo", d2XIsPressed());
+        telemetry.addData("leftBeaconServo", d2YIsPressed());
+        telemetry.addData("rightBeaconServo", d2AIsPressed());
+        telemetry.addData("rightBeaconServo", d2BIsPressed());
+
+        // clip servo values
+        rightBeaconServoPosition = Range.clip(rightBeaconServoPosition, -1.0f, 1.0f);
+        leftBeaconServoPosition = Range.clip(leftBeaconServoPosition, -1.0f, 1.0f);
+
+        rightBeaconServo.setPosition(rightBeaconServoPosition);
+        leftBeaconServo.setPosition(leftBeaconServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
@@ -233,6 +297,6 @@ public class FullHolonomic extends VelocityBase {
         powerLevels.frontRightPower *= driveDirection;
         powerLevels.backRightPower *= driveDirection;
     }
-
 }
+
 
