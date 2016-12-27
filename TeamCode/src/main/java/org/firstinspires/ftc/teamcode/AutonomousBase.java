@@ -20,6 +20,10 @@ public abstract class AutonomousBase extends VelocityBase {
         telemetry.addData("currentState: ", currentState);
         //telemetry.addData("Gyro", turningGyro.getHeading());
         //telemetry.addData("Target", segment.Angle);
+        telemetry.addData("F L", powerLevels.frontLeftPower);
+        telemetry.addData("F R", powerLevels.frontRightPower);
+        telemetry.addData("B L", powerLevels.backLeftPower);
+        telemetry.addData("B R", powerLevels.backRightPower);
         int heading = turningGyro.getHeading();
 
         switch (currentState) {
@@ -122,7 +126,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
                 } else {
 
-                    if (isPushing) {
+                    /*if (isPushing) {
 
                         if (elapsedTimeForMove.time() >= 1.0f) {
 
@@ -137,26 +141,24 @@ public abstract class AutonomousBase extends VelocityBase {
                             isPushing = !isPushing;
                             elapsedTimeForMove.reset();
                         }
-                    }
+                    }*/
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.2f, heading);
+                        setPowerForMecanumStrafe(0.5f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.2f, heading);
+                        setPowerForMecanumStrafe(-0.5f, heading);
                     }
 
-                    if (isPushing && !isRed()) {
+                    /*if (isPushing && !isRed()) {
 
                         powerLevels.frontRightPower= 0.3f;
                         powerLevels.backRightPower= 0.3f;
                         powerLevels.frontLeftPower= 0.2f;
                         powerLevels.backLeftPower= 0.2f;
-                    }
-
-                    setMotorPowerLevels(powerLevels);
+                    }*/
                 }
 
                 break;
@@ -176,7 +178,6 @@ public abstract class AutonomousBase extends VelocityBase {
                         powerLevels.backRightPower= 0.3f;
                         powerLevels.frontLeftPower= 0.2f;
                         powerLevels.backLeftPower= 0.2f;
-                        setMotorPowerLevels(powerLevels);
                     }
 
                 } else {
@@ -250,6 +251,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
         rightBeaconServo.setPosition(rightBeaconServoPosition);
         leftBeaconServo.setPosition(leftBeaconServoPosition);
+        setMotorPowerLevels(powerLevels);
     }
 
     public void switchToNextState() {

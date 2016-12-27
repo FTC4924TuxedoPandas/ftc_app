@@ -140,7 +140,7 @@ public abstract class VelocityBase extends OpMode {
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
-        collectionMotor = hardwareMap.dcMotor.get("linearSlideMotor");
+        //collectionMotor = hardwareMap.dcMotor.get("linearSlideMotor");
 
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
@@ -158,7 +158,7 @@ public abstract class VelocityBase extends OpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        linearSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        //linearSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
@@ -221,8 +221,8 @@ public abstract class VelocityBase extends OpMode {
 
         if (headingDifference < 0) {
 
-            powerLevels.frontLeftPower = power - Math.abs(headingDifference * power);
-            powerLevels.backLeftPower = -power - Math.abs(headingDifference * power);;
+            powerLevels.frontLeftPower = power - Math.abs(headingDifference / 10);
+            powerLevels.backLeftPower = -power - Math.abs(headingDifference  / 10);
             powerLevels.backRightPower = power;
             powerLevels.frontRightPower = -power;
 
@@ -230,17 +230,17 @@ public abstract class VelocityBase extends OpMode {
 
             powerLevels.frontLeftPower = power;
             powerLevels.backLeftPower = -power;
-            powerLevels.backRightPower = power - Math.abs(headingDifference * power);;
-            powerLevels.frontRightPower = -power - Math.abs(headingDifference * power);;
+            powerLevels.backRightPower = power - Math.abs(headingDifference / 10);
+            powerLevels.frontRightPower = -power - Math.abs(headingDifference / 10);
         }
     }
 
     public void setPowerForLinearMove(float power) {
 
-        powerLevels.frontLeftPower = -power;
-        powerLevels.backLeftPower = -power;
-        powerLevels.backRightPower = -power;
-        powerLevels.frontRightPower = -power;
+        powerLevels.frontLeftPower = power;
+        powerLevels.backLeftPower = power;
+        powerLevels.backRightPower = power;
+        powerLevels.frontRightPower = power;
     }
 
     public void setPowerForDiagonalMove(float power) {
@@ -291,7 +291,7 @@ public abstract class VelocityBase extends OpMode {
 
     public void setPowerForFullRangeHolonomic(float x, float y, int heading, float turnPower) {
 
-        int headingDifference = steadyHeading - heading;
+        float headingDifference = steadyHeading - heading;
 
         if (isTurningLeft) {
 
@@ -323,8 +323,8 @@ public abstract class VelocityBase extends OpMode {
 
                 if (headingDifference < 0) {
 
-                    powerLevels.frontLeftPower = (y - x) - Math.abs(headingDifference / 10);
-                    powerLevels.backLeftPower = (y + x) - Math.abs(headingDifference / 10);
+                    powerLevels.frontLeftPower = (y - x) - Math.abs(headingDifference / 10.0f);
+                    powerLevels.backLeftPower = (y + x) - Math.abs(headingDifference / 10.0f);
                     powerLevels.backRightPower = y - x;
                     powerLevels.frontRightPower = y + x;
 
@@ -332,8 +332,8 @@ public abstract class VelocityBase extends OpMode {
 
                     powerLevels.frontLeftPower = y - x;
                     powerLevels.backLeftPower = y + x;
-                    powerLevels.backRightPower = (y - x) - (headingDifference / 10);
-                    powerLevels.frontRightPower = (y + x) - (headingDifference / 10);
+                    powerLevels.backRightPower = (y - x) - (headingDifference / 10.0f);
+                    powerLevels.frontRightPower = (y + x) - (headingDifference / 10.0f);
                 }
             }
         }
@@ -466,7 +466,7 @@ public abstract class VelocityBase extends OpMode {
                 }
             }
 
-            SetDriveMotorPowerLevels(powerLevels);
+            // SetDriveMotorPowerLevels(powerLevels);
 
             currentPathSegmentIndex++;
         }
@@ -589,8 +589,6 @@ public abstract class VelocityBase extends OpMode {
                     }
                 }
             }
-
-            setMotorPowerLevels(powerLevels);
         }
 
         return false;
@@ -662,7 +660,8 @@ public abstract class VelocityBase extends OpMode {
     }
 
     public void TurnOffAllDriveMotors() {
-        SetDriveMotorPowerLevels(zeroPowerLevels);
+
+        powerLevels = zeroPowerLevels;
     }
 
     public void throwBall(ElapsedTime ElapsedThrowingTime, float throwingTime) {
