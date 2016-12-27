@@ -6,6 +6,16 @@ package org.firstinspires.ftc.teamcode;
 
 public class TeleopBase extends VelocityBase {
 
+    public final float DIAGONAL_MARGIN_OF_ERROR = 1.0f;
+    public final float STICK_THRESHOLD = 0.1f;
+
+    @Override
+    public void init() {
+
+        super.init();
+
+    }
+
     public void setPowerForFullRangeHolonomic(float x, float y, int heading, float turnPower) {
 
         float headingDifference = steadyHeading - heading;

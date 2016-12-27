@@ -34,37 +34,9 @@ public class FullHolonomic extends TeleopBase {
     @Override
     public void init() {
 
-        frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
-        frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
-        backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-        backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
-        throwingArm = hardwareMap.dcMotor.get("throwingArm");
-        collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
-        collectionMotor = hardwareMap.dcMotor.get("linearSlideMotor");
-
-        leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
-        rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
-
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
-        collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        super.init();
+        linearSlideMotor = hardwareMap.dcMotor.get("linearSlideMotor");
         linearSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
-        leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
-
-        turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
-        //currentState = VelocityBase.State.STATE_INITIAL;
-
-        useRunUsingEncoders();
-        //countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         highSensitivity = false;
         lowSensitivity = false;

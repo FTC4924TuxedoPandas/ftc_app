@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -63,6 +65,25 @@ public abstract class AutonomousBase extends VelocityBase {
     public State currentState;
     static final float TURNING_ANGLE_MARGIN = 2.0f;
     static final int ENCODER_TARGET_MARGIN = 15;
+    final int COUNTS_PER_REVOLUTION = 1120;
+    final double WHEEL_DIAMETER = 4.0f;
+    final double GEAR_RATIO = 1.0f;
+    final double CALIBRATION_FACTOR = 1.93f;
+    public static int angleOffset = 0;
+
+    @Override
+    public void init() {
+
+        super.init();
+        currentState = State.STATE_INITIAL;
+        countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
+    }
+
+    @Override
+    public void start() {
+
+        angleOffset = turningGyro.getHeading();
+    }
 
     @Override
     public void loop() {
@@ -592,6 +613,38 @@ public abstract class AutonomousBase extends VelocityBase {
         }
 
         return (currentAngle - Math.abs(segment.Angle)) <= 180.0f;
+    }
+
+    public void useRunUsingEncoders() {
+
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void throwBall(ElapsedTime ElapsedThrowingTime, float throwingTime) {
+
+        if (ElapsedThrowingTime.time() >= throwingTime) {
+
+            lowerAutoThrowingArm(ElapsedThrowingTime, throwingTime);
+
+        } else {
+
+            throwingArm.setPower(0.9f);
+        }
+    }
+
+    public void lowerAutoThrowingArm(ElapsedTime ElapsedThrowingTime, float throwingTime) {
+
+        if (ElapsedThrowingTime.time() >= throwingTime * 4) {
+
+            throwingArm.setPower(0.0f);
+
+        } else {
+
+            throwingArm.setPower(-0.9f);
+        }
     }
 
     public abstract boolean isRed();

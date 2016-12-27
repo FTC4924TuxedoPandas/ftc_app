@@ -57,8 +57,6 @@ public abstract class VelocityBase extends OpMode {
     public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
     public final float GATE_SERVO_POSITION_LOW = 0.6f;
     public final float GATE_SERVO_POSITION_HIGH = 1.0f;
-    public final float DIAGONAL_MARGIN_OF_ERROR = 1.0f;
-    public final float STICK_THRESHOLD = 0.1f;
 
     public ElapsedTime buttonDelay = new ElapsedTime();
     int turnStartValueLeft;
@@ -66,17 +64,12 @@ public abstract class VelocityBase extends OpMode {
     int driveDirection;
     GyroSensor turningGyro;
     public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
-    final int COUNTS_PER_REVOLUTION = 1120;
-    final double WHEEL_DIAMETER = 4.0f;
-    final double GEAR_RATIO = 1.0f;
-    final double CALIBRATION_FACTOR = 1.93f;
     static final float DELAY = 1.0f;
     public float driveStickX = 0.0f;
     public float driveStickY = 0.0f;
     public float leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
-    public static int angleOffset = 0;
     boolean reversed;
     boolean lowSensitivity;
     boolean highSensitivity;
@@ -110,10 +103,7 @@ public abstract class VelocityBase extends OpMode {
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
-        //currentState = State.STATE_INITIAL;
-
         runWithoutEncoders();
-        //countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
         turningGyro.calibrate();
     }
 
@@ -125,12 +115,6 @@ public abstract class VelocityBase extends OpMode {
         collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
         shovelLockServo.setPosition(0.0f);
         autonomousBallServo.setPosition(0.0f);
-    }
-
-    @Override
-    public void start() {
-
-        angleOffset = turningGyro.getHeading();
     }
 
     @Override
@@ -297,49 +281,9 @@ public abstract class VelocityBase extends OpMode {
             backRightMotor.setMode(mode);
     }
 
-    public void useRunUsingEncoders() {
-
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void SetDriveMotorPowerLevels(PowerLevels levels) {
-
-        frontRightMotor.setPower(levels.frontRightPower);
-        frontLeftMotor.setPower(levels.frontLeftPower);
-        backRightMotor.setPower(levels.backRightPower);
-        backLeftMotor.setPower(levels.backLeftPower);
-    }
-
     public void TurnOffAllDriveMotors() {
 
         powerLevels = zeroPowerLevels;
-    }
-
-    public void throwBall(ElapsedTime ElapsedThrowingTime, float throwingTime) {
-
-        if (ElapsedThrowingTime.time() >= throwingTime) {
-
-            lowerAutoThrowingArm(ElapsedThrowingTime, throwingTime);
-
-        } else {
-
-            throwingArm.setPower(0.9f);
-        }
-    }
-
-    public void lowerAutoThrowingArm(ElapsedTime ElapsedThrowingTime, float throwingTime) {
-
-        if (ElapsedThrowingTime.time() >= throwingTime * 4) {
-
-            throwingArm.setPower(0.0f);
-
-        } else {
-
-            throwingArm.setPower(-0.9f);
-        }
     }
 
     public void leftBeaconServoOut() {
