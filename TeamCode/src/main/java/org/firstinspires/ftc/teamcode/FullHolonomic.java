@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "FullHolonomic")
-public class FullHolonomic extends VelocityBase {
+public class FullHolonomic extends TeleopBase {
 
     @Override
     public void clipPowerLevels() {
@@ -57,10 +57,10 @@ public class FullHolonomic extends VelocityBase {
         leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
-        currentState = VelocityBase.State.STATE_INITIAL;
+        //currentState = VelocityBase.State.STATE_INITIAL;
 
         useRunUsingEncoders();
-        countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
+        //countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

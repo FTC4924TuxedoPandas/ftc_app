@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 //@Autonomous(name = "TestAutonomous")
-public class TestAutonomous extends VelocityBase {
+public class TestAutonomous extends AutonomousBase {
 
     public TestAutonomous() {
 
@@ -47,5 +47,15 @@ public class TestAutonomous extends VelocityBase {
 
                 break;
         }
+    }
+
+    @Override
+    public boolean isRed() {
+        return false;
+    }
+
+    @Override
+    public State[] stateList() {
+        return new State[0];
     }
 }
