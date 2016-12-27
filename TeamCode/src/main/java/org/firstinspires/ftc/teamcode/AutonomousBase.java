@@ -227,11 +227,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.5f, heading);
+                        setPowerForMecanumStrafe(0.2f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.5f, heading);
+                        setPowerForMecanumStrafe(-0.2f, heading);
                     }
 
                     /*if (isPushing && !isRed()) {

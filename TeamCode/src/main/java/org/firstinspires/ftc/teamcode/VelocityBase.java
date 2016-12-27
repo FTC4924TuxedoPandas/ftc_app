@@ -63,7 +63,6 @@ public abstract class VelocityBase extends OpMode {
     int turnStartValueRight;
     int driveDirection;
     GyroSensor turningGyro;
-    public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     static final float DELAY = 1.0f;
     public float driveStickX = 0.0f;
     public float driveStickY = 0.0f;
@@ -283,7 +282,7 @@ public abstract class VelocityBase extends OpMode {
 
     public void TurnOffAllDriveMotors() {
 
-        powerLevels = zeroPowerLevels;
+        powerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
     public void leftBeaconServoOut() {
