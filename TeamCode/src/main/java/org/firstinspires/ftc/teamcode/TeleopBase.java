@@ -8,12 +8,13 @@ public class TeleopBase extends VelocityBase {
 
     public final float DIAGONAL_MARGIN_OF_ERROR = 1.0f;
     public final float STICK_THRESHOLD = 0.1f;
+    public final float WINCH_POWER = 1.0f;
+    public float winchPowerLevel = 0.0f;
 
     @Override
     public void init() {
 
         super.init();
-
     }
 
     public void setPowerForFullRangeHolonomic(float x, float y, int heading, float turnPower) {
@@ -91,6 +92,16 @@ public class TeleopBase extends VelocityBase {
     public boolean d2DPadLeftIsPressed() { return gamepad2.dpad_left; }
 
     public boolean d2DPadrightIsPressed() { return gamepad2.dpad_right; }
+
+    public boolean winchUp() { return gamepad2.dpad_left; }
+
+    public boolean winchDown() { return gamepad2.dpad_right; }
+
+    public void winchIntake() { winchPowerLevel = WINCH_POWER; }
+
+    public void winchRelease() { winchPowerLevel = -WINCH_POWER; }
+
+    public void winchOff() { winchPowerLevel = 0.0f; }
 
     public float leftTriggerValue() { return gamepad1.left_trigger; }
 

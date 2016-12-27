@@ -23,7 +23,7 @@ public abstract class VelocityBase extends OpMode {
     DcMotor backLeftMotor;
     DcMotor throwingArm;
     DcMotor collectionMotor;
-    DcMotor linearSlideMotor;
+    DcMotor winchMotor;
 
     Servo leftBeaconServo;
     Servo rightBeaconServo;
@@ -88,7 +88,7 @@ public abstract class VelocityBase extends OpMode {
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
-        shovelLockServo = hardwareMap.servo.get("shovelLockServo");
+        //shovelLockServo = hardwareMap.servo.get("shovelLockServo");
         autonomousBallServo = hardwareMap.servo.get("autonomousBallServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
@@ -113,7 +113,7 @@ public abstract class VelocityBase extends OpMode {
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
-        shovelLockServo.setPosition(0.0f);
+        //shovelLockServo.setPosition(0.0f);
         autonomousBallServo.setPosition(0.0f);
     }
 

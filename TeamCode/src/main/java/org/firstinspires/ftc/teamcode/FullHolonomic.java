@@ -1,12 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.GyroSensor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -35,8 +30,8 @@ public class FullHolonomic extends TeleopBase {
     public void init() {
 
         super.init();
-        linearSlideMotor = hardwareMap.dcMotor.get("linearSlideMotor");
-        linearSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        winchMotor = hardwareMap.dcMotor.get("winchMotor");
+        winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         highSensitivity = false;
         lowSensitivity = false;
@@ -141,6 +136,22 @@ public class FullHolonomic extends TeleopBase {
 
         isTurningLeft = leftTriggerValue() > 0.01f;
         isTurningRight = rightTriggerValue() > 0.01f;
+
+        if (winchUp()) {
+
+            winchIntake();
+
+        } else {
+
+            if (winchDown()) {
+
+                winchRelease();
+
+            } else {
+
+                winchOff();
+            }
+        }
 
         if (d1DPadDownIsPressed()) {
 
@@ -261,6 +272,7 @@ public class FullHolonomic extends TeleopBase {
 
         throwingArm.setPower(throwingArmPowerLevel);
         collectionMotor.setPower(collectionPowerLevel);
+        winchMotor.setPower(winchPowerLevel);
     }
 
     private void setCoeffPowerLevels(int driveDirection) {

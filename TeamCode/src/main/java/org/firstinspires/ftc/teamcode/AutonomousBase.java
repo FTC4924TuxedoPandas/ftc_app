@@ -75,8 +75,19 @@ public abstract class AutonomousBase extends VelocityBase {
     public void init() {
 
         super.init();
+        shovelLockServo = hardwareMap.servo.get("shovelLockServo");
         currentState = State.STATE_INITIAL;
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
+    }
+
+    @Override
+    public void init_loop() {
+
+        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+        shovelLockServo.setPosition(0.0f);
+        autonomousBallServo.setPosition(0.0f);
     }
 
     @Override
