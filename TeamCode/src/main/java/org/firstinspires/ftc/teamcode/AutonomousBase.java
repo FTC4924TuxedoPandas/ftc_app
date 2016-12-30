@@ -642,7 +642,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
         } else {
 
-            throwingArm.setPower(0.9f);
+            throwingArmPowerLevel = 0.9f;
         }
     }
 
@@ -650,11 +650,11 @@ public abstract class AutonomousBase extends VelocityBase {
 
         if (ElapsedThrowingTime.time() >= throwingTime * 4) {
 
-            throwingArm.setPower(0.0f);
+            throwingArmPowerLevel = 0.0f;
 
         } else {
 
-            throwingArm.setPower(-0.9f);
+            throwingArmPowerLevel = -0.9f;
         }
     }
 
