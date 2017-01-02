@@ -100,12 +100,8 @@ public abstract class AutonomousBase extends VelocityBase {
     public void loop() {
 
         telemetry.addData("currentState: ", currentState);
-        //telemetry.addData("Gyro", turningGyro.getHeading());
+        telemetry.addData("Gyro", turningGyro.getHeading());
         //telemetry.addData("Target", segment.Angle);
-        telemetry.addData("F L", powerLevels.frontLeftPower);
-        telemetry.addData("F R", powerLevels.frontRightPower);
-        telemetry.addData("B L", powerLevels.backLeftPower);
-        telemetry.addData("B R", powerLevels.backRightPower);
         int heading = turningGyro.getHeading();
 
         switch (currentState) {

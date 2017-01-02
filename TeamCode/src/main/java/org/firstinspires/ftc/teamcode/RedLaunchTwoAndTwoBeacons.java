@@ -22,7 +22,8 @@ public class RedLaunchTwoAndTwoBeacons extends LaunchTwoAndTwoBeaconsBase {
                 new DrivePathSegment(315.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(35.0f, 1.0f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(270.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(15.0f, 0.1f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(17.0f, 1.0f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(8.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
 
