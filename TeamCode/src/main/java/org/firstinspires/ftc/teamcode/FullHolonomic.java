@@ -15,22 +15,12 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
     private boolean throwing;
     private double throwStartTime;
-    private double throwInterval = 0.2;
-    private final double THROW_INPUT_DELAY = 0.7;
+    private double switchModeStartTime;
+    private final double THROW_INTERVAL = 0.2;
+    private final double THROW_INPUT_DELAY = 0.5;
+    private final double BOUNCE_DELAY = 0.2;
 
     public boolean gyroCorrecting = true;
-
-    @Override
-    public void clipPowerLevels() {
-
-        powerLevels.backRightPower = Range.clip(powerLevels.backRightPower, -1.0f, 1.0f);
-        powerLevels.backLeftPower = Range.clip(powerLevels.backLeftPower, -1.0f, 1.0f);
-        powerLevels.frontRightPower = Range.clip(powerLevels.frontRightPower, -1.0f, 1.0f);
-        powerLevels.frontLeftPower = Range.clip(powerLevels.frontLeftPower, -1.0f, 1.0f);
-        throwingArmPowerLevel = Range.clip(throwingArmPowerLevel, -1.0f, 1.0f);
-        collectionPowerLevel = Range.clip(collectionPowerLevel, -1.0f, 1.0f);
-    }
-
 
     @Override
     public void init() {
@@ -47,7 +37,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
         turningGyro.calibrate();
 
         throwing = false;
-        throwInterval = 0.0;
     }
 
     @Override
@@ -60,23 +49,16 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
     }
 
-    private void setPowerForFullHolonomic(float x, float y, int heading, float turningPower, int driveDirection) {
+    private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
 
         int headingDifference = steadyHeading - heading;
 
-        if (isTurningLeft) {
+        if (isTurningLeft || isTurningRight) {
 
-            powerLevels.frontLeftPower = y - x - turningPower;
-            powerLevels.backLeftPower = y + x - turningPower;
-            powerLevels.backRightPower = y - x;
-            powerLevels.frontRightPower = y + x;
-
-        } else if (isTurningRight) {
-
-            powerLevels.frontLeftPower = y - x;
-            powerLevels.backLeftPower = y + x;
-            powerLevels.backRightPower = y - x - turningPower;
-            powerLevels.frontRightPower = y + x - turningPower;
+            powerLevels.frontLeftPower = y - x - leftTurnPower + rightTurnPower;
+            powerLevels.backLeftPower = y + x - leftTurnPower + rightTurnPower;
+            powerLevels.backRightPower = y - x + leftTurnPower - rightTurnPower;
+            powerLevels.frontRightPower = y + x + leftTurnPower - rightTurnPower;
 
         } else {
 
@@ -200,21 +182,19 @@ public class FullHolonomic extends RevolutionVelocityBase {
             closeGate();
         }
 
+        if (d1StartIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
+
+            gyroCorrecting = !gyroCorrecting;
+            switchModeStartTime = time.time();
+        }
+
         if (d2YIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
 
             throwing = true;
-            throwInterval = 0.2;
             throwStartTime = time.time();
         }
 
-        if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
-
-            throwing = true;
-            throwInterval = 0.3;
-            throwStartTime = time.time();
-        }
-
-        if (throwing && ((time.time() - throwStartTime) < throwInterval)) {
+        if (throwing && ((time.time() - throwStartTime) < THROW_INTERVAL)) {
 
             throwingArmPowerLevel = 0.9f;
         } else if (throwing) {
@@ -274,15 +254,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
-            if (isTurningLeft) {
-
-                setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), driveDirection);
-
-            } else {
-
-                setPowerForFullHolonomic(x, y, currentHeading, rightTriggerValue(), driveDirection);
-            }
-
+            setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue(), driveDirection);
             setMotorPowerLevels(powerLevels);
 
         } else {

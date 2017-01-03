@@ -65,6 +65,18 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     static final float TURNING_ANGLE_MARGIN = 2.0f;
     static final int ENCODER_TARGET_MARGIN = 15;
     public static int angleOffset = 0;
+    final int COUNTS_PER_REVOLUTION = 1120;
+    final double WHEEL_DIAMETER = 4.0f;
+    final double GEAR_RATIO = 1.0f;
+    final double CALIBRATION_FACTOR = 1.93f;
+
+    @Override
+    public void init() {
+
+        super.init();
+        currentState = State.STATE_INITIAL;
+        countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
+    }
 
     @Override
     public void init_loop() {
@@ -73,7 +85,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
         shovelLockServo.setPosition(0.0f);
-        autonomousBallServo.setPosition(0.0f);
     }
 
     @Override
