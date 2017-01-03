@@ -59,16 +59,23 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
     }
 
-    private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
+    private void setPowerForFullHolonomic(float x, float y, int heading, float turningPower, int driveDirection) {
 
         int headingDifference = steadyHeading - heading;
 
-        if (isTurningLeft || isTurningRight) {
+        if (isTurningLeft) {
 
-            powerLevels.frontLeftPower = y - x - leftTurnPower + rightTurnPower;
-            powerLevels.backLeftPower = y + x - leftTurnPower + rightTurnPower;
-            powerLevels.backRightPower = y - x + leftTurnPower - rightTurnPower;
-            powerLevels.frontRightPower = y + x + leftTurnPower - rightTurnPower;
+            powerLevels.frontLeftPower = y - x - turningPower;
+            powerLevels.backLeftPower = y + x - turningPower;
+            powerLevels.backRightPower = y - x;
+            powerLevels.frontRightPower = y + x;
+
+        } else if (isTurningRight) {
+
+            powerLevels.frontLeftPower = y - x;
+            powerLevels.backLeftPower = y + x;
+            powerLevels.backRightPower = y - x - turningPower;
+            powerLevels.frontRightPower = y + x - turningPower;
 
         } else {
 
@@ -258,7 +265,15 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
-            setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue(), driveDirection);
+            if (isTurningLeft) {
+
+                setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), driveDirection);
+
+            } else {
+
+                setPowerForFullHolonomic(x, y, currentHeading, rightTriggerValue(), driveDirection);
+            }
+
             setMotorPowerLevels(powerLevels);
 
         } else {
