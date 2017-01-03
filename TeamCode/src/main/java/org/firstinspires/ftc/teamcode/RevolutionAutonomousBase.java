@@ -71,7 +71,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
-        collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
         shovelLockServo.setPosition(0.0f);
         autonomousBallServo.setPosition(0.0f);
     }
