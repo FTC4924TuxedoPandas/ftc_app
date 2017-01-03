@@ -153,7 +153,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
         shovelLockServo = hardwareMap.servo.get("shovelLockServo");
-        autonomousBallServo = hardwareMap.servo.get("autonomousBallServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
