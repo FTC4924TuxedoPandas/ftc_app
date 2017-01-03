@@ -317,6 +317,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
 
     public boolean d2DPadRightIsPressed() { return gamepad2.dpad_right; }
 
+    public boolean d2BIsPressed() { return gamepad2.b; }
+
     public boolean d1DPadRightIsPressed() { return gamepad1.dpad_right; }
 
     public boolean d1LeftBumperIsPressed() { return gamepad1.left_bumper; }

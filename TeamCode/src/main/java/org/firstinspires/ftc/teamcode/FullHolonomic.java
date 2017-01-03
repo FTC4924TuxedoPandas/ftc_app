@@ -16,7 +16,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
     private boolean throwing;
     private double throwStartTime;
     private double throwInterval = 0.0;
-    private final double THROW_INPUT_DELAY = 0.7;
     private double switchModeStartTime;
     private final double THROW_INTERVAL = 0.2;
     private final double THROW_INPUT_DELAY = 0.5;
