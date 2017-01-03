@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
  */
 
 @TeleOp(name = "FullRangeHolonomicTest ")
-public class FullRangeHolonomicTest extends VelocityBase {
+public class FullRangeHolonomicTest extends TeleopBase {
 
     @Override
     public void loop() {
@@ -18,16 +18,16 @@ public class FullRangeHolonomicTest extends VelocityBase {
         float x = -gamepad1.left_stick_x;
         float y = -gamepad1.left_stick_y;
 
-        isTurningLeft = leftTriggerValue() > 0.01f;
-        isTurningRight = rightTriggerValue() > 0.01f;
+        isTurningLeft = leftTriggerValue() > 0.1f;
+        isTurningRight = rightTriggerValue() > 0.1f;
 
 
-        if (Math.abs(x) > 0.01 || Math.abs(y) > 0.01) {
+        if (Math.abs(x) > 0.1 || Math.abs(y) > 0.1) {
 
             headingSet = true;
         }
 
-        if ((Math.abs(x) < 0.01 && Math.abs(y) < 0.01)) {
+        if ((Math.abs(x) < 0.1 && Math.abs(y) < 0.1)) {
 
             headingSet = false;
             steadyHeading = currentHeading;
@@ -35,6 +35,7 @@ public class FullRangeHolonomicTest extends VelocityBase {
 
         if (isTurningLeft || isTurningRight) {
 
+            headingSet = true;
             steadyHeading = currentHeading;
         }
 
@@ -59,13 +60,13 @@ public class FullRangeHolonomicTest extends VelocityBase {
 
                     setPowerForFullRangeHolonomic(x, y, currentHeading, 0.0f);
                 }
-
-                setMotorPowerLevels(powerLevels);
             }
 
         } else {
 
             TurnOffAllDriveMotors();
         }
+
+        setMotorPowerLevels(powerLevels);
     }
 }

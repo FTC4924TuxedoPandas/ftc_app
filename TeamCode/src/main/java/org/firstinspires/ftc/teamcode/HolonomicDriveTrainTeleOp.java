@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "HolonomicDriveTrainTeleOp")
-public class HolonomicDriveTrainTeleOp extends VelocityBase {
+public class HolonomicDriveTrainTeleOp extends TeleopBase {
 
     public int reverseFactor = 1;
 

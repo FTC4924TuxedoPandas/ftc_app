@@ -12,8 +12,7 @@ public abstract class TestMovesBase extends AutonomousBase {
         return new State[] {
 
                 State.STATE_INITIAL,
-                State.STATE_START_BEACON_PATH,
-                State.STATE_DRIVE,
+                State.STATE_FIND_WHITE_LINE,
                 State.STATE_STOP
         };
     }
