@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.MatrixConstants;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -15,7 +16,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name = "FullHolonomic")
-public class FullHolonomic extends VelocityBase {
+public class FullHolonomic extends RevolutionVelocityBase {
 
     @Override
     public void clipPowerLevels() {
@@ -26,7 +27,7 @@ public class FullHolonomic extends VelocityBase {
         powerLevels.frontLeftPower = Range.clip(powerLevels.frontLeftPower, -1.0f, 1.0f);
         throwingArmPowerLevel = Range.clip(throwingArmPowerLevel, -1.0f, 1.0f);
         collectionPowerLevel = Range.clip(collectionPowerLevel, -1.0f, 1.0f);
-        linearSlidePowerLevel = Range.clip(linearSlidePowerLevel, -1.0f, 1.0f);
+
 
     }
 
@@ -40,10 +41,12 @@ public class FullHolonomic extends VelocityBase {
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
-        collectionMotor = hardwareMap.dcMotor.get("linearSlideMotor");
+        winchMotor = hardwareMap.dcMotor.get("winchMotor");
 
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
+        shovelLockServo = hardwareMap.servo.get("shovelLockServo");
+        collectionGateServo = hardwareMap.servo.get("collectionGateServo");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -51,13 +54,14 @@ public class FullHolonomic extends VelocityBase {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        linearSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
         leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
-
+        lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
-        currentState = VelocityBase.State.STATE_INITIAL;
+
+        currentState = State.STATE_INITIAL;
 
         useRunUsingEncoders();
         countsPerInch = (COUNTS_PER_REVOLUTION / (Math.PI * WHEEL_DIAMETER)) * GEAR_RATIO * CALIBRATION_FACTOR;
@@ -70,6 +74,7 @@ public class FullHolonomic extends VelocityBase {
         lowSensitivity = false;
 
         driveDirection = 1;
+        driveCoeff = 1;
     }
 
     @Override
@@ -77,6 +82,8 @@ public class FullHolonomic extends VelocityBase {
 
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
+        shovelLockServo.setPosition(LOCK_SERVO_POSITION_CLOSED);
+        collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
 
     }
 
@@ -93,14 +100,14 @@ public class FullHolonomic extends VelocityBase {
 
         } else {
 
-            if (steadyHeading - heading >= 180) {
+            if (steadyHeading - heading >= 0) {
 
-                headingDifference = steadyHeading - 360 - heading;
+                headingDifference = steadyHeading - 0 - heading;
             }
 
-            if (heading - steadyHeading >= 180) {
+            if (heading - steadyHeading >= 0) {
 
-                headingDifference = 360 - heading + steadyHeading;
+                headingDifference = 0 - heading + steadyHeading;
             }
 
             if (headingDifference < 0) {
@@ -119,8 +126,8 @@ public class FullHolonomic extends VelocityBase {
             }
         }
 
-        setCoeffPowerLevels(driveDirection);
-
+        setCoeffPowerLevels(driveDirection, driveCoeff);
+/*
         if (lowSensitivity) {
             powerLevels.frontLeftPower = getSensitivePowerLevel(powerLevels.frontLeftPower);
             powerLevels.backLeftPower = getSensitivePowerLevel(powerLevels.backLeftPower);
@@ -134,8 +141,9 @@ public class FullHolonomic extends VelocityBase {
             powerLevels.backRightPower = getSensitivePowerLevel(powerLevels.backRightPower);
             powerLevels.frontRightPower = getSensitivePowerLevel(powerLevels.frontRightPower);
         }
+ */
     }
-
+/*
     private float getSensitivePowerLevel(float motorPower) { //returns square of value; if below 1, will be lowered exponentially; if above 1, will be clipped to 1 later
         int direction = 1;
         if (motorPower < 0) {
@@ -159,6 +167,25 @@ public class FullHolonomic extends VelocityBase {
         lowSensitivity = false;
         highSensitivity = false;
     }
+*/
+
+    private void setCoeffPowerLevels(int driveDirection, float driveCoeff) {
+        powerLevels.frontLeftPower *= driveDirection * driveCoeff;
+        powerLevels.backLeftPower *= driveDirection * driveCoeff;
+        powerLevels.frontRightPower *= driveDirection * driveCoeff;
+        powerLevels.backRightPower *= driveDirection * driveCoeff;
+    }
+
+    private void throwBalls(double throwTime) {
+
+        time.reset();
+        while (time.time() <= throwTime) {
+
+            telemetry.addData("time",time.time());
+            throwingArm.setPower(0.9f);
+        }
+        throwingArm.setPower(0.0f);
+    }
 
     @Override
     public void loop() {
@@ -170,6 +197,21 @@ public class FullHolonomic extends VelocityBase {
         isTurningLeft = leftTriggerValue() > 0.01f;
         isTurningRight = rightTriggerValue() > 0.01f;
 
+        winchPowerLevel = -gamepad2.left_stick_y;
+/*
+        if (winchUp()) {
+
+            winchIntake();
+
+        } else if (winchDown()) {
+
+            winchRelease();
+
+        } else {
+
+            winchOff();
+        }
+*/
         if (d1DPadDownIsPressed()) {
 
             driveDirection = -1;
@@ -180,21 +222,21 @@ public class FullHolonomic extends VelocityBase {
 
         }
 
-        if (d2XIsPressed()) {
+        if (d1XIsPressed()) {
 
             leftBeaconServoOut();
 
-        } else if (d2YIsPressed()) {
+        } else if (d1YIsPressed()) {
 
             leftBeaconServoIn();
 
         }
 
-        if (d2AIsPressed()) {
+        if (d1AIsPressed()) {
 
             rightBeaconServoOut();
 
-        } else if (d2BIsPressed()) {
+        } else if (d1BIsPressed()) {
 
             rightBeaconServoIn();
 
@@ -226,19 +268,41 @@ public class FullHolonomic extends VelocityBase {
             collectionOff();
         }
 
-        if (d1XIsPressed()) {
+        if (d2XIsPressed()) {
 
-            setLowSensitivity();
+            openGate();
+
+        } else if (d2AIsPressed()) {
+
+            closeGate();
         }
 
-        if (d1BIsPressed()) {
+        if (d2YIsPressed()) {
 
-            setHighSensitivity();
+            throwBalls(0.2);
         }
 
-        if (d1YIsPressed()) {
+        if (d2BIsPressed()) {
 
-            resetSensitivity();
+            throwBalls(0.3);
+        }
+
+        if (d1DPadLeftIsPressed() && d2DPadLeftIsPressed()) {
+
+            lockShovel();
+        }
+
+        if (d1DPadRightIsPressed() && d2DPadRightIsPressed()) {
+
+            unlockShovel();
+        }
+
+        if (d1LeftBumperIsPressed()) {
+            driveCoeff = 1f;
+        }
+
+        if (d1RightBumperIsPressed()) {
+            driveCoeff = 0.4f;
         }
 
         if (Math.abs(x) > 0.01 || Math.abs(y) > 0.01) {
@@ -260,15 +324,6 @@ public class FullHolonomic extends VelocityBase {
         telemetry.addData("x", x);
         telemetry.addData("y", y);
         telemetry.addData("Steady Angle", steadyHeading);
-        telemetry.addData("Collection", collectionIn());
-        telemetry.addData("Throwing Arm", d2DPadUpIsPressed());
-        telemetry.addData("Collection", collectionOut());
-        telemetry.addData("Throwing Arm", d2DPadDownIsPressed());
-        telemetry.addData("Collection", collectionPowerLevel);
-        telemetry.addData("leftBeaconServo", d2XIsPressed());
-        telemetry.addData("leftBeaconServo", d2YIsPressed());
-        telemetry.addData("rightBeaconServo", d2AIsPressed());
-        telemetry.addData("rightBeaconServo", d2BIsPressed());
 
         // clip servo values
         rightBeaconServoPosition = Range.clip(rightBeaconServoPosition, -1.0f, 1.0f);
@@ -276,6 +331,8 @@ public class FullHolonomic extends VelocityBase {
 
         rightBeaconServo.setPosition(rightBeaconServoPosition);
         leftBeaconServo.setPosition(leftBeaconServoPosition);
+        shovelLockServo.setPosition(shovelLockServoPosition);
+        collectionGateServo.setPosition(gateServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
@@ -289,14 +346,7 @@ public class FullHolonomic extends VelocityBase {
 
         throwingArm.setPower(throwingArmPowerLevel);
         collectionMotor.setPower(collectionPowerLevel);
+        winchMotor.setPower(winchPowerLevel);
     }
 
-    private void setCoeffPowerLevels(int driveDirection) {
-        powerLevels.frontLeftPower *= driveDirection;
-        powerLevels.backLeftPower *= driveDirection;
-        powerLevels.frontRightPower *= driveDirection;
-        powerLevels.backRightPower *= driveDirection;
-    }
 }
-
-
