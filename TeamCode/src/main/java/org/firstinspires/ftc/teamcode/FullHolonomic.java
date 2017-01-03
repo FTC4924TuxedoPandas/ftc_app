@@ -13,6 +13,11 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name = "FullHolonomic")
 public class FullHolonomic extends RevolutionVelocityBase {
 
+    private boolean throwing;
+    private double throwStartTime;
+    private final double THROW_INTERVAL = 0.2;
+    private final double THROW_INPUT_DELAY = 0.5;
+
     public boolean gyroCorrecting = true;
 
     @Override
@@ -40,6 +45,8 @@ public class FullHolonomic extends RevolutionVelocityBase {
         driveDirection = 1;
         driveCoeff = 1;
         turningGyro.calibrate();
+
+        throwing = false;
     }
 
     @Override
@@ -102,64 +109,13 @@ public class FullHolonomic extends RevolutionVelocityBase {
         }
 
         setCoeffPowerLevels(driveDirection, driveCoeff);
-/*
-        if (lowSensitivity) {
-            powerLevels.frontLeftPower = getSensitivePowerLevel(powerLevels.frontLeftPower);
-            powerLevels.backLeftPower = getSensitivePowerLevel(powerLevels.backLeftPower);
-            powerLevels.backRightPower = getSensitivePowerLevel(powerLevels.backRightPower);
-            powerLevels.frontRightPower = getSensitivePowerLevel(powerLevels.frontRightPower);
-        }
-
-        if (highSensitivity) {
-            powerLevels.frontLeftPower = getSensitivePowerLevel(powerLevels.frontLeftPower);
-            powerLevels.backLeftPower = getSensitivePowerLevel(powerLevels.backLeftPower);
-            powerLevels.backRightPower = getSensitivePowerLevel(powerLevels.backRightPower);
-            powerLevels.frontRightPower = getSensitivePowerLevel(powerLevels.frontRightPower);
-        }
- */
     }
-/*
-    private float getSensitivePowerLevel(float motorPower) { //returns square of value; if below 1, will be lowered exponentially; if above 1, will be clipped to 1 later
-        int direction = 1;
-        if (motorPower < 0) {
-            direction = -1;
-        }
-        return (float) ((Math.pow((double) motorPower, 2.0)) * direction);
-    }
-
-    private void setLowSensitivity() {
-
-        lowSensitivity = true;
-    }
-
-    private void setHighSensitivity() {
-
-        highSensitivity = true;
-    }
-
-    private void resetSensitivity() {
-
-        lowSensitivity = false;
-        highSensitivity = false;
-    }
-*/
 
     private void setCoeffPowerLevels(int driveDirection, float driveCoeff) {
         powerLevels.frontLeftPower *= driveDirection * driveCoeff;
         powerLevels.backLeftPower *= driveDirection * driveCoeff;
         powerLevels.frontRightPower *= driveDirection * driveCoeff;
         powerLevels.backRightPower *= driveDirection * driveCoeff;
-    }
-
-    private void throwBalls(double throwTime) {
-
-        time.reset();
-        while (time.time() <= throwTime) {
-
-            telemetry.addData("time",time.time());
-            throwingArm.setPower(0.9f);
-        }
-        throwingArm.setPower(0.0f);
     }
 
     @Override
@@ -173,20 +129,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         isTurningRight = rightTriggerValue() > 0.01f;
 
         winchPowerLevel = -gamepad2.left_stick_y;
-/*
-        if (winchUp()) {
 
-            winchIntake();
-
-        } else if (winchDown()) {
-
-            winchRelease();
-
-        } else {
-
-            winchOff();
-        }
-*/
         if (d1DPadDownIsPressed()) {
 
             driveDirection = -1;
@@ -249,14 +192,19 @@ public class FullHolonomic extends RevolutionVelocityBase {
             closeGate();
         }
 
-        if (d2YIsPressed()) {
+        if (d2YIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
 
-            throwBalls(0.2);
+            throwing = true;
+            throwStartTime = time.time();
         }
 
-        if (d2BIsPressed()) {
+        if (throwing && ((time.time() - throwStartTime) < THROW_INTERVAL)) {
 
-            throwBalls(0.3);
+            throwingArmPowerLevel = 0.9f;
+        } else if (throwing) {
+
+            throwing = false;
+            throwingArmPowerLevel = 0.0f;
         }
 
         if (d1DPadLeftIsPressed() && d2DPadLeftIsPressed()) {
