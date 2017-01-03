@@ -15,6 +15,8 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
     private boolean throwing;
     private double throwStartTime;
+    private double throwInterval = 0.0;
+    private final double THROW_INPUT_DELAY = 0.7;
     private double switchModeStartTime;
     private final double THROW_INTERVAL = 0.2;
     private final double THROW_INPUT_DELAY = 0.5;
@@ -191,10 +193,18 @@ public class FullHolonomic extends RevolutionVelocityBase {
         if (d2YIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
 
             throwing = true;
+            throwInterval = 0.3;
             throwStartTime = time.time();
         }
 
-        if (throwing && ((time.time() - throwStartTime) < THROW_INTERVAL)) {
+        if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
+
+            throwing = true;
+            throwInterval = 0.4;
+            throwStartTime = time.time();
+        }
+
+        if (throwing && ((time.time() - throwStartTime) < throwInterval)) {
 
             throwingArmPowerLevel = 0.9f;
         } else if (throwing) {
