@@ -79,8 +79,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float BEACON_SERVO_POSITION_OUT = 0.7f;
 
     public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
-    public final float GATE_SERVO_POSITION_LOW = 0.6f;
-    public final float GATE_SERVO_POSITION_HIGH = 1.0f;
     public final float GATE_SERVO_POSITION_OPEN = 0.6f;
 
     public final float LOCK_SERVO_POSITION_CLOSED = 1.0f;
@@ -134,7 +132,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
     public float shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
     public static int angleOffset = 0;
-    boolean reversed;
     boolean lowSensitivity;
     boolean highSensitivity;
     ElapsedTime time = new ElapsedTime();
@@ -723,16 +720,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public void closeGate() {
 
         gateServoPosition = GATE_SERVO_POSITION_CLOSED;
-    }
-
-    public void openGateLow() {
-
-        gateServoPosition = GATE_SERVO_POSITION_LOW;
-    }
-
-    public void openGateHigh() {
-
-        gateServoPosition = GATE_SERVO_POSITION_HIGH;
     }
 
     public void openGate() {

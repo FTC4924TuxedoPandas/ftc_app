@@ -15,8 +15,8 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
     private boolean throwing;
     private double throwStartTime;
-    private final double THROW_INTERVAL = 0.2;
-    private final double THROW_INPUT_DELAY = 0.5;
+    private double throwInterval = 0.2;
+    private final double THROW_INPUT_DELAY = 0.7;
 
     public boolean gyroCorrecting = true;
 
@@ -47,6 +47,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         turningGyro.calibrate();
 
         throwing = false;
+        throwInterval = 0.0;
     }
 
     @Override
@@ -195,10 +196,18 @@ public class FullHolonomic extends RevolutionVelocityBase {
         if (d2YIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
 
             throwing = true;
+            throwInterval = 0.2;
             throwStartTime = time.time();
         }
 
-        if (throwing && ((time.time() - throwStartTime) < THROW_INTERVAL)) {
+        if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
+
+            throwing = true;
+            throwInterval = 0.3;
+            throwStartTime = time.time();
+        }
+
+        if (throwing && ((time.time() - throwStartTime) < throwInterval)) {
 
             throwingArmPowerLevel = 0.9f;
         } else if (throwing) {
