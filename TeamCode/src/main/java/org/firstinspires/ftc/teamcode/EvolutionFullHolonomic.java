@@ -29,7 +29,7 @@ public class EvolutionFullHolonomic extends TeleopBase {
 
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        driveDirection = 1;
+        driveDirection = -1;
         driveCoeff = 1;
         turningGyro.calibrate();
 

@@ -49,6 +49,9 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
     private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
 
+        x *= driveDirection;
+        y *= driveDirection;
+
         int headingDifference = steadyHeading - heading;
 
         if (isTurningLeft || isTurningRight) {
@@ -96,14 +99,14 @@ public class FullHolonomic extends RevolutionVelocityBase {
             }
         }
 
-        setCoeffPowerLevels(driveDirection, driveCoeff);
+        setCoeffPowerLevels(driveCoeff);
     }
 
-    private void setCoeffPowerLevels(int driveDirection, float driveCoeff) {
-        powerLevels.frontLeftPower *= driveDirection * driveCoeff;
-        powerLevels.backLeftPower *= driveDirection * driveCoeff;
-        powerLevels.frontRightPower *= driveDirection * driveCoeff;
-        powerLevels.backRightPower *= driveDirection * driveCoeff;
+    private void setCoeffPowerLevels(float driveCoeff) {
+        powerLevels.frontLeftPower *= driveCoeff;
+        powerLevels.backLeftPower *= driveCoeff;
+        powerLevels.frontRightPower *= driveCoeff;
+        powerLevels.backRightPower *= driveCoeff;
     }
 
     @Override
