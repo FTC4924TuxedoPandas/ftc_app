@@ -25,10 +25,10 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_START_LAUNCH_PATH,
         STATE_START_CAP_BALL_PATH,
         STATE_DROP_GATE,
-        STATE_lINE_UP_TO_BEACON
+        STATE_LINE_UP_TO_BEACON
     }
 
-    final float THROWING_TIME = 0.2f;
+    final float THROWING_TIME = 0.5f;
     public int stateIndex = 0;
     public ElapsedTime elapsedTimeForMove = new ElapsedTime();
     public boolean isPushing = false;
@@ -62,7 +62,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
     public State currentState;
-    static final float TURNING_ANGLE_MARGIN = 2.0f;
+    static final float TURNING_ANGLE_MARGIN = 10.0f;
     static final int ENCODER_TARGET_MARGIN = 15;
     public static int angleOffset = 0;
     final int COUNTS_PER_REVOLUTION = 1120;
@@ -129,7 +129,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 } else {
 
-                    collectionMotor.setPower(-1.0f);
+                    collectionMotor.setPower(1.0f);
                 }
 
                 break;
@@ -147,7 +147,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_LOAD_BALL:
 
-                autonomousBallServo.setPosition(1.0f);
+                collectionGateServo.setPosition(1.0f);
                 switchToNextState();
 
                 break;
@@ -156,7 +156,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= 2.0f) {
 
-                    autonomousBallServo.setPosition(0.0f);
+                    collectionGateServo.setPosition(0.0f);
                     switchToNextState();
                 }
 
@@ -207,7 +207,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 break;
 
-            case STATE_lINE_UP_TO_BEACON:
+            case STATE_LINE_UP_TO_BEACON:
 
                 if (!isRed() && isSecondBeacon) {
 
@@ -638,7 +638,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
     public void lowerAutoThrowingArm(ElapsedTime ElapsedThrowingTime, float throwingTime) {
 
-        if (ElapsedThrowingTime.time() >= throwingTime * 4) {
+        if (ElapsedThrowingTime.time() >= throwingTime * 1.5) {
 
             throwingArmPowerLevel = 0.0f;
 
