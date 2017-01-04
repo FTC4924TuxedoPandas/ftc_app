@@ -58,7 +58,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
 
-    double countsPerInch;
+    double countsPerInch = 0.0;
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
     public State currentState;
@@ -84,13 +84,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
-        shovelLockServo.setPosition(0.0f);
-    }
-
-    @Override
-    public void start() {
-
-        angleOffset = turningGyro.getHeading();
+        shovelLockServo.setPosition(1.0f);
     }
 
     @Override
@@ -304,6 +298,36 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         setMotorPowerLevels(powerLevels);
     }
 
+    public void setPowerForMecanumStrafe(float power, int heading) {
+
+        int headingDifference = steadyHeading - heading;
+
+        if (steadyHeading - heading >= 180) {
+
+            headingDifference = steadyHeading - 360 - heading;
+        }
+
+        if (heading - steadyHeading >= 180) {
+
+            headingDifference = 360 - heading + steadyHeading;
+        }
+
+        if (headingDifference < 0) {
+
+            powerLevels.frontLeftPower = -power - Math.abs(headingDifference / 10);
+            powerLevels.backLeftPower = power - Math.abs(headingDifference / 10);
+            powerLevels.backRightPower = -power;
+            powerLevels.frontRightPower = power;
+
+        } else {
+
+            powerLevels.frontLeftPower = -power;
+            powerLevels.backLeftPower = power;
+            powerLevels.backRightPower = -power - Math.abs(headingDifference / 10);
+            powerLevels.frontRightPower = power - Math.abs(headingDifference / 10);
+        }
+    }
+
     public void switchToNextState() {
 
         elapsedTimeForCurrentState.reset();
@@ -349,11 +373,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 if (counterclockwiseTurnNeeded(currentAngle)) {
 
-                    segment.leftPower = -segment.rightPower;
+                    segment.rightPower = -segment.rightPower;
 
                 } else {
 
-                    segment.rightPower = -segment.leftPower;
+                    segment.leftPower = -segment.leftPower;
                 }
 
                 powerLevels = new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
@@ -407,8 +431,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     }
                 }
             }
-
-            // SetDriveMotorPowerLevels(powerLevels);
 
             currentPathSegmentIndex++;
         }
