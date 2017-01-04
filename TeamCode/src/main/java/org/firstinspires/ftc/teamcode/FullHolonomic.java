@@ -30,9 +30,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
         winchMotor = hardwareMap.dcMotor.get("winchMotor");
         winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        highSensitivity = false;
-        lowSensitivity = false;
-
         driveDirection = 1;
         driveCoeff = 1;
         turningGyro.calibrate();
@@ -190,13 +187,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
         }
 
         if (d2YIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
-
-            throwing = true;
-            throwInterval = 0.5;
-            throwStartTime = time.time();
-        }
-
-        if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
 
             throwing = true;
             throwInterval = 0.4;

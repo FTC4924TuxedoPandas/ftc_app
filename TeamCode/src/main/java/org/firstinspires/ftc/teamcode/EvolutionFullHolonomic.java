@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.Range;
  * Created by 4924_Users on 1/4/2017.
  */
 
-@TeleOp(name = "FullHolonomic")
+@TeleOp(name = "EvolutionFullHolonomic")
 public class EvolutionFullHolonomic extends TeleopBase {
 
     private boolean throwing;
@@ -20,12 +20,14 @@ public class EvolutionFullHolonomic extends TeleopBase {
     private final double BOUNCE_DELAY = 0.2;
     private float driveCoeff;
 
-    public boolean gyroCorrecting = true;
+    public boolean gyroCorrecting = false;
 
     @Override
     public void init() {
 
         super.init();
+
+        collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         driveDirection = 1;
         driveCoeff = 1;
@@ -99,6 +101,8 @@ public class EvolutionFullHolonomic extends TeleopBase {
     private boolean d1RightBumperIsPressed() { return gamepad1.right_bumper; }
 
     private boolean d1StartIsPressed() { return gamepad1.start; }
+
+    private boolean d2StartIsPressed() { return gamepad2.start; }
 
     @Override
     public void loop() {
@@ -182,10 +186,10 @@ public class EvolutionFullHolonomic extends TeleopBase {
             switchModeStartTime = time.time();
         }
 
-        if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
+        if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY) && !d2StartIsPressed()) {
 
             throwing = true;
-            throwInterval = 0.4;
+            throwInterval = 0.3;
             throwStartTime = time.time();
         }
 
@@ -240,12 +244,13 @@ public class EvolutionFullHolonomic extends TeleopBase {
         if (headingSet || isTurningLeft || isTurningRight) {
 
             setPowerForFullHolonomic(x, y, currentHeading, leftTriggerValue(), rightTriggerValue(), driveDirection);
-            setMotorPowerLevels(powerLevels);
 
         } else {
 
             TurnOffAllDriveMotors();
         }
+
+        setMotorPowerLevels(powerLevels);
 
         throwingArm.setPower(throwingArmPowerLevel);
         collectionMotor.setPower(collectionPowerLevel);
