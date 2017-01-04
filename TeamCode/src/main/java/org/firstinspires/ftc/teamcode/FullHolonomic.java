@@ -21,7 +21,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
     private final double BOUNCE_DELAY = 0.2;
     private float driveCoeff;
 
-    public boolean gyroCorrecting = true;
+    public boolean gyroCorrecting = false;
 
     @Override
     public void init() {
@@ -48,6 +48,9 @@ public class FullHolonomic extends RevolutionVelocityBase {
     }
 
     private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
+
+        x *= driveDirection;
+        y *= driveDirection;
 
         int headingDifference = steadyHeading - heading;
 
@@ -96,14 +99,14 @@ public class FullHolonomic extends RevolutionVelocityBase {
             }
         }
 
-        setCoeffPowerLevels(driveDirection, driveCoeff);
+        setCoeffPowerLevels(driveCoeff);
     }
 
-    private void setCoeffPowerLevels(int driveDirection, float driveCoeff) {
-        powerLevels.frontLeftPower *= driveDirection * driveCoeff;
-        powerLevels.backLeftPower *= driveDirection * driveCoeff;
-        powerLevels.frontRightPower *= driveDirection * driveCoeff;
-        powerLevels.backRightPower *= driveDirection * driveCoeff;
+    private void setCoeffPowerLevels(float driveCoeff) {
+        powerLevels.frontLeftPower *= driveCoeff;
+        powerLevels.backLeftPower *= driveCoeff;
+        powerLevels.frontRightPower *= driveCoeff;
+        powerLevels.backRightPower *= driveCoeff;
     }
 
     @Override
@@ -180,7 +183,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
             closeGate();
         }
 
-        if (d1StartIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
+        if (d1BackIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
 
             gyroCorrecting = !gyroCorrecting;
             switchModeStartTime = time.time();

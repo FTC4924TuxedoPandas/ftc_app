@@ -296,7 +296,9 @@ public abstract class RevolutionVelocityBase extends OpMode {
 
     public boolean d1StartIsPressed() { return gamepad1.start; }
 
-    private boolean d2StartIsPressed() { return gamepad2.start; }
+    public boolean d2StartIsPressed() { return gamepad2.start; }
+
+    public boolean d1BackIsPressed() { return gamepad1.back; }
 
     public float leftTriggerValue() { return gamepad1.left_trigger; }
 
