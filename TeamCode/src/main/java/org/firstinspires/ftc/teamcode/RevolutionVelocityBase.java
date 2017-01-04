@@ -68,8 +68,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
     public float shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
     public static int angleOffset = 0;
-    boolean lowSensitivity;
-    boolean highSensitivity;
     ElapsedTime time = new ElapsedTime();
 
     @Override
@@ -81,6 +79,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
+        winchMotor = hardwareMap.dcMotor.get("winchMotor");
 
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
@@ -97,6 +96,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
 
@@ -110,7 +110,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_OPEN);
-        shovelLockServo.setPosition(0.0f);
+        shovelLockServo.setPosition(1.0f);
         autonomousBallServo.setPosition(0.0f);
     }
 
@@ -126,42 +126,12 @@ public abstract class RevolutionVelocityBase extends OpMode {
 
     }
 
-    public void setPowerForMecanumStrafe(float power, int heading) {
-
-        int headingDifference = steadyHeading - heading;
-
-        if (steadyHeading - heading >= 180) {
-
-            headingDifference = steadyHeading - 360 - heading;
-        }
-
-        if (heading - steadyHeading >= 180) {
-
-            headingDifference = 360 - heading + steadyHeading;
-        }
-
-        if (headingDifference < 0) {
-
-            powerLevels.frontLeftPower = power - Math.abs(headingDifference * power);
-            powerLevels.backLeftPower = -power - Math.abs(headingDifference * power);;
-            powerLevels.backRightPower = power;
-            powerLevels.frontRightPower = -power;
-
-        } else {
-
-            powerLevels.frontLeftPower = power;
-            powerLevels.backLeftPower = -power;
-            powerLevels.backRightPower = power - Math.abs(headingDifference * power);;
-            powerLevels.frontRightPower = -power - Math.abs(headingDifference * power);;
-        }
-    }
-
     public void setPowerForLinearMove(float power) {
 
-        powerLevels.frontLeftPower = -power;
-        powerLevels.backLeftPower = -power;
-        powerLevels.backRightPower = -power;
-        powerLevels.frontRightPower = -power;
+        powerLevels.frontLeftPower = power;
+        powerLevels.backLeftPower = power;
+        powerLevels.backRightPower = power;
+        powerLevels.frontRightPower = power;
     }
 
     public void setMotorPowerLevels(PowerLevels powerLevels) {
