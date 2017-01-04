@@ -21,7 +21,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
     private final double BOUNCE_DELAY = 0.2;
     private float driveCoeff;
 
-    public boolean gyroCorrecting = true;
+    public boolean gyroCorrecting = false;
 
     @Override
     public void init() {
@@ -180,7 +180,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
             closeGate();
         }
 
-        if (d1StartIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
+        if (d1BackIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
 
             gyroCorrecting = !gyroCorrecting;
             switchModeStartTime = time.time();

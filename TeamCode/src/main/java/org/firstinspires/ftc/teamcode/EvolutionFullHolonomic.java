@@ -38,6 +38,9 @@ public class EvolutionFullHolonomic extends TeleopBase {
 
     private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
 
+        x *= driveDirection;
+        y *= driveDirection;
+
         int headingDifference = steadyHeading - heading;
 
         if (isTurningLeft || isTurningRight) {
@@ -85,15 +88,15 @@ public class EvolutionFullHolonomic extends TeleopBase {
             }
         }
 
-        setCoeffPowerLevels(driveDirection, driveCoeff);
+        setCoeffPowerLevels(driveCoeff);
     }
 
-    private void setCoeffPowerLevels(int driveDirection, float driveCoeff) {
+    private void setCoeffPowerLevels(float driveCoeff) {
 
-        powerLevels.frontLeftPower *= driveDirection * driveCoeff;
-        powerLevels.backLeftPower *= driveDirection * driveCoeff;
-        powerLevels.frontRightPower *= driveDirection * driveCoeff;
-        powerLevels.backRightPower *= driveDirection * driveCoeff;
+        powerLevels.frontLeftPower *= driveCoeff;
+        powerLevels.backLeftPower *= driveCoeff;
+        powerLevels.frontRightPower *= driveCoeff;
+        powerLevels.backRightPower *= driveCoeff;
     }
 
     private boolean d1LeftBumperIsPressed() { return gamepad1.left_bumper; }
@@ -103,6 +106,8 @@ public class EvolutionFullHolonomic extends TeleopBase {
     private boolean d1StartIsPressed() { return gamepad1.start; }
 
     private boolean d2StartIsPressed() { return gamepad2.start; }
+
+    private boolean d1BackIsPressed() { return gamepad1.back; }
 
     @Override
     public void loop() {
@@ -132,7 +137,7 @@ public class EvolutionFullHolonomic extends TeleopBase {
             leftBeaconServoIn();
         }
 
-        if (d1AIsPressed()) {
+        if (d1AIsPressed() && !d1StartIsPressed()) {
 
             rightBeaconServoOut();
 
@@ -180,7 +185,7 @@ public class EvolutionFullHolonomic extends TeleopBase {
             closeGate();
         }
 
-        if (d1StartIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
+        if (d1BackIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
 
             gyroCorrecting = !gyroCorrecting;
             switchModeStartTime = time.time();
