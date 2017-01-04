@@ -61,7 +61,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
     int turnStartValueLeft;
     int turnStartValueRight;
     int driveDirection;
-    float driveCoeff;
     GyroSensor turningGyro;
     public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     public float leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;

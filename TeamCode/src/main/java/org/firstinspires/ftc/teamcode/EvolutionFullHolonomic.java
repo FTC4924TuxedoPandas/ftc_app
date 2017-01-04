@@ -6,12 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * Created by 4924_Users on 12/17/2016.
- * Latest fixes made on 12/23/2016
+ * Created by 4924_Users on 1/4/2017.
  */
 
 @TeleOp(name = "FullHolonomic")
-public class FullHolonomic extends RevolutionVelocityBase {
+public class EvolutionFullHolonomic extends TeleopBase {
 
     private boolean throwing;
     private double throwStartTime;
@@ -27,27 +26,12 @@ public class FullHolonomic extends RevolutionVelocityBase {
     public void init() {
 
         super.init();
-        winchMotor = hardwareMap.dcMotor.get("winchMotor");
-        winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        highSensitivity = false;
-        lowSensitivity = false;
 
         driveDirection = 1;
         driveCoeff = 1;
         turningGyro.calibrate();
 
         throwing = false;
-    }
-
-    @Override
-    public void init_loop() {
-
-        rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
-        leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
-        shovelLockServo.setPosition(LOCK_SERVO_POSITION_CLOSED);
-        collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
-
     }
 
     private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
@@ -103,11 +87,18 @@ public class FullHolonomic extends RevolutionVelocityBase {
     }
 
     private void setCoeffPowerLevels(int driveDirection, float driveCoeff) {
+
         powerLevels.frontLeftPower *= driveDirection * driveCoeff;
         powerLevels.backLeftPower *= driveDirection * driveCoeff;
         powerLevels.frontRightPower *= driveDirection * driveCoeff;
         powerLevels.backRightPower *= driveDirection * driveCoeff;
     }
+
+    private boolean d1LeftBumperIsPressed() { return gamepad1.left_bumper; }
+
+    private boolean d1RightBumperIsPressed() { return gamepad1.right_bumper; }
+
+    private boolean d1StartIsPressed() { return gamepad1.start; }
 
     @Override
     public void loop() {
@@ -118,8 +109,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         isTurningLeft = leftTriggerValue() > 0.01f;
         isTurningRight = rightTriggerValue() > 0.01f;
-
-        winchPowerLevel = -gamepad2.left_stick_y;
 
         if (d1DPadDownIsPressed()) {
 
@@ -176,7 +165,11 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         if (d2XIsPressed()) {
 
-            openGate();
+            openGateLow();
+
+        } else if (d2YIsPressed()) {
+
+            openGateHigh();
 
         } else if (d2AIsPressed()) {
 
@@ -187,13 +180,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
             gyroCorrecting = !gyroCorrecting;
             switchModeStartTime = time.time();
-        }
-
-        if (d2YIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
-
-            throwing = true;
-            throwInterval = 0.5;
-            throwStartTime = time.time();
         }
 
         if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
@@ -211,16 +197,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
             throwing = false;
             throwingArmPowerLevel = 0.0f;
-        }
-
-        if (d1DPadLeftIsPressed() && d2DPadLeftIsPressed()) {
-
-            lockShovel();
-        }
-
-        if (d1DPadRightIsPressed() && d2DPadRightIsPressed()) {
-
-            unlockShovel();
         }
 
         if (d1LeftBumperIsPressed()) {
@@ -259,7 +235,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         rightBeaconServo.setPosition(rightBeaconServoPosition);
         leftBeaconServo.setPosition(leftBeaconServoPosition);
-        shovelLockServo.setPosition(shovelLockServoPosition);
         collectionGateServo.setPosition(gateServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
@@ -274,7 +249,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         throwingArm.setPower(throwingArmPowerLevel);
         collectionMotor.setPower(collectionPowerLevel);
-        winchMotor.setPower(winchPowerLevel);
     }
-
 }
+
