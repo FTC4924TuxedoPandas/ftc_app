@@ -62,7 +62,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
     public State currentState;
-    static final float TURNING_ANGLE_MARGIN = 10.0f;
+    static final float TURNING_ANGLE_MARGIN = 7.0f;
     static final int ENCODER_TARGET_MARGIN = 15;
     public static int angleOffset = 0;
     final int COUNTS_PER_REVOLUTION = 1120;
@@ -197,18 +197,18 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.2f, heading);
+                        setPowerForMecanumStrafe(-0.2f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.2f, heading);
+                        setPowerForMecanumStrafe(0.2f, heading);
                     }
                 }
 
                 break;
 
             case STATE_LINE_UP_TO_BEACON:
-
+                TurnOffAllDriveMotors(); //added this as robot was continuing to move in FindWhiteLine state 1/4/17
                 if (!isRed() && isSecondBeacon) {
 
                     if (elapsedTimeForCurrentState.time() >= 1.0f) {
@@ -232,6 +232,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                 break;
 
             case STATE_PUSH_BEACON:
+                TurnOffAllDriveMotors(); //added this as robot was continuing to move in FindWhiteLine state 1/4/17
 
                 if (isRed()) {
 
