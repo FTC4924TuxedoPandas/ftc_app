@@ -33,7 +33,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     public ElapsedTime elapsedTimeForMove = new ElapsedTime();
     public boolean isPushing = false;
     public boolean isSecondBeacon = false;
+    public int loopsPassed = 0;
     public int currentPathSegmentIndex = 0;
+    public int lastHeadingDifference = 0;
     DrivePathSegment segment = new DrivePathSegment();
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
@@ -112,7 +114,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_POSITION_FOR_BALL:
 
-                if (pathComplete()) {
+                if (pathComplete(heading)) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -171,7 +173,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_DRIVE:
 
-                if (pathComplete()) {
+                if (pathComplete(heading)) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -208,7 +210,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                 break;
 
             case STATE_LINE_UP_TO_BEACON:
+
                 TurnOffAllDriveMotors(); //added this as robot was continuing to move in FindWhiteLine state 1/4/17
+
                 if (!isRed() && isSecondBeacon) {
 
                     if (elapsedTimeForCurrentState.time() >= 1.0f) {
@@ -281,7 +285,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_KNOCK_CAP_BALL:
 
-                if (pathComplete()) {
+                if (pathComplete(heading)) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -446,9 +450,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         startSeg();
     }
 
-    public boolean pathComplete() {
+    public boolean pathComplete(int heading) {
         // Wait for this Segment to end and then see what's next.
-        if (segmentComplete()) {
+        if (segmentComplete(heading)) {
             // Start next Segment if there is one.
             if (currentPathSegmentIndex < currentPath.length) {
 
@@ -506,11 +510,49 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         currentEncoderTargets.backRightTarget = getRightPosition();
     }
 
-    public boolean segmentComplete() {
+    public boolean segmentComplete(int heading) {
 
         if (segment.isTurn) {
 
-            return turnComplete();
+            if (turnComplete()) {
+
+                return true;
+
+            } else {
+
+                int headingDifference = (int) segment.Angle - heading;
+
+                if ((int) segment.Angle - heading >= 180) {
+
+                    headingDifference = (int) segment.Angle - 360 - heading;
+                }
+
+                if (heading - (int) segment.Angle >= 180) {
+
+                    headingDifference = 360 - heading + (int) segment.Angle;
+                }
+
+                if (Math.abs(headingDifference) > Math.abs(lastHeadingDifference)) {
+
+                    segment.leftPower *= -1;
+                    segment.rightPower *= -1;
+                }
+
+                powerLevels = new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
+
+                if (loopsPassed >= 3) {
+
+                    lastHeadingDifference = headingDifference;
+                    loopsPassed = 0;
+                }
+
+
+                telemetry.addData("HD" , headingDifference);
+                telemetry.addData("LHD", lastHeadingDifference);
+                loopsPassed++;
+
+                return false;
+            }
 
         } else {
 
