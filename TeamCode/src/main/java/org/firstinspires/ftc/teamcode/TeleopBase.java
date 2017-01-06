@@ -140,10 +140,10 @@ public class TeleopBase extends VelocityBase {
 
     public boolean d2DPadUpIsPressed() { return gamepad2.dpad_up; }
 
-    public boolean collectionIn() {return gamepad2.right_bumper;}
+    public boolean collectionIn() {return gamepad2.left_bumper;}
 
     public boolean collectionOut() {
-        return gamepad2.left_bumper;
+        return gamepad2.right_bumper;
     }
 
     public boolean isDiagonal() {
