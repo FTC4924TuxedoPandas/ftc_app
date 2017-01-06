@@ -18,14 +18,14 @@ public class BlueRevLaunchAndBeacon extends RevLaunchAndBeaconBase{
         };
 
         beaconPath = new DrivePathSegment[]{
+
                 new DrivePathSegment(0.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(-2.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(38.0f, 0.3f, DrivePathSegment.TURN), //I found that the robot was always over rotating its turns (high margin of error) 1/4/17
+                new DrivePathSegment(38.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(13.0f, 0.2f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(78.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(9.0f, 0.2f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(6.0f, 0.1f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(-5.0f, 0.1f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(10.0f, 0.2f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(5.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
 
