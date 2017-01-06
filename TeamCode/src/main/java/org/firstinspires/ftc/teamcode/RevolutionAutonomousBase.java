@@ -25,7 +25,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_START_LAUNCH_PATH,
         STATE_START_CAP_BALL_PATH,
         STATE_DROP_GATE,
-        STATE_LINE_UP_TO_BEACON
     }
 
     final float THROWING_TIME = 0.5f;
@@ -156,7 +155,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_WAIT_FOR_BALL:
 
-                if (elapsedTimeForCurrentState.time() >= 2.0f) {
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
                     collectionGateServo.setPosition(0.0f);
                     switchToNextState();
@@ -199,44 +198,22 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(-0.2f, heading);
+                        setPowerForMecanumStrafe(-0.05f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(0.2f, heading);
+                        setPowerForMecanumStrafe(0.05f, heading);
                     }
-                }
-
-                break;
-
-            case STATE_LINE_UP_TO_BEACON:
-
-                TurnOffAllDriveMotors(); //added this as robot was continuing to move in FindWhiteLine state 1/4/17
-
-                if (!isRed() && isSecondBeacon) {
-
-                    if (elapsedTimeForCurrentState.time() >= 1.0f) {
-
-                        TurnOffAllDriveMotors();
-                        switchToNextState();
-
-                    } else {
-
-                        powerLevels.frontRightPower= 0.3f;
-                        powerLevels.backRightPower= 0.3f;
-                        powerLevels.frontLeftPower= 0.2f;
-                        powerLevels.backLeftPower= 0.2f;
-                    }
-
-                } else {
-
-                    switchToNextState();
                 }
 
                 break;
 
             case STATE_PUSH_BEACON:
-                TurnOffAllDriveMotors(); //added this as robot was continuing to move in FindWhiteLine state 1/4/17
+                TurnOffAllDriveMotors();
+                powerLevels.frontRightPower = 0.2f;
+                powerLevels.backRightPower = 0.2f;
+                powerLevels.frontLeftPower = 0.2f;
+                powerLevels.backLeftPower = 0.2f;
 
                 if (isRed()) {
 
@@ -254,9 +231,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         rightBeaconServoIn();
                         leftBeaconServoIn();
                         TurnOffAllDriveMotors();
-                        elapsedTimeForMove.reset();
-                        isPushing = false;
-                        isSecondBeacon = true;
                         switchToNextState();
                     }
 
@@ -267,9 +241,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         rightBeaconServoIn();
                         leftBeaconServoIn();
                         TurnOffAllDriveMotors();
-                        elapsedTimeForMove.reset();
-                        isPushing = false;
-                        isSecondBeacon = true;
                         switchToNextState();
                     }
                 }
@@ -375,6 +346,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 runWithoutEncoders();
                 double currentAngle = heading;
+                segment.isClockwise = !counterclockwiseTurnNeeded(currentAngle);
 
                 if (counterclockwiseTurnNeeded(currentAngle)) {
 
@@ -532,20 +504,24 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     headingDifference = 360 - heading + (int) segment.Angle;
                 }
 
-                if (Math.abs(headingDifference) > Math.abs(lastHeadingDifference)) {
+                if (segment.isClockwise) {
 
-                    segment.leftPower *= -1;
-                    segment.rightPower *= -1;
+                    if (headingDifference < 0) {
+
+                        segment.leftPower *= -1;
+                        segment.rightPower *= -1;
+                        segment.isClockwise = false;
+                    }
+
+                } else {
+
+                    if (headingDifference > 0) {
+
+                        segment.leftPower *= -1;
+                        segment.rightPower *= -1;
+                        segment.isClockwise = true;
+                    }
                 }
-
-                powerLevels = new PowerLevels(segment.leftPower, segment.rightPower, segment.leftPower, segment.rightPower);
-
-                if (loopsPassed >= 3) {
-
-                    lastHeadingDifference = headingDifference;
-                    loopsPassed = 0;
-                }
-
 
                 telemetry.addData("HD" , headingDifference);
                 telemetry.addData("LHD", lastHeadingDifference);
@@ -587,20 +563,15 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         int rightPosition = getRightPosition();
         int rightTarget = currentEncoderTargets.frontRightTarget;
 
-        return (isPositionClose(leftPosition, leftTarget, segment.LeftSideDistance) ||
-                isPositionClose(rightPosition, rightTarget, segment.LeftSideDistance)) ||
+        return (isPositionClose(leftPosition, leftTarget) ||
+                isPositionClose(rightPosition, rightTarget)) ||
                 (isPastTarget(leftPosition, leftTarget, segment.LeftSideDistance) ||
                         isPastTarget(rightPosition, rightTarget, segment.LeftSideDistance));
     }
 
-    public boolean isPositionClose(int position, int target, float distanceToMove) {
+    public boolean isPositionClose(int position, int target) {
 
-        if (distanceToMove < 0) {
-
-            return position - target < ENCODER_TARGET_MARGIN;
-        }
-
-        return target - position < ENCODER_TARGET_MARGIN;
+        return Math.abs(target - position) < ENCODER_TARGET_MARGIN;
     }
 
     public boolean isPastTarget(int position, int target, float distanceToMove) {
@@ -687,7 +658,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = -0.9f;
+            throwingArmPowerLevel = -0.8f;
         }
     }
 

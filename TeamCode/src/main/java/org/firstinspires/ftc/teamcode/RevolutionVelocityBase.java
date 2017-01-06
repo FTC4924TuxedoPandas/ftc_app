@@ -101,6 +101,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
 
         runWithoutEncoders();
+        rightBeaconSensor.enableLed(false);
+        leftBeaconSensor.enableLed(false);
         turningGyro.calibrate();
     }
 

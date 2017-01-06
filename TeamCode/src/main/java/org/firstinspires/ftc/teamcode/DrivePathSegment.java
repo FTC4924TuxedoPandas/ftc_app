@@ -18,6 +18,7 @@ public class DrivePathSegment {
     public boolean isTurn = false;
     public boolean isHolonomic = false;
     public boolean isDelay = false;
+    public boolean isClockwise = false;
 
     public DrivePathSegment() {}
 

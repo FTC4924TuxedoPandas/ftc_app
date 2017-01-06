@@ -14,9 +14,7 @@ public class RevolutionTestAutonomous extends RevolutionTestAutonomousBase {
         beaconPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(10.0f, 0.2f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(90.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(-10.0f, 0.2f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(0.0f, 0.2f, DrivePathSegment.TURN),
         };
     }
 

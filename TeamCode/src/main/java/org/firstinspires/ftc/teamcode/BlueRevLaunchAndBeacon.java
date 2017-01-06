@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
 /**
- * Created by 4924_Users on 1/4/2017.
+ * Created by 4924_Users on 1/5/2017.
  */
 
-@Autonomous(name = "RedRevLaunchAndBeacon")
-public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
+@Autonomous(name = "BlueRevLaunchAndBeacon")
+public class BlueRevLaunchAndBeacon extends RevLaunchAndBeaconBase{
 
-    public RedRevLaunchAndBeacon() {
+    public BlueRevLaunchAndBeacon() {
 
         launchPositioningPath = new DrivePathSegment[]{
 
@@ -21,11 +20,11 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
         beaconPath = new DrivePathSegment[]{
                 new DrivePathSegment(0.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(-2.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(322.0f, 0.3f, DrivePathSegment.TURN), //I found that the robot was always over rotating its turns (high margin of error) 1/4/17
-                new DrivePathSegment(15.0f, 0.2f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(282.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(38.0f, 0.3f, DrivePathSegment.TURN), //I found that the robot was always over rotating its turns (high margin of error) 1/4/17
+                new DrivePathSegment(13.0f, 0.2f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(78.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(9.0f, 0.2f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(7.0f, 0.1f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(6.0f, 0.1f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(-5.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
@@ -33,6 +32,7 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
     @Override
     public boolean isRed() {
 
-        return true;
+        return false;
     }
 }
+
