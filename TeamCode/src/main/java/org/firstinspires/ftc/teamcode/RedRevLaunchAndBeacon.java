@@ -14,12 +14,12 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(8.5f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(8.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(7.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
         };
 
         beaconPath = new DrivePathSegment[]{
-                new DrivePathSegment(0.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(0.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(-2.0f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(322.0f, 0.3f, DrivePathSegment.TURN), //I found that the robot was always over rotating its turns (high margin of error) 1/4/17
                 new DrivePathSegment(15.0f, 0.2f, DrivePathSegment.LINEAR),
