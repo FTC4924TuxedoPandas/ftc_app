@@ -30,7 +30,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         winchMotor = hardwareMap.dcMotor.get("winchMotor");
         winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        driveDirection = 1;
+        driveDirection = -1;
         driveCoeff = 1;
         turningGyro.calibrate();
 
@@ -56,10 +56,10 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         if (isTurningLeft || isTurningRight) {
 
-            powerLevels.frontLeftPower = y - x - leftTurnPower + rightTurnPower;
-            powerLevels.backLeftPower = y + x - leftTurnPower + rightTurnPower;
-            powerLevels.backRightPower = y - x + leftTurnPower - rightTurnPower;
-            powerLevels.frontRightPower = y + x + leftTurnPower - rightTurnPower;
+            powerLevels.frontLeftPower = y - x + leftTurnPower - rightTurnPower;
+            powerLevels.backLeftPower = y + x + leftTurnPower - rightTurnPower;
+            powerLevels.backRightPower = y - x - leftTurnPower + rightTurnPower;
+            powerLevels.frontRightPower = y + x - leftTurnPower + rightTurnPower;
 
         } else {
 
@@ -99,10 +99,10 @@ public class FullHolonomic extends RevolutionVelocityBase {
             }
         }
 
-        setCoeffPowerLevels(driveCoeff);
+        setCoeffPowerLevels(driveDirection, driveCoeff);
     }
 
-    private void setCoeffPowerLevels(float driveCoeff) {
+    private void setCoeffPowerLevels(int driveDirection, float driveCoeff) {
         powerLevels.frontLeftPower *= driveCoeff;
         powerLevels.backLeftPower *= driveCoeff;
         powerLevels.frontRightPower *= driveCoeff;

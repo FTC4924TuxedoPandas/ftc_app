@@ -91,7 +91,9 @@ public class TeleopBase extends VelocityBase {
 
     public boolean d2DPadLeftIsPressed() { return gamepad2.dpad_left; }
 
-    public boolean d2DPadrightIsPressed() { return gamepad2.dpad_right; }
+    public boolean d1DPadRightIsPressed() { return gamepad1.dpad_right; }
+
+    public boolean d2DPadRightIsPressed() { return gamepad2.dpad_right; }
 
     public boolean winchUp() { return gamepad2.dpad_left; }
 

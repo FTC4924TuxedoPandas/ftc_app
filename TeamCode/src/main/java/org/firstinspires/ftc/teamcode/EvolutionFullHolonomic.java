@@ -185,6 +185,16 @@ public class EvolutionFullHolonomic extends TeleopBase {
             closeGate();
         }
 
+        if (d1DPadLeftIsPressed() && d2DPadLeftIsPressed()) {
+
+            lockShovel();
+        }
+
+        if (d1DPadRightIsPressed() && d2DPadRightIsPressed()) {
+
+            unlockShovel();
+        }
+
         if (d1BackIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
 
             gyroCorrecting = !gyroCorrecting;
@@ -245,6 +255,7 @@ public class EvolutionFullHolonomic extends TeleopBase {
         rightBeaconServo.setPosition(rightBeaconServoPosition);
         leftBeaconServo.setPosition(leftBeaconServoPosition);
         collectionGateServo.setPosition(gateServoPosition);
+        shovelLockServo.setPosition(shovelLockServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
 

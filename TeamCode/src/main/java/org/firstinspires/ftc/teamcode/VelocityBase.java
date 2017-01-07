@@ -58,6 +58,9 @@ public abstract class VelocityBase extends OpMode {
     public final float GATE_SERVO_POSITION_LOW = 0.6f;
     public final float GATE_SERVO_POSITION_HIGH = 1.0f;
 
+    public final float LOCK_SERVO_POSITION_CLOSED = 0.0f;
+    public final float LOCK_SERVO_POSITION_OPEN = 0.5f;
+
     public ElapsedTime buttonDelay = new ElapsedTime();
     int turnStartValueLeft;
     int turnStartValueRight;
@@ -69,6 +72,7 @@ public abstract class VelocityBase extends OpMode {
     public float leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
+    public float shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
     boolean reversed;
     boolean lowSensitivity;
     boolean highSensitivity;
@@ -87,7 +91,7 @@ public abstract class VelocityBase extends OpMode {
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
-        //shovelLockServo = hardwareMap.servo.get("shovelLockServo");
+        shovelLockServo = hardwareMap.servo.get("shovelLockServo");
         autonomousBallServo = hardwareMap.servo.get("autonomousBallServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
@@ -112,7 +116,7 @@ public abstract class VelocityBase extends OpMode {
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_LOW);
-        //shovelLockServo.setPosition(0.0f);
+        shovelLockServo.setPosition(LOCK_SERVO_POSITION_CLOSED);
         autonomousBallServo.setPosition(0.0f);
     }
 
@@ -318,6 +322,16 @@ public abstract class VelocityBase extends OpMode {
     public void openGateHigh() {
 
         gateServoPosition = GATE_SERVO_POSITION_HIGH;
+    }
+
+    public void unlockShovel() {
+
+        shovelLockServoPosition = LOCK_SERVO_POSITION_OPEN;
+    }
+
+    public void lockShovel() {
+
+        shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
     }
 }
 
