@@ -9,19 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "BeaconOnly")
 public class BeaconOnly extends BeaconOnlyBase {
 
-    public BeaconOnly() {
-
-        launchPositioningPath = new DrivePathSegment[] {
-
-                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
-        };
-
-        beaconPath = new DrivePathSegment[] {
-
-                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
-        };
-    }
-
     @Override
     public boolean isRed() {
 

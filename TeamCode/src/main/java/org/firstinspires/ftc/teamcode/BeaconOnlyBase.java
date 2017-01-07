@@ -13,6 +13,7 @@ public abstract class BeaconOnlyBase extends RevolutionAutonomousBase {
 
                 State.STATE_INITIAL,
                 State.STATE_FIND_WHITE_LINE,
+                State.STATE_LINE_UP_TO_BEACON,
                 State.STATE_PUSH_BEACON,
                 State.STATE_STOP
         };

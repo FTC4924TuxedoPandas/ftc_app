@@ -18,6 +18,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_POSITION_FOR_BALL,
         STATE_KNOCK_CAP_BALL,
         STATE_FIND_WHITE_LINE,
+        STATE_LINE_UP_TO_BEACON,
         STATE_PUSH_BEACON,
         STATE_LOAD_BALL,
         STATE_WAIT_FOR_BALL,
@@ -192,7 +193,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 1.0f) {
+                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.5f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -201,11 +202,32 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(-0.06f, heading);
+                        setPowerForMecanumStrafe(-0.3f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(0.06f, heading);
+                        setPowerForMecanumStrafe(0.3f, heading);
+                    }
+                }
+
+                break;
+
+            case STATE_LINE_UP_TO_BEACON:
+
+                if (lineSensor.getRawLightDetected() >= 0.5f) {
+
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+
+                } else {
+
+                    if (isRed()) {
+
+                        setPowerForMecanumStrafe(0.05f, heading);
+
+                    } else {
+
+                        setPowerForMecanumStrafe(-0.05f, heading);
                     }
                 }
 
@@ -213,10 +235,10 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                powerLevels.frontRightPower = 0.1f;
-                powerLevels.backRightPower = 0.1f;
-                powerLevels.frontLeftPower = 0.1f;
-                powerLevels.backLeftPower = 0.1f;
+                powerLevels.frontRightPower = 0.05f;
+                powerLevels.backRightPower = 0.05f;
+                powerLevels.frontLeftPower = 0.05f;
+                powerLevels.backLeftPower = 0.05f;
 
                 if (isRed()) {
 
@@ -293,17 +315,17 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         if (headingDifference < 0) {
 
-            powerLevels.frontLeftPower = -power - Math.abs(headingDifference / 100);
-            powerLevels.backLeftPower = power - Math.abs(headingDifference / 100);
-            powerLevels.backRightPower = -power;
-            powerLevels.frontRightPower = power;
+            powerLevels.frontLeftPower = -power;
+            powerLevels.backLeftPower = power;
+            powerLevels.backRightPower = -power + Math.abs(headingDifference / 50);
+            powerLevels.frontRightPower = power + Math.abs(headingDifference / 50);
 
         } else {
 
-            powerLevels.frontLeftPower = -power;
-            powerLevels.backLeftPower = power;
-            powerLevels.backRightPower = -power - Math.abs(headingDifference / 100);
-            powerLevels.frontRightPower = power - Math.abs(headingDifference / 100);
+            powerLevels.frontLeftPower = -power + Math.abs(headingDifference / 50);
+            powerLevels.backLeftPower = power + Math.abs(headingDifference / 50);
+            powerLevels.backRightPower = -power;
+            powerLevels.frontRightPower = power;
         }
     }
 
