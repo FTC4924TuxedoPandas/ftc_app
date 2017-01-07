@@ -3,19 +3,16 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 /**
- * Created by 4924_Users on 1/4/2017.
+ * Created by 4924_Users on 1/6/2017.
  */
-
-@Autonomous(name = "RedRevLaunchAndBeacon")
-public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
-
-    public RedRevLaunchAndBeacon() {
-
+@Autonomous(name = "BlueRevLaunchAndCapBall")
+public class BlueRevLaunchAndCapBall extends RevLaunchAndCapBallBase{
+    public BlueRevLaunchAndCapBall() {
         launchPositioningPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(8.5f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(7.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(1.0f),
+                    new DrivePathSegment(8.5f, 0.3f, DrivePathSegment.LINEAR),
+                    new DrivePathSegment(7.0f, 0.3f, DrivePathSegment.TURN),
+                    new DrivePathSegment(1.0f),
         };
 
         beaconPath = new DrivePathSegment[]{
@@ -33,6 +30,7 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
     @Override
     public boolean isRed() {
 
-        return true;
+        return false;
     }
 }
+

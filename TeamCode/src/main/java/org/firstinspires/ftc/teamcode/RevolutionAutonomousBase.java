@@ -201,11 +201,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(-0.08f, heading);
+                        setPowerForMecanumStrafe(-0.06f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(0.08f, heading);
+                        setPowerForMecanumStrafe(0.06f, heading);
                     }
                 }
 
