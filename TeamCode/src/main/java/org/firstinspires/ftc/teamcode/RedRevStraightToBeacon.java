@@ -12,12 +12,12 @@ public class RedRevStraightToBeacon extends RevStraightToBeaconBase {
     public RedRevStraightToBeacon() {
 
         beaconPath = new DrivePathSegment[]{
-
-                new DrivePathSegment(4.0f, 0.3f, DrivePathSegment.LINEAR),
+//dist. ratio at 0.3 power is approx. 1 : 3.4
+                new DrivePathSegment(0.71f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(315.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(17.1f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(270.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(18.0f, 0.1f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(4.0f, 0.1f, DrivePathSegment.LINEAR),
         };
     }
 
