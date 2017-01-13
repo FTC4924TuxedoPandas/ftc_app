@@ -193,7 +193,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.5f) {
+                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.2f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -223,11 +223,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.05f, heading);
+                        setPowerForMecanumStrafe(0.07f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.05f, heading);
+                        setPowerForMecanumStrafe(-0.07f, heading);
                     }
                 }
 
