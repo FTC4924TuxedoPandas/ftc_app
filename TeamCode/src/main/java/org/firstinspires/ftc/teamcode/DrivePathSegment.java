@@ -8,6 +8,7 @@ public class DrivePathSegment {
     public static final int LINEAR = 0;
     public static final int TURN = 1;
     public static final int HOLONOMIC = 2;
+    public static final int STOP = 0;
 
     public float LeftSideDistance = 0.0f;
     public float RightSideDistance = 0.0f;

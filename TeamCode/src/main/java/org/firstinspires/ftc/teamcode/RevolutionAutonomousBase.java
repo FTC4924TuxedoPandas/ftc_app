@@ -672,7 +672,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = 0.9f;
+            throwingArmPowerLevel = 1.0f;
         }
     }
 
