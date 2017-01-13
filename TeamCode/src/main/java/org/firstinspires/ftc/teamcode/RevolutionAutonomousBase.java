@@ -60,6 +60,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
 
+    public DrivePathSegment[] stop = new DrivePathSegment[] {
+
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
+    };
+
     double countsPerInch = 0.0;
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
@@ -282,14 +287,15 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             case STATE_KNOCK_CAP_BALL:
 
                 if (pathComplete(heading)) {
-
-                    TurnOffAllDriveMotors();
                     switchToNextState();
                 }
 
                 break;
 
             case STATE_STOP:
+
+                startPath(stop);
+                TurnOffAllDriveMotors();
 
                 break;
         }
