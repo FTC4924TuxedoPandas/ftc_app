@@ -198,7 +198,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.2f) {
+                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.1f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -228,11 +228,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.07f, heading);
+                        setPowerForMecanumStrafe(0.05f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.07f, heading);
+                        setPowerForMecanumStrafe(-0.05f, heading);
                     }
                 }
 
@@ -240,10 +240,10 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                powerLevels.frontRightPower = 0.05f;
-                powerLevels.backRightPower = 0.05f;
-                powerLevels.frontLeftPower = 0.05f;
-                powerLevels.backLeftPower = 0.05f;
+                powerLevels.frontRightPower = 0.02f;
+                powerLevels.backRightPower = 0.02f;
+                powerLevels.frontLeftPower = 0.02f;
+                powerLevels.backLeftPower = 0.02f;
 
                 if (isRed()) {
 
@@ -678,7 +678,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = 1.0f;
+            throwingArmPowerLevel = 0.87f;
         }
     }
 

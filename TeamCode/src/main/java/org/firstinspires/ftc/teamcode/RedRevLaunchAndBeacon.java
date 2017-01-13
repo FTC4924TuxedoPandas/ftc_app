@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by 4924_Users on 1/4/2017.
  */
-
-@Autonomous(name = "RedRevLaunchAndBeacon")
+@Autonomous(name = "RedRevLaunchAndBeacon", group = "Revolution")
 public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
 
     public RedRevLaunchAndBeacon() {
@@ -23,10 +22,10 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
                 new DrivePathSegment(0.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(-2.0f, 0.4f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(322.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(18.3f, 0.4f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(285.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(7.0f, 0.4f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(5.0f, 0.1f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(15.0f, 0.4f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(286.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(10.0f, 0.2f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(3.0f, 0.05f, DrivePathSegment.LINEAR),
         };
     }
 
