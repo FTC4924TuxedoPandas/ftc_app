@@ -130,7 +130,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_DROP_GATE:
 
-                if (elapsedTimeForCurrentState.time() >= 2.0f) {
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
                     collectionMotor.setPower(0.0f);
                     switchToNextState();
@@ -207,11 +207,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(-0.3f, heading);
+                        setPowerForMecanumStrafe(-0.5f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(0.3f, heading);
+                        setPowerForMecanumStrafe(0.5f, heading);
                     }
                 }
 
@@ -228,11 +228,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.05f, heading);
+                        setPowerForMecanumStrafe(0.035f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.05f, heading);
+                        setPowerForMecanumStrafe(-0.035f, heading);
                     }
                 }
 
@@ -273,6 +273,14 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         TurnOffAllDriveMotors();
                         switchToNextState();
                     }
+                }
+
+                if (elapsedTimeForCurrentState.time() >= 5.0f) {
+
+                    rightBeaconServoIn();
+                    leftBeaconServoIn();
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
                 }
 
                 break;
@@ -618,7 +626,13 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
     public void pushBeaconButton(int leftSensorRead, int rightSensorRead) {
 
+        telemetry.addData("Left Sensor", leftSensorRead);
+        telemetry.addData("Right Sensor", rightSensorRead);
+
         if (rightSensorRead >= 3 && leftSensorRead >= 3) {
+
+            rightBeaconServoIn();
+            leftBeaconServoIn();
 
             return;
 
@@ -627,16 +641,19 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             if (rightSensorRead <= 3 && leftSensorRead <= 3) {
 
                 leftBeaconServoOut();
+                rightBeaconServoIn();
 
             } else {
 
                 if (rightSensorRead >= 3) {
 
                     rightBeaconServoOut();
+                    leftBeaconServoIn();
 
                 } else {
 
                     leftBeaconServoOut();
+                    rightBeaconServoIn();
                 }
             }
         }
@@ -678,7 +695,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = 0.87f;
+            throwingArmPowerLevel = 0.85f;
         }
     }
 
