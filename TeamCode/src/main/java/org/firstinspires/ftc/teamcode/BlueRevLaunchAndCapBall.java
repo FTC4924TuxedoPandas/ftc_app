@@ -11,7 +11,7 @@ public class BlueRevLaunchAndCapBall extends RevLaunchAndCapBallBase{
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(1.00f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(40.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(42.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(14.0f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(1.0f),
         };
