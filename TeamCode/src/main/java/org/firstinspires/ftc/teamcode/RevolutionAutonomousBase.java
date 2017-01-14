@@ -30,10 +30,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
     final float THROWING_TIME = 0.5f;
     public int stateIndex = 0;
-    public ElapsedTime elapsedTimeForMove = new ElapsedTime();
-    public boolean isPushing = false;
-    public boolean isSecondBeacon = false;
-    public int loopsPassed = 0;
     public int currentPathSegmentIndex = 0;
     public int lastHeadingDifference = 0;
     DrivePathSegment segment = new DrivePathSegment();
