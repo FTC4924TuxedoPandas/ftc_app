@@ -6,19 +6,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 
 @Autonomous(name = "BlueRevLaunchAndBeacon", group = "Revolution")
-public class BlueRevLaunchAndBeacon extends RevLaunchAndBeaconBase{
+public class BlueRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
 
     public BlueRevLaunchAndBeacon() {
 
-        launchPositioningPath = new DrivePathSegment[]{
+        launchPositioningPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(8.5f, 0.4f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(8.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(1.0f),
+                new DrivePathSegment(7.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(0.5f),
         };
 
-        beaconPath = new DrivePathSegment[]{
-
+        beaconPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(0.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(-2.0f, 0.4f, DrivePathSegment.LINEAR),
