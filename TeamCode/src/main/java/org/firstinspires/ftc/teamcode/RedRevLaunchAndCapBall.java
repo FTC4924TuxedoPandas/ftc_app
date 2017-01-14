@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by 4924_Users on 1/6/2017.
  */
-@Autonomous(name = "RedRevLaunchAndCapBall")
+@Autonomous(name = "RedRevLaunchAndCapBall", group = "Revolution")
 public class RedRevLaunchAndCapBall extends RevLaunchAndCapBallBase {
     public RedRevLaunchAndCapBall() {
 
