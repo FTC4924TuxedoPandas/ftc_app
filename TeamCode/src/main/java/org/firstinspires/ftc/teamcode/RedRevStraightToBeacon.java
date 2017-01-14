@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by 4924_Users on 1/7/2017.
  */
 
-@Autonomous(name = "RedRevStraightToBeacon")
+@Autonomous(name = "RedRevStraightToBeacon", group = "Revolution")
 public class RedRevStraightToBeacon extends RevStraightToBeaconBase {
 
     public RedRevStraightToBeacon() {
