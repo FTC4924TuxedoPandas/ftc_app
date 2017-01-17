@@ -234,7 +234,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 break;
 
-            case STATE_PUSH_BEACON:
+            case STATE_PUSH_BEACON: //Regardless of the color of the beacon, the servo on the left will always extends
 
                 powerLevels.frontRightPower = 0.02f;
                 powerLevels.backRightPower = 0.02f;
