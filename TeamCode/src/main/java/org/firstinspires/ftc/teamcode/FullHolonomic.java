@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
@@ -216,6 +215,19 @@ public class FullHolonomic extends RevolutionVelocityBase {
             unlockShovel();
         }
 
+        if (d2RightStickIsLeft()) {
+
+            spinLeft();
+
+        } else if (d2RightStickIsRight()) {
+
+            spinRight();
+
+        } else {
+
+            spinStop();
+        }
+
         if (d1LeftBumperIsPressed()) {
 
             driveCoeff = 1f;
@@ -245,6 +257,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         telemetry.addData("x", x);
         telemetry.addData("y", y);
         telemetry.addData("Steady Angle", steadyHeading);
+        telemetry.addData("SpinningServo Stop", spinningServoPosition);
 
         // clip servo values
         rightBeaconServoPosition = Range.clip(rightBeaconServoPosition, -1.0f, 1.0f);
@@ -254,6 +267,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         leftBeaconServo.setPosition(leftBeaconServoPosition);
         shovelLockServo.setPosition(shovelLockServoPosition);
         collectionGateServo.setPosition(gateServoPosition);
+        spinningServo.setPosition(spinningServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
 

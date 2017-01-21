@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by 4924_Users on 10/8/2016.
@@ -29,6 +28,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo collectionGateServo;
     Servo shovelLockServo;
     Servo autonomousBallServo;
+    Servo spinningServo;
 
     OpticalDistanceSensor lineSensor;
     ColorSensor rightBeaconSensor;
@@ -58,6 +58,10 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float LOCK_SERVO_POSITION_CLOSED = 1.0f;
     public final float LOCK_SERVO_POSITION_OPEN = 0.5f;
 
+    public final float SPINNING_SERVO_POSITION_LEFT = -0.6f;
+    public final float SPINNING_SERVO_POSITION_RIGHT = 0.6f;
+    public final float SPINNING_SERVO_POSITION_STOP = 0.5f;
+
     int turnStartValueLeft;
     int turnStartValueRight;
     int driveDirection;
@@ -67,6 +71,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public float rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float gateServoPosition = GATE_SERVO_POSITION_CLOSED;
     public float shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
+    public float spinningServoPosition = SPINNING_SERVO_POSITION_STOP;
     public static int angleOffset = 0;
     ElapsedTime time = new ElapsedTime();
 
@@ -85,6 +90,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
         shovelLockServo = hardwareMap.servo.get("shovelLockServo");
+        spinningServo = hardwareMap.servo.get("spinningServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
@@ -114,6 +120,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         collectionGateServo.setPosition(GATE_SERVO_POSITION_OPEN);
         shovelLockServo.setPosition(1.0f);
         autonomousBallServo.setPosition(0.0f);
+        spinningServo.setPosition(0.5f);
     }
 
     @Override
@@ -254,6 +261,25 @@ public abstract class RevolutionVelocityBase extends OpMode {
         shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
     }
 
+    public void spinLeft () {
+
+        spinningServoPosition = SPINNING_SERVO_POSITION_LEFT;
+    }
+
+    public void spinRight() {
+
+        spinningServoPosition = SPINNING_SERVO_POSITION_RIGHT;
+    }
+
+    public void spinStop() {
+
+        spinningServoPosition = SPINNING_SERVO_POSITION_STOP;
+    }
+
+    public boolean d2RightStickIsLeft() {return gamepad2.right_stick_x < -0.5f;}
+
+    public boolean d2RightStickIsRight() {return gamepad2.right_stick_x > 0.5f;}
+
     public boolean d1DPadUpIsPressed() { return gamepad1.dpad_up; }
 
     public boolean d1DPadDownIsPressed() { return gamepad1.dpad_down; }
@@ -305,4 +331,5 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public float leftTriggerValue() { return gamepad1.left_trigger; }
 
     public float rightTriggerValue() { return gamepad1.right_trigger; }
+
 }
