@@ -15,8 +15,12 @@ public abstract class RevStraightToBeaconBase extends RevolutionAutonomousBase {
                 State.STATE_START_BEACON_PATH,
                 State.STATE_DRIVE,
                 State.STATE_FIND_WHITE_LINE,
+                State.STATE_SQUARE_ON_WALL,
+                State.STATE_LINE_UP_TO_BEACON,
                 State.STATE_PUSH_BEACON,
                 State.STATE_FIND_WHITE_LINE,
+                State.STATE_SQUARE_ON_WALL,
+                State.STATE_LINE_UP_TO_BEACON,
                 State.STATE_PUSH_BEACON,
                 State.STATE_STOP
         };
