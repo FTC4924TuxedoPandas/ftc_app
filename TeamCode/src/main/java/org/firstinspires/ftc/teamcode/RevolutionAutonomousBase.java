@@ -26,6 +26,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_START_LAUNCH_PATH,
         STATE_START_CAP_BALL_PATH,
         STATE_DROP_GATE,
+        STATE_SQUARE_ON_WALL,
     }
 
     final float THROWING_TIME = 0.5f;
@@ -72,6 +73,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     final double WHEEL_DIAMETER = 4.0f;
     final double GEAR_RATIO = 1.0f;
     final double CALIBRATION_FACTOR = 1.93f;
+    public boolean isSecondBeacon = false;
 
     @Override
     public void init() {
@@ -194,21 +196,47 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                if (lineSensor.getRawLightDetected() >= 0.5f && elapsedTimeForCurrentState.time() >= 0.5f) {
+                if (lineSensor.getRawLightDetected() >= 0.5f) {
+
+                    if (isSecondBeacon) {
+
+                        if (elapsedTimeForCurrentState.time() >= 1.0f) {
+
+                            TurnOffAllDriveMotors();
+                            switchToNextState();
+
+                        } else {
+
+                            strafeAgainstWall(heading);
+                        }
+
+                    } else {
+
+                        isSecondBeacon = true;
+                        TurnOffAllDriveMotors();
+                        switchToNextState();
+                    }
+
+                } else {
+
+                    strafeAgainstWall(heading);
+                }
+
+                break;
+
+            case STATE_SQUARE_ON_WALL:
+
+                if (elapsedTimeForCurrentState.time() >= 2.0f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
 
                 } else {
 
-                    if (isRed()) {
-
-                        setPowerForMecanumStrafe(-0.5f, heading);
-
-                    } else {
-
-                        setPowerForMecanumStrafe(0.5f, heading);
-                    }
+                    powerLevels.frontRightPower = 0.04f;
+                    powerLevels.backRightPower = 0.04f;
+                    powerLevels.frontLeftPower = 0.04f;
+                    powerLevels.backLeftPower = 0.04f;
                 }
 
                 break;
@@ -217,6 +245,15 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 if (lineSensor.getRawLightDetected() >= 0.5f) {
 
+                    if (isRed()) {
+
+                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+
+                    } else {
+
+                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                    }
+
                     TurnOffAllDriveMotors();
                     switchToNextState();
 
@@ -224,51 +261,24 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.045f, heading);
+                        setPowerForMecanumStrafe(0.05f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.045f, heading);
+                        setPowerForMecanumStrafe(-0.05f, heading);
                     }
                 }
 
                 break;
 
-            case STATE_PUSH_BEACON: //Regardless of the color of the beacon, the servo on the left will always extends
+            case STATE_PUSH_BEACON:
 
-                powerLevels.frontRightPower = 0.03f;
-                powerLevels.backRightPower = 0.03f;
-                powerLevels.frontLeftPower = 0.03f;
-                powerLevels.backLeftPower = 0.03f;
+                if (elapsedTimeForCurrentState.time() >= 5.0f) {
 
-                if (isRed()) {
-
-                    pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
-
-                } else {
-
-                    pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
-                }
-
-                if (isRed()) {
-
-                    if (leftBeaconSensor.red() >= 3 && rightBeaconSensor.red() >= 3) {
-
-                        rightBeaconServoIn();
-                        leftBeaconServoIn();
-                        TurnOffAllDriveMotors();
-                        switchToNextState();
-                    }
-
-                } else {
-
-                    if (leftBeaconSensor.blue() >= 3 && rightBeaconSensor.blue() >= 3) {
-
-                        rightBeaconServoIn();
-                        leftBeaconServoIn();
-                        TurnOffAllDriveMotors();
-                        switchToNextState();
-                    }
+                    rightBeaconServoIn();
+                    leftBeaconServoIn();
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
                 }
 
                 break;
@@ -301,6 +311,62 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         setMotorPowerLevels(powerLevels);
     }
 
+    public void strafeAgainstWall(int heading) {
+
+        if (leftBumper.isPressed()) {
+
+            if (rightBumper.isPressed()) {
+
+                if (isRed()) {
+
+                    if (isSecondBeacon) {
+
+                        setPowerForMecanumStrafe(-0.35f, heading);
+
+                    } else {
+
+                        setPowerForMecanumStrafe(-0.2f, heading);
+                    }
+
+                } else {
+
+                    if (isSecondBeacon) {
+
+                        setPowerForMecanumStrafe(0.35f, heading);
+
+                    } else {
+
+                        setPowerForMecanumStrafe(0.2f, heading);
+                    }
+                }
+
+            } else {
+
+                powerLevels.frontRightPower = 0.2f;
+                powerLevels.backRightPower = 0.2f;
+                powerLevels.frontLeftPower = 0.0f;
+                powerLevels.backLeftPower = 0.0f;
+            }
+
+        } else {
+
+            if (rightBumper.isPressed()) {
+
+                powerLevels.frontRightPower = 0.0f;
+                powerLevels.backRightPower = 0.0f;
+                powerLevels.frontLeftPower = 0.2f;
+                powerLevels.backLeftPower = 0.2f;
+
+            } else {
+
+                powerLevels.frontRightPower = 0.2f;
+                powerLevels.backRightPower = 0.2f;
+                powerLevels.frontLeftPower = 0.2f;
+                powerLevels.backLeftPower = 0.2f;
+            }
+        }
+    }
+
     public void setPowerForMecanumStrafe(float power, int heading) {
 
         int headingDifference = steadyHeading - heading;
@@ -317,17 +383,17 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         if (headingDifference < 0) {
 
-            powerLevels.frontLeftPower = -power;
-            powerLevels.backLeftPower = power;
-            powerLevels.backRightPower = -power + Math.abs(headingDifference / 50);
-            powerLevels.frontRightPower = power + Math.abs(headingDifference / 50);
+            powerLevels.frontLeftPower = -power; //+ Math.abs(headingDifference / 15);
+            powerLevels.backLeftPower = power; //+ Math.abs(headingDifference / 15);
+            powerLevels.backRightPower = -power;
+            powerLevels.frontRightPower = power;
 
         } else {
 
-            powerLevels.frontLeftPower = -power + Math.abs(headingDifference / 50);
-            powerLevels.backLeftPower = power + Math.abs(headingDifference / 50);
-            powerLevels.backRightPower = -power;
-            powerLevels.frontRightPower = power;
+            powerLevels.frontLeftPower = -power;
+            powerLevels.backLeftPower = power;
+            powerLevels.backRightPower = -power; //+ Math.abs(headingDifference / 15);
+            powerLevels.frontRightPower = power; //+ Math.abs(headingDifference / 15);
         }
     }
 

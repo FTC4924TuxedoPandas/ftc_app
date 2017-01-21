@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -62,6 +63,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
     int turnStartValueRight;
     int driveDirection;
     GyroSensor turningGyro;
+    TouchSensor rightBumper;
+    TouchSensor leftBumper;
     public PowerLevels zeroPowerLevels = new PowerLevels(0.0f, 0.0f, 0.0f, 0.0f);
     public float leftBeaconServoPosition = BEACON_SERVO_POSITION_IN;
     public float rightBeaconServoPosition = BEACON_SERVO_POSITION_IN;
@@ -89,6 +92,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
         leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
+        rightBumper = hardwareMap.touchSensor.get("rightBumper");
+        leftBumper = hardwareMap.touchSensor.get("leftBumper");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -212,6 +217,10 @@ public abstract class RevolutionVelocityBase extends OpMode {
 
     public void TurnOffAllDriveMotors() {
         SetDriveMotorPowerLevels(zeroPowerLevels);
+        powerLevels.backLeftPower = 0.0f;
+        powerLevels.frontLeftPower = 0.0f;
+        powerLevels.backRightPower = 0.0f;
+        powerLevels.frontRightPower = 0.0f;
     }
 
     public void leftBeaconServoOut() {
