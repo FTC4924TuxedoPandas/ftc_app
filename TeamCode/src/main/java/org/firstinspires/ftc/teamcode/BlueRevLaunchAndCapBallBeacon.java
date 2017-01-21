@@ -12,7 +12,7 @@ public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(36.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(36.0f, 0.3f, DrivePathSegment.TURN), //YEAH BOOOOOOOOOOOOOOOOOOOOOIIIIIIIIIIIIIIIIIIIIIIII
                 new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(50.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
@@ -24,7 +24,7 @@ public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase
                 new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(20.0f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(75.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(3.0f, 0.3f, DrivePathSegment.HOLONOMIC),
+                //new DrivePathSegment(3.0f, 0.3f, DrivePathSegment.HOLONOMIC),
                 new DrivePathSegment(9.0f, 0.3f, DrivePathSegment.LINEAR),
         };
         stop = new DrivePathSegment [] {
