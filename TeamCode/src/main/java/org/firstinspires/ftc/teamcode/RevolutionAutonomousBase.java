@@ -228,6 +228,15 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 if (elapsedTimeForCurrentState.time() >= 2.0f) {
 
+                    if (isRed()) {
+
+                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+
+                    } else {
+
+                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                    }
+
                     TurnOffAllDriveMotors();
                     switchToNextState();
 
@@ -245,28 +254,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 if (lineSensor.getRawLightDetected() >= 0.5f) {
 
-                    if (isRed()) {
-
-                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
-
-                    } else {
-
-                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
-                    }
-
                     TurnOffAllDriveMotors();
                     switchToNextState();
 
-                } else {
-
-                    if (isRed()) {
-
-                        setPowerForMecanumStrafe(0.05f, heading);
-
-                    } else {
-
-                        setPowerForMecanumStrafe(-0.05f, heading);
-                    }
                 }
 
                 break;
