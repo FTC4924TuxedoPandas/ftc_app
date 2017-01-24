@@ -11,7 +11,7 @@ public class BlueRevLaunchAndCapBallDelay extends RevLaunchAndCapBallBase{
     public BlueRevLaunchAndCapBallDelay() {
         launchPositioningPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(1.00f),
+                new DrivePathSegment(5.00f),
                 new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(36.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
