@@ -313,7 +313,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
     public void strafeAgainstWall(int heading) {
 
-        if (leftBumper.isPressed()) {
+        /*if (leftBumper.isPressed()) {
 
             if (rightBumper.isPressed()) {
 
@@ -363,6 +363,29 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                 powerLevels.backRightPower = 0.2f;
                 powerLevels.frontLeftPower = 0.2f;
                 powerLevels.backLeftPower = 0.2f;
+            }
+        }*/
+
+        if (isRed()) {
+
+            if (isSecondBeacon) {
+
+                setPowerForMecanumStrafe(-0.35f, heading);
+
+            } else {
+
+                setPowerForMecanumStrafe(-0.2f, heading);
+            }
+
+        } else {
+
+            if (isSecondBeacon) {
+
+                setPowerForMecanumStrafe(0.35f, heading);
+
+            } else {
+
+                setPowerForMecanumStrafe(0.2f, heading);
             }
         }
     }
