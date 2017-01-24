@@ -24,8 +24,7 @@ public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase
                 new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(20.0f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(75.0f, 0.3f, DrivePathSegment.TURN),
-                //new DrivePathSegment(3.0f, 0.3f, DrivePathSegment.HOLONOMIC),
-                new DrivePathSegment(9.0f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(12.0f, 0.4f, DrivePathSegment.LINEAR),
         };
         stop = new DrivePathSegment [] {
 
