@@ -267,6 +267,8 @@ public abstract class AutonomousBase extends VelocityBase {
 
             case STATE_PUSH_BEACON:
 
+
+
                 if (isRed()) {
 
                     pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
@@ -282,6 +284,10 @@ public abstract class AutonomousBase extends VelocityBase {
 
                         rightBeaconServoIn();
                         leftBeaconServoIn();
+                        powerLevels.frontRightPower= -0.15f;
+                        powerLevels.backRightPower= -0.15f;
+                        powerLevels.frontLeftPower= -0.15f;
+                        powerLevels.backLeftPower= -0.15f;
                         TurnOffAllDriveMotors();
                         elapsedTimeForMove.reset();
                         isPushing = false;
@@ -295,6 +301,10 @@ public abstract class AutonomousBase extends VelocityBase {
 
                         rightBeaconServoIn();
                         leftBeaconServoIn();
+                        powerLevels.frontRightPower= -0.15f;
+                        powerLevels.backRightPower= -0.15f;
+                        powerLevels.frontLeftPower= -0.15f;
+                        powerLevels.backLeftPower= -0.15f;
                         TurnOffAllDriveMotors();
                         elapsedTimeForMove.reset();
                         isPushing = false;

@@ -51,7 +51,10 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
+    public DrivePathSegment[] leaveBeaconPath = new DrivePathSegment[] {
 
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
+    };
     public DrivePathSegment[] knockCapBallPath = new DrivePathSegment[] {
 
             new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
@@ -242,8 +245,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 } else {
 
-                    powerLevels.frontRightPower = 0.04f;
-                    powerLevels.backRightPower = 0.04f;
+                    powerLevels.frontRightPower = 0.05f;
+                    powerLevels.backRightPower = 0.05f;
                     powerLevels.frontLeftPower = 0.04f;
                     powerLevels.backLeftPower = 0.04f;
                 }
@@ -264,9 +267,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             case STATE_PUSH_BEACON:
 
                 if (elapsedTimeForCurrentState.time() >= 5.0f) {
-
                     rightBeaconServoIn();
                     leftBeaconServoIn();
+                    startPath(leaveBeaconPath);
                     TurnOffAllDriveMotors();
                     switchToNextState();
                 }

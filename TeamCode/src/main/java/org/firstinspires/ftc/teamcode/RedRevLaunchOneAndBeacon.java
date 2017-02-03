@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by 4924_Users on 1/13/2017.
  */
-@Autonomous(name = "RedRevLaunchOneAndBeacon", group = "Revolution")
+@Autonomous(name = "RedRevLaunchOneAndBeacon")
 public class RedRevLaunchOneAndBeacon extends RevLaunchOneAndBeaconBase{
     public RedRevLaunchOneAndBeacon() {
 

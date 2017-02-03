@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by 4924_Users on 1/21/2017.
  */
 
-@Autonomous(name = "BlueRevLaunchAndCapBallDealy", group = "Revolution")
+@Autonomous(name = "BlueRevLaunchAndCapBallDealy")
 public class BlueRevLaunchAndCapBallDelay extends RevLaunchAndCapBallBase{
     public BlueRevLaunchAndCapBallDelay() {
         launchPositioningPath = new DrivePathSegment[]{

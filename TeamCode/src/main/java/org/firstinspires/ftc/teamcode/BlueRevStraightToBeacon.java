@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "BlueRevStraightToBeacon", group = "Revolution")
+@Autonomous(name = "BlueRevStraightToBeacon")
 public class BlueRevStraightToBeacon extends RevStraightToBeaconBase {
     public BlueRevStraightToBeacon() {
         beaconPath = new DrivePathSegment[]{

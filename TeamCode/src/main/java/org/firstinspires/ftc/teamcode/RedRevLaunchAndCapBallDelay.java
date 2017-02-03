@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by 4924_Users on 1/21/2017.
  */
 
-@Autonomous(name = "RedRevLaunchAndCapBallDelay", group = "Revolution")
+@Autonomous(name = "RedRevLaunchAndCapBallDelay")
 public class RedRevLaunchAndCapBallDelay extends RevLaunchAndCapBallBase {
     public RedRevLaunchAndCapBallDelay() {
 
