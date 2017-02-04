@@ -70,7 +70,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
     public State currentState;
-    static final float TURNING_ANGLE_MARGIN = 7.0f;
+    static final float TURNING_ANGLE_MARGIN = 3.0f;
     static final int ENCODER_TARGET_MARGIN = 15;
     public static int angleOffset = 0;
     final int COUNTS_PER_REVOLUTION = 1120;
@@ -199,9 +199,14 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_FIND_WHITE_LINE:
 
+                if (lineSensor.getRawLightDetected() >= 0.001f) {
+
+                    DbgLog.msg("Line sensor reading: " + lineSensor.getRawLightDetected());
+                }
+
                 telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                if (lineSensor.getRawLightDetected() >= 0.5f) {
+                if (lineSensor.getRawLightDetected() >= 0.3f) {
 
                     if (isSecondBeacon) {
 
@@ -257,7 +262,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_LINE_UP_TO_BEACON:
 
-                if (lineSensor.getRawLightDetected() >= 0.5f) {
+                DbgLog.msg("Line sensor reading: " + lineSensor.getRawLightDetected());
+
+                if (lineSensor.getRawLightDetected() >= 0.3f && elapsedTimeForCurrentState.time() >= 0.1f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -316,7 +323,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         leftBeaconServo.setPosition(leftBeaconServoPosition);
         setMotorPowerLevels(powerLevels);
         DbgLog.msg("Gyro reading: " + heading);
-        DbgLog.msg("Line sensor reading: " + lineSensor.getRawLightDetected());
     }
 
     public void strafeAgainstWall(int heading) {
@@ -378,7 +384,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             if (isSecondBeacon) {
 
-                setPowerForMecanumStrafe(-0.35f, heading);
+                setPowerForMecanumStrafe(-0.4f, heading);
 
             } else {
 
@@ -389,7 +395,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             if (isSecondBeacon) {
 
-                setPowerForMecanumStrafe(0.35f, heading);
+                setPowerForMecanumStrafe(0.4f, heading);
 
             } else {
 

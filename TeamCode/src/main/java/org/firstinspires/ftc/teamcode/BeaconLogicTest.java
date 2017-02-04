@@ -12,7 +12,7 @@ public class BeaconLogicTest extends RevolutionAutonomousBase {
 
         beaconPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(13.0f, 0.2f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(5.0f, 0.2f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(3.0f, 0.05f, DrivePathSegment.LINEAR),
         };
     }
