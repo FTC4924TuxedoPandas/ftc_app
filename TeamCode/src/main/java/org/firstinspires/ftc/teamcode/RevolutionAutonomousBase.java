@@ -260,6 +260,16 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     TurnOffAllDriveMotors();
                     switchToNextState();
 
+                } else {
+
+                    if (isRed()) {
+
+                        setPowerForMecanumStrafe(0.05f, heading);
+
+                    } else {
+
+                        setPowerForMecanumStrafe(-0.05f, heading);
+                    }
                 }
 
                 break;
@@ -267,6 +277,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             case STATE_PUSH_BEACON:
 
                 if (elapsedTimeForCurrentState.time() >= 5.0f) {
+
                     rightBeaconServoIn();
                     leftBeaconServoIn();
                     startPath(leaveBeaconPath);
