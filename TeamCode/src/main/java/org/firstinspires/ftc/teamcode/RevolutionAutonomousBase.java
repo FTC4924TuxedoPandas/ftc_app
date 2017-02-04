@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by 4924_Users on 1/3/2017.
@@ -70,7 +71,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     public ElapsedTime elapsedTimeForCurrentSegment = new ElapsedTime();
     public ElapsedTime elapsedTimeForCurrentState = new ElapsedTime();
     public State currentState;
-    static final float TURNING_ANGLE_MARGIN = 3.0f;
+    static final float TURNING_ANGLE_MARGIN = 7.0f;
     static final int ENCODER_TARGET_MARGIN = 15;
     public static int angleOffset = 0;
     final int COUNTS_PER_REVOLUTION = 1120;
