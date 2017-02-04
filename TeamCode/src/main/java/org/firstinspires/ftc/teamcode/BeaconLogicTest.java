@@ -1,12 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 /**
- * Created by 4924_Users on 11/25/2016.
+ * Created by 4924_Users on 2/4/2017.
  */
+@Autonomous(name = "BeaconLogicTest")
+public class BeaconLogicTest extends RevolutionAutonomousBase {
 
-public abstract class BeaconOnlyBase extends RevolutionAutonomousBase {
+    public boolean isRed() {
 
-    @Override
+        return true;
+    }
+
     public State[] stateList() {
 
         return new State[] {
@@ -14,9 +20,11 @@ public abstract class BeaconOnlyBase extends RevolutionAutonomousBase {
                 State.STATE_INITIAL,
                 State.STATE_FIND_WHITE_LINE,
                 State.STATE_LINE_UP_TO_BEACON,
+                State.STATE_SQUARE_ON_WALL,
                 State.STATE_PUSH_BEACON,
                 State.STATE_FIND_WHITE_LINE,
                 State.STATE_LINE_UP_TO_BEACON,
+                State.STATE_SQUARE_ON_WALL,
                 State.STATE_PUSH_BEACON,
                 State.STATE_STOP
         };
