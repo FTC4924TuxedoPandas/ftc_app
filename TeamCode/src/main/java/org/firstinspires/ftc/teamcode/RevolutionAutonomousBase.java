@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -108,6 +109,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             case STATE_INITIAL:
 
                 steadyHeading = heading;
+                runWithoutEncoders();
                 switchToNextState();
 
                 break;
@@ -313,6 +315,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         rightBeaconServo.setPosition(rightBeaconServoPosition);
         leftBeaconServo.setPosition(leftBeaconServoPosition);
         setMotorPowerLevels(powerLevels);
+        DbgLog.msg("Gyro reading: " + heading);
+        DbgLog.msg("Line sensor reading: " + lineSensor.getRawLightDetected());
     }
 
     public void strafeAgainstWall(int heading) {
@@ -440,6 +444,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         }
 
         currentState = stateList()[stateIndex];
+        DbgLog.msg("State changed to " + currentState);
     }
 
     public void startSeg() {
