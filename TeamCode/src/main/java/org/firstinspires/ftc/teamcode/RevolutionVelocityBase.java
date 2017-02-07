@@ -131,6 +131,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     @Override
     public void start() {
 
+        turningGyro.resetZAxisIntegrator();
         angleOffset = turningGyro.getHeading();
     }
 

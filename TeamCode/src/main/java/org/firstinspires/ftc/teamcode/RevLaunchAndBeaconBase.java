@@ -15,7 +15,6 @@ public abstract class RevLaunchAndBeaconBase extends RevolutionAutonomousBase {
                 State.STATE_START_LAUNCH_PATH,
                 State.STATE_POSITION_FOR_BALL,
                 State.STATE_LAUNCH_BALL,
-                State.STATE_DROP_GATE,
                 State.STATE_LOAD_BALL,
                 State.STATE_WAIT_FOR_BALL,
                 State.STATE_LAUNCH_BALL,

@@ -109,9 +109,12 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_INITIAL:
 
-                steadyHeading = heading;
-                runWithoutEncoders();
-                switchToNextState();
+                if (!turningGyro.isCalibrating()) {
+
+                    steadyHeading = heading;
+                    runWithoutEncoders();
+                    switchToNextState();
+                }
 
                 break;
 
@@ -223,7 +226,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     } else {
 
-                        isSecondBeacon = true;
                         TurnOffAllDriveMotors();
                         switchToNextState();
                     }
@@ -237,7 +239,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_SQUARE_ON_WALL:
 
-                if (elapsedTimeForCurrentState.time() >= 2.0f) {
+                if (elapsedTimeForCurrentState.time() >= 1.5f) {
 
                     if (isRed()) {
 
@@ -286,8 +288,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                if (elapsedTimeForCurrentState.time() >= 5.0f) {
+                if (elapsedTimeForCurrentState.time() >= 1.5f && !isSecondBeacon) {
 
+                    isSecondBeacon = true;
                     rightBeaconServoIn();
                     leftBeaconServoIn();
                     startPath(leaveBeaconPath);
@@ -770,7 +773,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = 0.85f;
+            throwingArmPowerLevel = 0.8f;
         }
     }
 
