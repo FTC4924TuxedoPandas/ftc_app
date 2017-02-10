@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -32,7 +34,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo spinningServo;
 
     OpticalDistanceSensor lineSensor;
-    ColorSensor rightBeaconSensor;
+    public FtcI2cDeviceState beaconColorSensorState;
+    //ColorSensor rightBeaconSensor;
     ColorSensor leftBeaconSensor;
 
     boolean isStrafingLeft = false;
@@ -96,8 +99,10 @@ public abstract class RevolutionVelocityBase extends OpMode {
         spinningServo = hardwareMap.servo.get("spinningServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
-        rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
-        leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
+        //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
+        leftBeaconSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
+        beaconColorSensorState = new FtcI2cDeviceState((I2cDevice)leftBeaconSensor);
+        beaconColorSensorState.setEnabled(false);
         rightBumper = hardwareMap.touchSensor.get("rightBumper");
         leftBumper = hardwareMap.touchSensor.get("leftBumper");
 
@@ -112,7 +117,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
 
         runWithoutEncoders();
-        rightBeaconSensor.enableLed(false);
+        //rightBeaconSensor.enableLed(false);
         leftBeaconSensor.enableLed(false);
         turningGyro.calibrate();
     }

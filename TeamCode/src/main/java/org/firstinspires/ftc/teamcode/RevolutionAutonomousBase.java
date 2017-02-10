@@ -217,6 +217,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
                             TurnOffAllDriveMotors();
+                            beaconColorSensorState.setEnabled(true);
                             switchToNextState();
 
                         } else {
@@ -227,6 +228,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     } else {
 
                         TurnOffAllDriveMotors();
+                        beaconColorSensorState.setEnabled(true);
                         switchToNextState();
                     }
 
@@ -243,11 +245,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        pushBeaconButton(leftBeaconSensor.red(), rightBeaconSensor.red());
+                        pushBeaconButton(leftBeaconSensor.red());
 
                     } else {
 
-                        pushBeaconButton(leftBeaconSensor.blue(), rightBeaconSensor.blue());
+                        pushBeaconButton(leftBeaconSensor.blue());
                     }
 
                     TurnOffAllDriveMotors();
@@ -295,6 +297,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     leftBeaconServoIn();
                     startPath(leaveBeaconPath);
                     TurnOffAllDriveMotors();
+                    beaconColorSensorState.setEnabled(false);
                     switchToNextState();
                 }
 
@@ -720,10 +723,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         return position > target;
     }
 
-    public void pushBeaconButton(int leftSensorRead, int rightSensorRead) {
+    public void pushBeaconButton(int leftSensorRead) {
 
         telemetry.addData("Left Sensor", leftSensorRead);
-        telemetry.addData("Right Sensor", rightSensorRead);
 
         if (leftSensorRead >= 2) {
 

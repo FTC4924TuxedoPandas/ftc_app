@@ -12,9 +12,9 @@ public class BeaconSensorReadingTest extends RevolutionVelocityBase {
     @Override
     public void init() {
 
-        rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
+        //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
         leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
-        rightBeaconSensor.enableLed(true);
+        //rightBeaconSensor.enableLed(true);
         leftBeaconSensor.enableLed(false);
     }
 
@@ -27,7 +27,7 @@ public class BeaconSensorReadingTest extends RevolutionVelocityBase {
     @Override
     public void loop() {
 
-        telemetry.addData("Right", rightBeaconSensor.red());
+        //telemetry.addData("Right", rightBeaconSensor.red());
         telemetry.addData("Left", leftBeaconSensor.red());
     }
 }
