@@ -216,7 +216,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
                             TurnOffAllDriveMotors();
-                            leftBeaconColorSensorState.setEnabled(true);
                             switchToNextState();
 
                         } else {
@@ -227,7 +226,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     } else {
 
                         TurnOffAllDriveMotors();
-                        leftBeaconColorSensorState.setEnabled(true);
                         switchToNextState();
                     }
 
@@ -296,7 +294,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     leftBeaconServoIn();
                     startPath(leaveBeaconPath);
                     TurnOffAllDriveMotors();
-                    leftBeaconColorSensorState.setEnabled(false);
                     switchToNextState();
                 }
 

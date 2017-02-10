@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
-import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -34,7 +32,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo spinningServo;
 
     OpticalDistanceSensor lineSensor;
-    public FtcI2cDeviceState leftBeaconColorSensorState;
     //ColorSensor rightBeaconSensor;
     ColorSensor leftBeaconSensor;
 
@@ -100,9 +97,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
-        leftBeaconSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
-        leftBeaconColorSensorState = new FtcI2cDeviceState((I2cDevice)leftBeaconSensor);
-        leftBeaconColorSensorState.setEnabled(false);
+        leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
         rightBumper = hardwareMap.touchSensor.get("rightBumper");
         leftBumper = hardwareMap.touchSensor.get("leftBumper");
 
