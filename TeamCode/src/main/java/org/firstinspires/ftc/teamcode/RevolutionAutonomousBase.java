@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.ftccommon.DbgLog;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by 4924_Users on 1/3/2017.
@@ -217,7 +216,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         if (elapsedTimeForCurrentState.time() >= 1.0f) {
 
                             TurnOffAllDriveMotors();
-                            beaconColorSensorState.setEnabled(true);
+                            leftBeaconColorSensorState.setEnabled(true);
                             switchToNextState();
 
                         } else {
@@ -228,7 +227,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     } else {
 
                         TurnOffAllDriveMotors();
-                        beaconColorSensorState.setEnabled(true);
+                        leftBeaconColorSensorState.setEnabled(true);
                         switchToNextState();
                     }
 
@@ -297,7 +296,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     leftBeaconServoIn();
                     startPath(leaveBeaconPath);
                     TurnOffAllDriveMotors();
-                    beaconColorSensorState.setEnabled(false);
+                    leftBeaconColorSensorState.setEnabled(false);
                     switchToNextState();
                 }
 

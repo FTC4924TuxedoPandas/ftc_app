@@ -34,7 +34,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo spinningServo;
 
     OpticalDistanceSensor lineSensor;
-    public FtcI2cDeviceState beaconColorSensorState;
+    public FtcI2cDeviceState leftBeaconColorSensorState;
     //ColorSensor rightBeaconSensor;
     ColorSensor leftBeaconSensor;
 
@@ -101,8 +101,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
         leftBeaconSensor = hardwareMap.get(ModernRoboticsI2cColorSensor.class, "colorSensor");
-        beaconColorSensorState = new FtcI2cDeviceState((I2cDevice)leftBeaconSensor);
-        beaconColorSensorState.setEnabled(false);
+        leftBeaconColorSensorState = new FtcI2cDeviceState((I2cDevice)leftBeaconSensor);
+        leftBeaconColorSensorState.setEnabled(false);
         rightBumper = hardwareMap.touchSensor.get("rightBumper");
         leftBumper = hardwareMap.touchSensor.get("leftBumper");
 
