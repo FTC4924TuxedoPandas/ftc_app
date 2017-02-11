@@ -12,16 +12,17 @@ public class RedRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase 
 
         launchPositioningPath = new DrivePathSegment[]{
 
-                new DrivePathSegment(1.00f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(335.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(341.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(16.0f, 0.3f, DrivePathSegment.LINEAR),
-                // new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(327.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
         };
         knockCapBallPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(18.0f, 0.4f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(290.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(33.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(20.0f, 0.4f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(302.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(12.0f, 0.4f, DrivePathSegment.LINEAR),
         };
         stop = new DrivePathSegment [] {

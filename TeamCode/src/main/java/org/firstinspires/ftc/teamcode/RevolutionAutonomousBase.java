@@ -31,7 +31,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_SQUARE_ON_WALL,
     }
 
-    final float THROWING_TIME = 0.5f;
+    final float THROWING_TIME = 0.3f;
     public int stateIndex = 0;
     public int currentPathSegmentIndex = 0;
     public int lastHeadingDifference = 0;
