@@ -138,7 +138,15 @@ public abstract class RevolutionVelocityBase extends OpMode {
     @Override
     public void loop() {
 
+    }
 
+    @Override
+    public void stop() {
+
+        leftBeaconServoIn();
+        rightBeaconServoIn();
+        rightBeaconServo.setPosition(rightBeaconServoPosition);
+        leftBeaconServo.setPosition(leftBeaconServoPosition);
     }
 
     public void setPowerForLinearMove(float power) {

@@ -312,7 +312,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                if (elapsedTimeForCurrentState.time() >= 1.5f && !isSecondBeacon) {
+                if (elapsedTimeForCurrentState.time() >= 1.5f) {
 
                     isSecondBeacon = true;
                     rightBeaconServoIn();
