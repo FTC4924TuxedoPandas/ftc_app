@@ -209,7 +209,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 telemetry.addData("LineSensor", lineSensor.getRawLightDetected());
 
-                if (lineSensor.getRawLightDetected() >= 0.3f) {
+                if (lineSensor.getRawLightDetected() >= 0.1f) {
 
                     if (isSecondBeacon) {
 
@@ -238,26 +238,53 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_SQUARE_ON_WALL:
 
-                if (elapsedTimeForCurrentState.time() >= 1.5f) {
+                if (!isRed() && isSecondBeacon) {
 
-                    if (isRed()) {
+                    if (elapsedTimeForCurrentState.time() >= 5.0f) {
 
-                        pushBeaconButton(leftBeaconSensor.red());
+                        if (isRed()) {
+
+                            pushBeaconButton(leftBeaconSensor.red());
+
+                        } else {
+
+                            pushBeaconButton(leftBeaconSensor.blue());
+                        }
+
+                        TurnOffAllDriveMotors();
+                        switchToNextState();
 
                     } else {
 
-                        pushBeaconButton(leftBeaconSensor.blue());
+                        powerLevels.frontRightPower = 0.05f;
+                        powerLevels.backRightPower = 0.05f;
+                        powerLevels.frontLeftPower = 0.04f;
+                        powerLevels.backLeftPower = 0.04f;
                     }
-
-                    TurnOffAllDriveMotors();
-                    switchToNextState();
 
                 } else {
 
-                    powerLevels.frontRightPower = 0.05f;
-                    powerLevels.backRightPower = 0.05f;
-                    powerLevels.frontLeftPower = 0.04f;
-                    powerLevels.backLeftPower = 0.04f;
+                    if (elapsedTimeForCurrentState.time() >= 1.5f) {
+
+                        if (isRed()) {
+
+                            pushBeaconButton(leftBeaconSensor.red());
+
+                        } else {
+
+                            pushBeaconButton(leftBeaconSensor.blue());
+                        }
+
+                        TurnOffAllDriveMotors();
+                        switchToNextState();
+
+                    } else {
+
+                        powerLevels.frontRightPower = 0.05f;
+                        powerLevels.backRightPower = 0.05f;
+                        powerLevels.frontLeftPower = 0.04f;
+                        powerLevels.backLeftPower = 0.04f;
+                    }
                 }
 
                 break;
@@ -398,7 +425,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             if (isSecondBeacon) {
 
-                setPowerForMecanumStrafe(0.4f, heading);
+                setPowerForMecanumStrafe(0.5f, heading);
 
             } else {
 
