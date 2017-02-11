@@ -20,6 +20,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_KNOCK_CAP_BALL,
         STATE_FIND_WHITE_LINE,
         STATE_LINE_UP_TO_BEACON,
+        STATE_START_PUSHING_BEACON,
         STATE_PUSH_BEACON,
         STATE_LOAD_BALL,
         STATE_WAIT_FOR_BALL,
@@ -242,15 +243,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (elapsedTimeForCurrentState.time() >= 5.0f) {
 
-                        if (isRed()) {
-
-                            pushBeaconButton(leftBeaconSensor.red());
-
-                        } else {
-
-                            pushBeaconButton(leftBeaconSensor.blue());
-                        }
-
                         TurnOffAllDriveMotors();
                         switchToNextState();
 
@@ -265,15 +257,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                 } else {
 
                     if (elapsedTimeForCurrentState.time() >= 1.5f) {
-
-                        if (isRed()) {
-
-                            pushBeaconButton(leftBeaconSensor.red());
-
-                        } else {
-
-                            pushBeaconButton(leftBeaconSensor.blue());
-                        }
 
                         TurnOffAllDriveMotors();
                         switchToNextState();
@@ -309,6 +292,21 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         setPowerForMecanumStrafe(-0.05f, heading);
                     }
                 }
+
+                break;
+
+            case STATE_START_PUSHING_BEACON:
+
+                if (isRed()) {
+
+                    pushBeaconButton(leftBeaconSensor.red());
+
+                } else {
+
+                    pushBeaconButton(leftBeaconSensor.blue());
+                }
+
+                switchToNextState();
 
                 break;
 
@@ -425,7 +423,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             if (isSecondBeacon) {
 
-                setPowerForMecanumStrafe(0.5f, heading);
+                setPowerForMecanumStrafe(0.4f, heading);
 
             } else {
 
