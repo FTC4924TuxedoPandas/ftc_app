@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by 4924_Users on 10/22/2016.
  */
 
-@Autonomous(name = "BlueLaunchTwoAndTwoBeacons")
+//@Autonomous(name = "BlueLaunchTwoAndTwoBeacons")
 public class BlueLaunchTwoAndTwoBeacons extends LaunchTwoAndTwoBeaconsBase {
 
     public BlueLaunchTwoAndTwoBeacons() {

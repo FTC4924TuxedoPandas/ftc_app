@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by 4924_Users on 2/4/2017.
  */
-@Autonomous(name = "BeaconLogicTest")
+//@Autonomous(name = "BeaconLogicTest")
 public class BeaconLogicTest extends RevolutionAutonomousBase {
 
     public BeaconLogicTest() {

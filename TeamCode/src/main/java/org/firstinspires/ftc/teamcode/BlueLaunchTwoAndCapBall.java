@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by 4924_Users on 12/17/2016.
  */
-@Autonomous(name = "BlueLaunchTwoAndCapBall")
+//@Autonomous(name = "BlueLaunchTwoAndCapBall")
 public class BlueLaunchTwoAndCapBall extends LaunchTwoAndCapBallBase {
 
     public BlueLaunchTwoAndCapBall () {
