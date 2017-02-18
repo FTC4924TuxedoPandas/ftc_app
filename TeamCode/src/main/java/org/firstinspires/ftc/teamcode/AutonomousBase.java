@@ -419,6 +419,8 @@ public abstract class AutonomousBase extends VelocityBase {
 
                             isStrafingLeft = true;
                             isStrafingRight = false;
+                            segment.rightPower *= -1;
+                            segment.leftPower *= -1;
 
                         } else {
 

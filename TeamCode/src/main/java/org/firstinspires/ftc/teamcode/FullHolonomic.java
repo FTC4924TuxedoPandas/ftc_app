@@ -118,7 +118,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         isTurningLeft = leftTriggerValue() > 0.01f;
         isTurningRight = rightTriggerValue() > 0.01f;
 
-        winchPowerLevel = gamepad2.left_stick_y;
+        winchPowerLevel = -gamepad2.left_stick_y;
 
         if (d1DPadDownIsPressed()) {
 
