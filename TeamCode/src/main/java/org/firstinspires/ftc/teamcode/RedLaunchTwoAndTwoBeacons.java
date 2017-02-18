@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by 4924_Users on 10/22/2016.
  */
 
-@Autonomous(name = "RedLaunchTwoAndTwoBeacons")
+//@Autonomous(name = "RedLaunchTwoAndTwoBeacons")
 public class RedLaunchTwoAndTwoBeacons extends LaunchTwoAndTwoBeaconsBase {
 
     public RedLaunchTwoAndTwoBeacons() {
