@@ -256,17 +256,35 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 } else {
 
-                    if (elapsedTimeForCurrentState.time() >= 1.5f) {
+                    if (isRed() && isSecondBeacon) {
 
-                        TurnOffAllDriveMotors();
-                        switchToNextState();
+                        if (elapsedTimeForCurrentState.time() >= 3.0f) {
+
+                            TurnOffAllDriveMotors();
+                            switchToNextState();
+
+                        } else {
+
+                            powerLevels.frontRightPower = 0.05f;
+                            powerLevels.backRightPower = 0.05f;
+                            powerLevels.frontLeftPower = 0.04f;
+                            powerLevels.backLeftPower = 0.04f;
+                        }
 
                     } else {
 
-                        powerLevels.frontRightPower = 0.05f;
-                        powerLevels.backRightPower = 0.05f;
-                        powerLevels.frontLeftPower = 0.04f;
-                        powerLevels.backLeftPower = 0.04f;
+                        if (elapsedTimeForCurrentState.time() >= 1.5f) {
+
+                            TurnOffAllDriveMotors();
+                            switchToNextState();
+
+                        } else {
+
+                            powerLevels.frontRightPower = 0.05f;
+                            powerLevels.backRightPower = 0.05f;
+                            powerLevels.frontLeftPower = 0.04f;
+                            powerLevels.backLeftPower = 0.04f;
+                        }
                     }
                 }
 
