@@ -26,7 +26,7 @@ public abstract class RevLaunchAndBeaconBase extends RevolutionAutonomousBase {
                 State.STATE_START_PUSHING_BEACON,
                 State.STATE_PUSH_BEACON,
                 State.STATE_FIND_WHITE_LINE,
-                State.STATE_SQUARE_ON_WALL, //This reversal is on purpose
+                State.STATE_SQUARE_ON_WALL, //This reversal is on purpose // are you sure?
                 State.STATE_LINE_UP_TO_BEACON,
                 State.STATE_START_PUSHING_BEACON,
                 State.STATE_PUSH_BEACON,

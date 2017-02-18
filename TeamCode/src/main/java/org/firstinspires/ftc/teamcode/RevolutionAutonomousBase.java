@@ -312,7 +312,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                if (elapsedTimeForCurrentState.time() >= 1.5f) {
+                if (elapsedTimeForCurrentState.time() >= 2.0f) {
 
                     isSecondBeacon = true;
                     rightBeaconServoIn();
@@ -796,7 +796,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = 0.9f;
+            throwingArmPowerLevel = 0.82f;
             //throwingArmPowerLevel = 0.8f; //for when gearbox starts wearing down
         }
     }
