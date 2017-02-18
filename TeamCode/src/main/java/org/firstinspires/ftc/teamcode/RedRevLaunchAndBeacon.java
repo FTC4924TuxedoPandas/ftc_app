@@ -25,8 +25,9 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
                 new DrivePathSegment(13.0f, 0.4f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(286.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(13.0f, 0.2f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(1.5f, 0.05f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(2.0f, 0.05f, DrivePathSegment.LINEAR),
         };
+
         leaveBeaconPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(-0.05f, 0.3f, DrivePathSegment.LINEAR),
