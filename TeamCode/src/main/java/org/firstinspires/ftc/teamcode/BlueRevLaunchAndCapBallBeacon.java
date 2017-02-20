@@ -22,9 +22,10 @@ public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase
         knockCapBallPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(20.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(75.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(12.0f, 0.4f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(20.0f, 0.4f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(1.0f),
+                new DrivePathSegment(79.0f, 0.2f, DrivePathSegment.TURN),
+                new DrivePathSegment(12.0f, 0.2f, DrivePathSegment.LINEAR),
         };
         stop = new DrivePathSegment [] {
 
