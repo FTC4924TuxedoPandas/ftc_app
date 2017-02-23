@@ -19,7 +19,7 @@ public class RedRevLaunchAndRamp extends RevLaunchAndRampBase{
 
         beaconPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(-7.0f, 0.3f, DrivePathSegment.HOLONOMIC),
+                new DrivePathSegment(7.0f, 0.3f, DrivePathSegment.HOLONOMIC),
                 new DrivePathSegment(8.0f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(220.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(5.0f, 0.3f, DrivePathSegment.LINEAR),
