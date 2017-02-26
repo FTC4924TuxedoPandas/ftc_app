@@ -181,13 +181,13 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
             closeGate();
         }
-
+/*
         if (d1BackIsPressed() && ((time.time() - switchModeStartTime) > BOUNCE_DELAY)) {
 
             gyroCorrecting = !gyroCorrecting;
             switchModeStartTime = time.time();
         }
-
+*/
         if (d2YIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
 
             throwing = true;

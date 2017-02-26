@@ -10,18 +10,20 @@ public class BlueRevLaunchAndCapBall extends RevLaunchAndCapBallBase{
     public BlueRevLaunchAndCapBall() {
         launchPositioningPath = new DrivePathSegment[]{
 
+                new DrivePathSegment(10.0f),
                 new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(36.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(50.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(75.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
 
 
         };
         knockCapBallPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(7.00f, 0.3f, DrivePathSegment.LINEAR),
+    //            new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
+    //            new DrivePathSegment(7.00f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(-5.00f, 0.3f, DrivePathSegment.LINEAR),
         };
         stop = new DrivePathSegment [] {
 

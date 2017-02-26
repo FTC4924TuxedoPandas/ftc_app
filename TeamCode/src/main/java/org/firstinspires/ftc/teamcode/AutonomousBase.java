@@ -650,7 +650,7 @@ public abstract class AutonomousBase extends VelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = 0.9f;
+            throwingArmPowerLevel = 1.0f;
         }
     }
 
