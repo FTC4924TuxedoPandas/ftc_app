@@ -98,8 +98,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
         leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
-        rightBumper = hardwareMap.touchSensor.get("rightBumper");
-        leftBumper = hardwareMap.touchSensor.get("leftBumper");
+        //rightBumper = hardwareMap.touchSensor.get("rightBumper");
+        //leftBumper = hardwareMap.touchSensor.get("leftBumper");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
