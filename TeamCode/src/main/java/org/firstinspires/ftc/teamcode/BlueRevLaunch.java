@@ -19,14 +19,9 @@ public class BlueRevLaunch extends RevCornerBase {
 
 
         };
-        knockCapBallPath = new DrivePathSegment[] {
+        postThrowingPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(-5.00f, 0.3f, DrivePathSegment.LINEAR),
-        };
-
-        rampPath = new DrivePathSegment[] {
-
-                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
         };
 
         stop = new DrivePathSegment [] {
