@@ -24,7 +24,7 @@ public class BlueRevLaunchAndRamp extends RevCornerBase {
 
                 new DrivePathSegment(7.0f, 0.3f, DrivePathSegment.HOLONOMIC),
                 new DrivePathSegment(8.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(140.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(165.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(5.0f, 0.3f, DrivePathSegment.LINEAR),
         };
 
