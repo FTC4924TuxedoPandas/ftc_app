@@ -8,7 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "BlueRevLaunchAndCapBallDealy")
 public class BlueRevLaunchAndCapBallDelay extends RevLaunchAndCapBallBase{
+
     public BlueRevLaunchAndCapBallDelay() {
+
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(5.00f),
@@ -20,11 +22,13 @@ public class BlueRevLaunchAndCapBallDelay extends RevLaunchAndCapBallBase{
 
 
         };
+
         knockCapBallPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(7.00f, 0.3f, DrivePathSegment.LINEAR),
         };
+
         stop = new DrivePathSegment [] {
 
                 new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
@@ -35,5 +39,10 @@ public class BlueRevLaunchAndCapBallDelay extends RevLaunchAndCapBallBase{
     public boolean isRed() {
 
         return false;
+    }
+
+    public float throwingPower() {
+
+        return 0.9f;
     }
 }

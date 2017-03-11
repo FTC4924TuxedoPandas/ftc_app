@@ -8,7 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "BlueRevStraightToBeacon")
 public class BlueRevStraightToBeacon extends RevStraightToBeaconBase {
+
     public BlueRevStraightToBeacon() {
+
         beaconPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(0.0f, 0.2f, DrivePathSegment.TURN),
@@ -24,5 +26,10 @@ public class BlueRevStraightToBeacon extends RevStraightToBeaconBase {
     public boolean isRed() {
 
         return true;
+    }
+
+    public float throwingPower() {
+
+        return 0.9f;
     }
 }

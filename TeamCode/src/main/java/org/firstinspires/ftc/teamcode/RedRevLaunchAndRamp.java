@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 @Autonomous(name = "RedRevLaunchAndRamp", group = "Revolution")
 public class RedRevLaunchAndRamp extends RevCornerBase {
+
     public RedRevLaunchAndRamp(){
+
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(10.0f),
@@ -25,12 +27,15 @@ public class RedRevLaunchAndRamp extends RevCornerBase {
                 new DrivePathSegment(220.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(5.0f, 0.3f, DrivePathSegment.LINEAR),
         };
-
-
     }
     @Override
     public boolean isRed() {
 
         return true;
+    }
+
+    public float throwingPower() {
+
+        return 0.9f;
     }
 }

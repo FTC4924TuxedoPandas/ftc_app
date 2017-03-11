@@ -40,5 +40,10 @@ public class BlueRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
 
         return false;
     }
+
+    public float throwingPower() {
+
+        return 0.9f;
+    }
 }
 

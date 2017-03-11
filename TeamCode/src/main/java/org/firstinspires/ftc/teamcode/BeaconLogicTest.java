@@ -42,4 +42,9 @@ public class BeaconLogicTest extends RevolutionAutonomousBase {
                 State.STATE_STOP
         };
     }
+
+    public float throwingPower() {
+
+        return 0.9f;
+    }
 }

@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 @Autonomous(name = "BlueRevLaunchAndCapBall", group = "Revolution")
 public class BlueRevLaunchAndCapBall extends RevCornerBase{
+
     public BlueRevLaunchAndCapBall() {
+
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(10.0f),
@@ -19,6 +21,7 @@ public class BlueRevLaunchAndCapBall extends RevCornerBase{
 
 
         };
+
         postThrowingPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
@@ -36,6 +39,12 @@ public class BlueRevLaunchAndCapBall extends RevCornerBase{
     public boolean isRed() {
 
         return false;
+    }
+
+    @Override
+    public float throwingPower() {
+
+        return 0.9f;
     }
 }
 

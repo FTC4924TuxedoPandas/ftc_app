@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  */
 @Autonomous(name = "BlueRevLaunchOneAndBeacon")
 public class BlueRevLaunchOneAndBeacon extends RevLaunchOneAndBeaconBase{
+
     public BlueRevLaunchOneAndBeacon() {
 
         launchPositioningPath = new DrivePathSegment[]{
@@ -31,5 +32,10 @@ public class BlueRevLaunchOneAndBeacon extends RevLaunchOneAndBeaconBase{
     public boolean isRed() {
 
         return false;
+    }
+
+    public float throwingPower() {
+
+        return 0.9f;
     }
 }

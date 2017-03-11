@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "BlueRevLaunchAndCapBallBeacon", group = "Revolution")
 public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase  {
+
     public BlueRevLaunchAndCapBallBeacon() {
 
         launchPositioningPath = new DrivePathSegment[]{
@@ -18,6 +19,7 @@ public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase
                 new DrivePathSegment(50.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
         };
+
         knockCapBallPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
@@ -26,6 +28,7 @@ public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase
                 new DrivePathSegment(79.0f, 0.2f, DrivePathSegment.TURN),
                 new DrivePathSegment(12.0f, 0.2f, DrivePathSegment.LINEAR),
         };
+
         stop = new DrivePathSegment [] {
 
                 new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
@@ -36,5 +39,9 @@ public class BlueRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase
     @Override
     public boolean isRed() {
         return false;
+    }
+
+    public float throwingPower() {
+        return 0.9f;
     }
 }

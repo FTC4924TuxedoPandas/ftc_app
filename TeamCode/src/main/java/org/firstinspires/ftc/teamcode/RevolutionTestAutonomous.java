@@ -23,4 +23,10 @@ public class RevolutionTestAutonomous extends RevolutionTestAutonomousBase {
 
         return false;
     }
+
+    @Override
+    public float throwingPower() {
+
+        return 0.9f;
+    }
 }

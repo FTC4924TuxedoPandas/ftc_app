@@ -26,4 +26,9 @@ public class RedRevStraightToBeacon extends RevStraightToBeaconBase {
 
         return true;
     }
+
+    public float throwingPower() {
+
+        return 0.9f;
+    }
 }

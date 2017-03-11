@@ -856,7 +856,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         } else {
 
-            throwingArmPowerLevel = 0.9f;
+            throwingArmPowerLevel = throwingPower();
             //throwingArmPowerLevel = 0.8f; //for when gearbox starts wearing down
         }
     }
@@ -876,4 +876,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     public abstract boolean isRed();
 
     public abstract State[] stateList();
+
+    public abstract float throwingPower();
 }
