@@ -5,11 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 /**
  * Created by 4924_Users on 1/6/2017.
  */
-@Autonomous(name = "BlueRevLaunchAndCapBall", group = "Revolution")
-public class BlueRevLaunchAndCapBall extends RevLaunchAndCapBallBase{
-    public BlueRevLaunchAndCapBall() {
+@Autonomous(name = "BlueRevLaunch", group = "Revolution")
+public class BlueRevLaunch extends RevLaunchBase{
+    public BlueRevLaunch() {
         launchPositioningPath = new DrivePathSegment[]{
 
+                new DrivePathSegment(10.0f),
                 new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(36.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
@@ -20,8 +21,6 @@ public class BlueRevLaunchAndCapBall extends RevLaunchAndCapBallBase{
         };
         knockCapBallPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(7.00f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(-5.00f, 0.3f, DrivePathSegment.LINEAR),
         };
         stop = new DrivePathSegment [] {
