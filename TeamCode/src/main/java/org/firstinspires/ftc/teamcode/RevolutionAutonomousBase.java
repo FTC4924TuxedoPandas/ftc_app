@@ -31,8 +31,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_SQUARE_ON_WALL,
         STATE_START_RAMP_PATH,
         STATE_DRIVE_TO_RAMP,
-        STATE_START_AFTER_THROWING_PATH,
-        STATE_DRIVE_AFTER_THROWING,
+        STATE_START_DRIVE_PATH,
+        STATE_CORNER_PATH,
     }
 
     final float THROWING_TIME = 0.5f;
@@ -384,14 +384,14 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 break;
 
-            case STATE_START_AFTER_THROWING_PATH:
+            case STATE_START_DRIVE_PATH:
 
                 startPath(postThrowingPath);
                 switchToNextState();
 
                 break;
 
-            case STATE_DRIVE_AFTER_THROWING:
+            case STATE_CORNER_PATH:
 
                 if (pathComplete(heading)) {
                     switchToNextState();
@@ -599,13 +599,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                         if (segment.RightSideDistance < 0.0f) {
 
-                            isStrafingLeft = true;
-                            isStrafingRight = false;
-
-                        } else {
-
-                            isStrafingLeft = false;
-                            isStrafingRight = true;
+                            segment.rightPower *= -1;
+                            segment.leftPower *= -1;
                         }
 
                         setPowerForMecanumStrafe(segment.rightPower, heading);

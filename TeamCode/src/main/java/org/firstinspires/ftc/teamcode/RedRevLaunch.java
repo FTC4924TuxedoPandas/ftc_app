@@ -18,8 +18,8 @@ public class RedRevLaunch extends RevCornerBase {
                 new DrivePathSegment(14.0f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(330.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
-
         };
+        
         postThrowingPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(-5.0f, 0.3f, DrivePathSegment.LINEAR),

@@ -17,8 +17,8 @@ public abstract class RevCornerBase extends RevolutionAutonomousBase {
                 State.STATE_LOAD_BALL,
                 State.STATE_WAIT_FOR_BALL,
                 State.STATE_LAUNCH_BALL,
-                State.STATE_START_AFTER_THROWING_PATH,
-                State.STATE_DRIVE_AFTER_THROWING,
+                State.STATE_START_DRIVE_PATH,
+                State.STATE_CORNER_PATH,
                 State.STATE_STOP
         };
     }
