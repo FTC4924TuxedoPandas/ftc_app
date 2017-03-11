@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Created by 4924_Users on 1/6/2017.
  */
 @Autonomous(name = "BlueRevLaunch", group = "Revolution")
-public class BlueRevLaunch extends RevLaunchBase{
+public class BlueRevLaunch extends RevCornerBase {
     public BlueRevLaunch() {
         launchPositioningPath = new DrivePathSegment[]{
 
@@ -23,6 +23,12 @@ public class BlueRevLaunch extends RevLaunchBase{
 
                 new DrivePathSegment(-5.00f, 0.3f, DrivePathSegment.LINEAR),
         };
+
+        rampPath = new DrivePathSegment[] {
+
+                new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
+        };
+
         stop = new DrivePathSegment [] {
 
                 new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
