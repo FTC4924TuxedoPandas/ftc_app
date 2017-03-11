@@ -29,6 +29,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_START_CAP_BALL_PATH,
         STATE_DROP_GATE,
         STATE_SQUARE_ON_WALL,
+        STATE_START_RAMP_PATH,
+        STATE_DRIVE_TO_RAMP,
     }
 
     final float THROWING_TIME = 0.5f;
@@ -58,6 +60,10 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
             new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
     public DrivePathSegment[] knockCapBallPath = new DrivePathSegment[] {
+
+            new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
+    };
+    public DrivePathSegment[] rampPath = new DrivePathSegment[] {
 
             new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
     };
