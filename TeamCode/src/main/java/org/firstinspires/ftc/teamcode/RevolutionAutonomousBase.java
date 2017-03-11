@@ -363,6 +363,21 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 break;
 
+            case STATE_DRIVE_TO_RAMP:
+
+                startPath(rampPath);
+                switchToNextState();
+
+                break;
+
+            case STATE_START_RAMP_PATH:
+
+                if (pathComplete(heading)) {
+                    switchToNextState();
+                }
+
+                break;
+
             case STATE_STOP:
 
                 startPath(stop);
