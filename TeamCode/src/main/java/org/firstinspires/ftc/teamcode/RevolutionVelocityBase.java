@@ -22,7 +22,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
     DcMotor backLeftMotor;
     DcMotor throwingArm;
     DcMotor collectionMotor;
-    DcMotor winchMotor;
+    DcMotor winchMotorOne;
+    DcMotor winchMotorTwo;
 
     Servo leftBeaconServo;
     Servo rightBeaconServo;
@@ -87,7 +88,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
         backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         throwingArm = hardwareMap.dcMotor.get("throwingArm");
         collectionMotor = hardwareMap.dcMotor.get("collectionMotor");
-        winchMotor = hardwareMap.dcMotor.get("winchMotor");
+        winchMotorOne = hardwareMap.dcMotor.get("winchMotorOne");
+        winchMotorTwo = hardwareMap.dcMotor.get("winchMotorTwo");
 
         leftBeaconServo = hardwareMap.servo.get("leftBeaconServo");
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
@@ -107,7 +109,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        winchMotorOne.setDirection(DcMotorSimple.Direction.FORWARD);
+        winchMotorTwo.setDirection(DcMotorSimple.Direction.FORWARD);
 
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
 
@@ -163,7 +166,8 @@ public abstract class RevolutionVelocityBase extends OpMode {
         frontRightMotor.setPower(powerLevels.frontRightPower);
         throwingArm.setPower(throwingArmPowerLevel);
         collectionMotor.setPower(collectionPowerLevel);
-        winchMotor.setPower(winchPowerLevel);
+        winchMotorOne.setPower(winchPowerLevel);
+        winchMotorTwo.setPower(winchPowerLevel);
     }
 
     protected void stopMovingThrowingArm() { throwingArmPowerLevel = 0.0f; }

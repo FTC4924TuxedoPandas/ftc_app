@@ -26,8 +26,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
     public void init() {
 
         super.init();
-        winchMotor = hardwareMap.dcMotor.get("winchMotor");
-        winchMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         driveDirection = -1;
         driveCoeff = 1;
@@ -281,7 +279,8 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         throwingArm.setPower(throwingArmPowerLevel);
         collectionMotor.setPower(collectionPowerLevel);
-        winchMotor.setPower(winchPowerLevel);
+        winchMotorOne.setPower(winchPowerLevel);
+        winchMotorTwo.setPower(winchPowerLevel);
     }
 
 }
