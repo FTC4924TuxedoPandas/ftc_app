@@ -16,7 +16,7 @@ public class RedRevLaunchAndRamp extends RevCornerBase {
                 new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(324.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(310.0f, 0.3f, DrivePathSegment.TURN),
+                //new DrivePathSegment(310.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
         };
 
@@ -24,8 +24,8 @@ public class RedRevLaunchAndRamp extends RevCornerBase {
 
                 new DrivePathSegment(-7.0f, 0.3f, DrivePathSegment.HOLONOMIC),
                 new DrivePathSegment(8.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(245.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(5.0f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(255.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(16.0f, 0.3f, DrivePathSegment.LINEAR),
         };
     }
     @Override

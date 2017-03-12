@@ -127,6 +127,19 @@ public class FullHolonomic extends RevolutionVelocityBase {
             driveDirection = 1;
         }
 
+        if (d2RightTriggerValue() > 0.1f) {
+
+            capBallServoFwd();
+
+        } else if (d2LeftTriggerValue() > 0.1f ) {
+
+            capBallServoBkwd();
+
+        } else {
+
+            capBallServoStop();
+        }
+
         if (d1XIsPressed()) {
 
             leftBeaconServoOut();
@@ -266,6 +279,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         shovelLockServo.setPosition(shovelLockServoPosition);
         collectionGateServo.setPosition(gateServoPosition);
         spinningServo.setPosition(spinningServoPosition);
+        //capBallServo.setPosition(capBallServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
 
