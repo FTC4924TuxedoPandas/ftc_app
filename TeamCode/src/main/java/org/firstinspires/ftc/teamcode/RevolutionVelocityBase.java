@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -31,7 +32,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo shovelLockServo;
     Servo autonomousBallServo;
     Servo spinningServo;
-    //Servo capBallServo;
+    Servo capBallServo;
 
     OpticalDistanceSensor lineSensor;
     //ColorSensor rightBeaconSensor;
@@ -55,7 +56,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float BEACON_SERVO_POSITION_IN = 0.2f;
     public final float BEACON_SERVO_POSITION_OUT = 0.7f;
 
-    public final float GATE_SERVO_POSITION_CLOSED = 0.0f;
+    public final float GATE_SERVO_POSITION_CLOSED = 0.03f;
     public final float GATE_SERVO_POSITION_OPEN = 0.6f;
 
     public final float CAP_BALL_SERVO_POSITION_STOPPED = 0.5f;
@@ -63,7 +64,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float CAP_BALL_SERVO_POSITION_BKWD = 0.0f;
 
     public final float LOCK_SERVO_POSITION_CLOSED = 1.0f;
-    public final float LOCK_SERVO_POSITION_OPEN = 0.5f;
+    public final float LOCK_SERVO_POSITION_OPEN = 0.35f;
 
     public final float SPINNING_SERVO_POSITION_LEFT = -0.6f;
     public final float SPINNING_SERVO_POSITION_RIGHT = 0.6f;
@@ -102,7 +103,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
         shovelLockServo = hardwareMap.servo.get("shovelLockServo");
         spinningServo = hardwareMap.servo.get("spinningServo");
-        //capBallServo = hardwareMap.servo.get("capBallServo");
+        capBallServo = hardwareMap.servo.get("capBallServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
@@ -136,7 +137,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         shovelLockServo.setPosition(1.0f);
         autonomousBallServo.setPosition(0.0f);
         spinningServo.setPosition(0.5f);
-        //capBallServo.setPosition(0.5f);
+        capBallServo.setPosition(CAP_BALL_SERVO_POSITION_STOPPED);
     }
 
     @Override
