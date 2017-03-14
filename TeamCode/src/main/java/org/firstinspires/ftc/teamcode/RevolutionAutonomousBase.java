@@ -260,10 +260,10 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     } else {
 
-                        powerLevels.frontRightPower = 0.05f;
-                        powerLevels.backRightPower = 0.05f;
-                        powerLevels.frontLeftPower = 0.04f;
-                        powerLevels.backLeftPower = 0.04f;
+                        powerLevels.frontRightPower = 0.1f;
+                        powerLevels.backRightPower = 0.1f;
+                        powerLevels.frontLeftPower = 0.1f;
+                        powerLevels.backLeftPower = 0.1f;
                     }
 
                 } else {
