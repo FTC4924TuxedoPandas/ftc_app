@@ -13,6 +13,7 @@ public class RedRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase 
 
         launchPositioningPath = new DrivePathSegment[]{
 
+                new DrivePathSegment(8.0f),
                 new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(324.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
