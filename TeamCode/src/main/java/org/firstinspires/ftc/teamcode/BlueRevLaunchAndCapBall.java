@@ -26,7 +26,6 @@ public class BlueRevLaunchAndCapBall extends RevCornerBase{
 
                 new DrivePathSegment(45.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(7.00f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(-5.00f, 0.3f, DrivePathSegment.LINEAR),
         };
 
         stop = new DrivePathSegment [] {
