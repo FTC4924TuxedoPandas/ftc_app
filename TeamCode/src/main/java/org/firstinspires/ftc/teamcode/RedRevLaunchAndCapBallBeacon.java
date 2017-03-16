@@ -16,8 +16,8 @@ public class RedRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase 
                 new DrivePathSegment(8.0f),
                 new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(324.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(310.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(14.0f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(330.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
         };
 
@@ -26,8 +26,8 @@ public class RedRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase 
                 new DrivePathSegment(315.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(19.0f, 0.5f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(1.0f),
-                new DrivePathSegment(281.0f, 0.2f, DrivePathSegment.TURN),
-                new DrivePathSegment(12.0f, 0.2f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(281.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(12.0f, 0.3f, DrivePathSegment.LINEAR),
         };
 
         stop = new DrivePathSegment [] {
@@ -41,6 +41,7 @@ public class RedRevLaunchAndCapBallBeacon extends RevLaunchAndCapBallBeaconBase 
         return true;
     }
 
+    @Override
     public float throwingPower() {
 
         return 0.9f;
