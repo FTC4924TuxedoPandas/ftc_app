@@ -254,7 +254,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 if (!isRed() && isSecondBeacon) {
 
-                    if (elapsedTimeForCurrentState.time() >= 5.0f) {
+                    if (elapsedTimeForCurrentState.time() >= 3.0f) {
 
                         TurnOffAllDriveMotors();
                         switchToNextState();
@@ -271,7 +271,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed() && isSecondBeacon) {
 
-                        if (elapsedTimeForCurrentState.time() >= 3.0f) {
+                        if (elapsedTimeForCurrentState.time() >= 5.0f) {
 
                             TurnOffAllDriveMotors();
                             switchToNextState();
@@ -473,7 +473,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             if (isSecondBeacon) {
 
-                setPowerForMecanumStrafe(-0.4f, heading);
+                setPowerForMecanumStrafe(-0.5f, heading);
 
             } else {
 

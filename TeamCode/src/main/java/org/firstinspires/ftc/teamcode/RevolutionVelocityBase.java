@@ -157,6 +157,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
 
         leftBeaconServoIn();
         rightBeaconServoIn();
+        capBallServoStop();
     }
 
     public void setPowerForLinearMove(float power) {

@@ -13,7 +13,7 @@ public class BlueRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
         launchPositioningPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(8.5f, 0.4f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(20.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(17.0f, 0.3f, DrivePathSegment.TURN),
                 new DrivePathSegment(0.5f),
         };
 
