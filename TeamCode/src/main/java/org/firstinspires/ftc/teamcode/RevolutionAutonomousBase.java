@@ -20,6 +20,10 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_KNOCK_CAP_BALL,
         STATE_FIND_WHITE_LINE,
         STATE_LINE_UP_TO_BEACON,
+        STATE_BACK_UP,
+        STATE_TURN_TO_ZERO,
+        STATE_DRIVE_TO_BEACON,
+        STATE_TURN_TO_BEACON,
         STATE_START_PUSHING_BEACON,
         STATE_PUSH_BEACON,
         STATE_LOAD_BALL,
@@ -39,6 +43,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     public int stateIndex = 0;
     public int currentPathSegmentIndex = 0;
     public int lastHeadingDifference = 0;
+    public boolean stateStarted = false;
     DrivePathSegment segment = new DrivePathSegment();
     public EncoderTargets zeroEncoderTargets = new EncoderTargets(0, 0);
     EncoderTargets currentEncoderTargets = zeroEncoderTargets;
@@ -326,6 +331,92 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 break;
 
+            case STATE_BACK_UP:
+
+                if (!stateStarted) {
+
+                    startPath(new DrivePathSegment[] {
+
+                            new DrivePathSegment(-10.0f, 0.4f, DrivePathSegment.LINEAR),
+                    });
+
+                    stateStarted = true;
+                }
+
+                if (pathComplete(heading)) {
+
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+                }
+
+                break;
+
+            case STATE_TURN_TO_ZERO:
+
+                if (!stateStarted) {
+
+                    startPath(new DrivePathSegment[] {
+
+                            new DrivePathSegment(0.0f, 0.3f, DrivePathSegment.TURN),
+                    });
+
+                    stateStarted = true;
+                }
+
+                if (pathComplete(heading)) {
+
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+                }
+
+                break;
+
+            case STATE_DRIVE_TO_BEACON:
+
+                if (lineSensor.getRawLightDetected() >= 0.3f && elapsedTimeForCurrentState.time() >= 0.5f) {
+
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+
+                } else {
+
+                    setPowerForLinearMove(1.0f);
+                }
+
+                break;
+
+            case STATE_TURN_TO_BEACON:
+
+                if (!stateStarted) {
+
+                    if (isRed()) {
+
+                        startPath(new DrivePathSegment[] {
+
+                                new DrivePathSegment(270.0f, 0.3f, DrivePathSegment.TURN),
+                        });
+
+                    } else {
+
+                        startPath(new DrivePathSegment[] {
+
+                                new DrivePathSegment(90.0f, 0.3f, DrivePathSegment.TURN),
+                        });
+                    }
+
+
+
+                    stateStarted = true;
+                }
+
+                if (pathComplete(heading)) {
+
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+                }
+
+                break;
+
             case STATE_START_PUSHING_BEACON:
 
                 if (isRed()) {
@@ -527,6 +618,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         elapsedTimeForCurrentState.reset();
         stateIndex++;
+        stateStarted = false;
 
         if (stateIndex >= stateList().length) {
 
