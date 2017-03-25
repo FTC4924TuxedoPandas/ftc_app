@@ -70,9 +70,9 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float SPINNING_SERVO_POSITION_RIGHT = 0.6f;
     public final float SPINNING_SERVO_POSITION_STOP = 0.5f;
 
-    public final float BALL_CLAMP_DOWN = 0.0f;
+    public final float BALL_CLAMP_DOWN = 1.0f;
     public final float BALL_CLAMP_MID = 0.5f;
-    public final float BALL_CLAMP_UP = 1.0f;
+    public final float BALL_CLAMP_UP = 0.0f;
 
     int turnStartValueLeft;
     int turnStartValueRight;
@@ -116,10 +116,10 @@ public abstract class RevolutionVelocityBase extends OpMode {
         //rightBumper = hardwareMap.touchSensor.get("rightBumper");
         //leftBumper = hardwareMap.touchSensor.get("leftBumper");
 
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         throwingArm.setDirection(DcMotorSimple.Direction.FORWARD);
         collectionMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         winchMotorOne.setDirection(DcMotorSimple.Direction.FORWARD);

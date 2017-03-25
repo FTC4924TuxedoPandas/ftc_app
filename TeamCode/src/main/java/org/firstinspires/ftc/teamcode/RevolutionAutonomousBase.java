@@ -337,7 +337,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     startPath(new DrivePathSegment[] {
 
-                            new DrivePathSegment(-10.0f, 0.4f, DrivePathSegment.LINEAR),
+                            new DrivePathSegment(-1.0f, 0.5f, DrivePathSegment.LINEAR),
                     });
 
                     stateStarted = true;
