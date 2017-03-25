@@ -94,7 +94,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
     final int COUNTS_PER_REVOLUTION = 1120;
     final double WHEEL_DIAMETER = 4.0f;
     final double GEAR_RATIO = 1.0f;
-    final double CALIBRATION_FACTOR = 1.93f;
+    final double CALIBRATION_FACTOR = 2.24f; //1.93f;
     public boolean isSecondBeacon = false;
 
     @Override
