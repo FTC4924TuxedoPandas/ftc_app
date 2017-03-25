@@ -24,8 +24,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_TURN_TO_ZERO,
         STATE_DRIVE_TO_BEACON,
         STATE_TURN_TO_BEACON,
-        STATE_START_PUSHING_BEACON,
         STATE_PUSH_BEACON,
+        STATE_CHECK_BEACON,
         STATE_LOAD_BALL,
         STATE_WAIT_FOR_BALL,
         STATE_START_BEACON_PATH,
@@ -417,31 +417,42 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 break;
 
-            case STATE_START_PUSHING_BEACON:
+            case STATE_PUSH_BEACON:
 
-                if (isRed()) {
+                if (elapsedTimeForCurrentState.time() >= 3.0f) {
 
-                    pushBeaconButton(leftBeaconSensor.red());
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
 
                 } else {
 
-                    pushBeaconButton(leftBeaconSensor.blue());
+                    setPowerForLinearMove(0.1f);
                 }
-
-                switchToNextState();
 
                 break;
 
-            case STATE_PUSH_BEACON:
+            case STATE_CHECK_BEACON:
 
-                if (elapsedTimeForCurrentState.time() >= 2.0f) {
+                boolean beaconIsCorrect;
+
+                if (isRed()) {
+
+                    beaconIsCorrect = leftBeaconSensor.red() >= 3;
+
+                } else {
+
+                    beaconIsCorrect = leftBeaconSensor.blue() >= 3;
+                }
+
+                if (beaconIsCorrect) {
 
                     isSecondBeacon = true;
-                    rightBeaconServoIn();
-                    leftBeaconServoIn();
-                    startPath(leaveBeaconPath);
                     TurnOffAllDriveMotors();
                     switchToNextState();
+
+                } else {
+
+                    restartBeaconSequence();
                 }
 
                 break;
@@ -618,6 +629,26 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         elapsedTimeForCurrentState.reset();
         stateIndex++;
+        stateStarted = false;
+
+        if (stateIndex >= stateList().length) {
+
+            stateIndex = stateList().length - 1;
+        }
+
+        if (stateIndex < 0) {
+
+            stateIndex = 0;
+        }
+
+        currentState = stateList()[stateIndex];
+        DbgLog.msg("State changed to " + currentState);
+    }
+
+    public void restartBeaconSequence() {
+
+        elapsedTimeForCurrentState.reset();
+        stateIndex -= 2;
         stateStarted = false;
 
         if (stateIndex >= stateList().length) {
