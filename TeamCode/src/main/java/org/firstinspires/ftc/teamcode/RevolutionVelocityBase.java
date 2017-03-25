@@ -31,7 +31,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo collectionGateServo;
     Servo shovelLockServo;
     Servo autonomousBallServo;
-    Servo spinningServo;
     Servo capBallServo;
     Servo ballClampServo;
 
@@ -108,7 +107,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
         rightBeaconServo = hardwareMap.servo.get("rightBeaconServo");
         collectionGateServo = hardwareMap.servo.get("collectionGateServo");
         shovelLockServo = hardwareMap.servo.get("shovelLockServo");
-        spinningServo = hardwareMap.servo.get("spinningServo");
         capBallServo = hardwareMap.servo.get("capBallServo");
         ballClampServo = hardwareMap.servo.get("ballClampServo");
 
@@ -144,7 +142,6 @@ public abstract class RevolutionVelocityBase extends OpMode {
         collectionGateServo.setPosition(GATE_SERVO_POSITION_OPEN);
         shovelLockServo.setPosition(1.0f);
         autonomousBallServo.setPosition(0.0f);
-        spinningServo.setPosition(0.5f);
         capBallServo.setPosition(CAP_BALL_SERVO_POSITION_STOPPED);
     }
 

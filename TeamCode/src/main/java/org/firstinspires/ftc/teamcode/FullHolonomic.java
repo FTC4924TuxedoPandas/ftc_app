@@ -279,7 +279,6 @@ public class FullHolonomic extends RevolutionVelocityBase {
         leftBeaconServo.setPosition(leftBeaconServoPosition);
         shovelLockServo.setPosition(shovelLockServoPosition);
         collectionGateServo.setPosition(gateServoPosition);
-        spinningServo.setPosition(spinningServoPosition);
         capBallServo.setPosition(capBallServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
