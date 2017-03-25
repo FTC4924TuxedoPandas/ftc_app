@@ -33,6 +33,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo autonomousBallServo;
     Servo spinningServo;
     Servo capBallServo;
+    Servo ballClampServo;
 
     OpticalDistanceSensor lineSensor;
     //ColorSensor rightBeaconSensor;
@@ -70,6 +71,10 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float SPINNING_SERVO_POSITION_RIGHT = 0.6f;
     public final float SPINNING_SERVO_POSITION_STOP = 0.5f;
 
+    public final float BALL_CLAMP_DOWN = 0.0f;
+    public final float BALL_CLAMP_MID = 0.5f;
+    public final float BALL_CLAMP_UP = 1.0f;
+
     int turnStartValueLeft;
     int turnStartValueRight;
     int driveDirection;
@@ -83,6 +88,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public float shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
     public float spinningServoPosition = SPINNING_SERVO_POSITION_STOP;
     public float capBallServoPosition = CAP_BALL_SERVO_POSITION_STOPPED;
+    public float ballClampPosition = BALL_CLAMP_DOWN;
     public static int angleOffset = 0;
     ElapsedTime time = new ElapsedTime();
 
@@ -104,6 +110,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         shovelLockServo = hardwareMap.servo.get("shovelLockServo");
         spinningServo = hardwareMap.servo.get("spinningServo");
         capBallServo = hardwareMap.servo.get("capBallServo");
+        ballClampServo = hardwareMap.servo.get("ballClampServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
         //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
@@ -131,6 +138,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     @Override
     public void init_loop() {
 
+        ballClampServo.setPosition(ballClampPosition);
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_OPEN);

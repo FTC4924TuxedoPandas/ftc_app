@@ -121,11 +121,11 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         if (d1DPadDownIsPressed()) {
 
-            driveDirection = -1;
+            ballClampPosition = BALL_CLAMP_MID;
 
         } else if (d1DPadUpIsPressed()) {
 
-            driveDirection = 1;
+            ballClampPosition = BALL_CLAMP_UP;
         }
 
         if (d2RightTriggerValue() > 0.1f) {

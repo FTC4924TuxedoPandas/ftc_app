@@ -373,7 +373,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_DRIVE_TO_BEACON:
 
-                if (lineSensor.getRawLightDetected() >= 0.3f && elapsedTimeForCurrentState.time() >= 0.5f) {
+                if (lineSensor.getRawLightDetected() >= 0.1f && elapsedTimeForCurrentState.time() >= 0.5f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -452,6 +452,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 } else {
 
+                    TurnOffAllDriveMotors();
                     restartBeaconSequence();
                 }
 
