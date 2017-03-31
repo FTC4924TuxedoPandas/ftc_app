@@ -380,7 +380,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 } else {
 
-                    setPowerForLinearMove(1.0f);
+                    setPowerForLinearMove(0.6f);
                 }
 
                 break;
@@ -419,7 +419,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                if (elapsedTimeForCurrentState.time() >= 3.0f) {
+                if (elapsedTimeForCurrentState.time() >= 2.0f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
