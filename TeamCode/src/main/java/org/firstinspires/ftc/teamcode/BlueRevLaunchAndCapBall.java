@@ -41,7 +41,7 @@ public class BlueRevLaunchAndCapBall extends RevCornerBase {
     @Override
     public float throwingPower() {
 
-        return 0.9f;
+        return 0.8f;
     }
 }
 
