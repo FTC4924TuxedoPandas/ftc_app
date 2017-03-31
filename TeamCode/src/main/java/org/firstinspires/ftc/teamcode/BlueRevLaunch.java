@@ -13,10 +13,10 @@ public class BlueRevLaunch extends RevCornerBase {
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(10.0f),
-                new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(36.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(15.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(75.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(2.00f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(36.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(15.0f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(75.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
 
 
@@ -24,7 +24,7 @@ public class BlueRevLaunch extends RevCornerBase {
 
         postThrowingPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(-5.00f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(-5.00f, 0.8f, DrivePathSegment.LINEAR),
         };
 
         stop = new DrivePathSegment [] {
