@@ -13,22 +13,21 @@ public class RedRevLaunchAndCapBall extends RevCornerBase {
         launchPositioningPath = new DrivePathSegment[]{
 
                 new DrivePathSegment(10.0f),
-                new DrivePathSegment(2.00f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(324.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(14.0f, 0.3f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(330.0f, 0.3f, DrivePathSegment.TURN),
-                //new DrivePathSegment(310.0f, 0.3f, DrivePathSegment.TURN),
+                new DrivePathSegment(2.00f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(324.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(14.0f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(330.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
 
         };
 
         postThrowingPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(315.0f, 0.3f, DrivePathSegment.TURN),
-                new DrivePathSegment(7.0f, 0.3f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(315.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(7.0f, 0.8f, DrivePathSegment.LINEAR),
         };
 
-        stop = new DrivePathSegment [] {
+        stop = new DrivePathSegment[] {
 
                 new DrivePathSegment(0.0f, 0.0f, DrivePathSegment.LINEAR),
         };
