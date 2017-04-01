@@ -24,7 +24,7 @@ public class BlueRevLaunch extends RevCornerBase {
 
         postThrowingPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(-5.00f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(-5.0f, 0.8f, DrivePathSegment.LINEAR),
         };
 
         stop = new DrivePathSegment [] {
