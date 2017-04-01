@@ -23,7 +23,7 @@ public abstract class RevLaunchAndBeaconBase extends RevolutionAutonomousBase {
                 State.STATE_BACK_UP,
                 State.STATE_FIND_WHITE_LINE,
                 State.STATE_LINE_UP_TO_BEACON,
-                State.STATE_SQUARE_ON_WALL,
+                //State.STATE_SQUARE_ON_WALL,
                 State.STATE_PUSH_BEACON,
                 State.STATE_BACK_UP,
                 State.STATE_CHECK_BEACON,
