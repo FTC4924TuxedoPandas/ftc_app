@@ -15,18 +15,18 @@ public class RedRevLaunchAndRamp extends RevCornerBase {
                 new DrivePathSegment(10.0f),
                 new DrivePathSegment(2.00f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(324.0f, 0.5f, DrivePathSegment.TURN),
-                new DrivePathSegment(15.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(310.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(11.0f, 0.8f, DrivePathSegment.LINEAR),
+                //new DrivePathSegment(320.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
         };
 
         postThrowingPath = new DrivePathSegment[] {
 
+                new DrivePathSegment(4.0f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(-7.0f, 0.8f, DrivePathSegment.HOLONOMIC),
                 new DrivePathSegment(8.0f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(260.0f, 0.5f, DrivePathSegment.TURN),
-                new DrivePathSegment(14.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(2.0f, 0.4f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(22.0f, 0.8f, DrivePathSegment.LINEAR),
         };
     }
     @Override
@@ -37,6 +37,6 @@ public class RedRevLaunchAndRamp extends RevCornerBase {
 
     public float throwingPower() {
 
-        return 0.9f;
+        return 0.85f;
     }
 }
