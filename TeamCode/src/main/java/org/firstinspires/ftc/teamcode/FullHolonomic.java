@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -42,7 +41,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         shovelLockServo.setPosition(LOCK_SERVO_POSITION_CLOSED);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
         capBallServo.setPosition(CAP_BALL_SERVO_POSITION_STOPPED);
-
+        ballClampServo.setPosition(BALL_CLAMP_SERVO_POSITION_STOPPED);
     }
 
     private void setPowerForFullHolonomic(float x, float y, int heading, float leftTurnPower, float rightTurnPower, int driveDirection) {
@@ -121,11 +120,14 @@ public class FullHolonomic extends RevolutionVelocityBase {
 
         if (d1DPadDownIsPressed()) {
 
-            ballClampPosition = BALL_CLAMP_MID;
+            ballClampServoBkwd();
 
         } else if (d1DPadUpIsPressed()) {
 
-            ballClampPosition = BALL_CLAMP_UP;
+            ballClampServoFwd();
+        } else {
+
+            ballClampServoStop();
         }
 
         if (d2RightTriggerValue() > 0.1f) {
@@ -280,7 +282,7 @@ public class FullHolonomic extends RevolutionVelocityBase {
         shovelLockServo.setPosition(shovelLockServoPosition);
         collectionGateServo.setPosition(gateServoPosition);
         capBallServo.setPosition(capBallServoPosition);
-        ballClampServo.setPosition(ballClampPosition);
+        ballClampServo.setPosition(ballClampServoPosition);
 
         if (headingSet || isTurningLeft || isTurningRight) {
 

@@ -113,6 +113,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         collectionGateServo.setPosition(GATE_SERVO_POSITION_CLOSED);
         shovelLockServo.setPosition(LOCK_SERVO_POSITION_CLOSED);
         capBallServo.setPosition(CAP_BALL_SERVO_POSITION_STOPPED);
+        ballClampServo.setPosition(BALL_CLAMP_SERVO_POSITION_STOPPED);
     }
 
     @Override

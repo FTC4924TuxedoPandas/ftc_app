@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -70,9 +69,9 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float SPINNING_SERVO_POSITION_RIGHT = 0.6f;
     public final float SPINNING_SERVO_POSITION_STOP = 0.5f;
 
-    public final float BALL_CLAMP_DOWN = 1.0f;
-    public final float BALL_CLAMP_MID = 0.5f;
-    public final float BALL_CLAMP_UP = 0.0f;
+    public final float BALL_CLAMP_SERVO_POSITION_FWD = 0.7f;
+    public final float BALL_CLAMP_SERVO_POSITION_STOPPED = 0.5f;
+    public final float BALL_CLAMP_SERVO_POSITION_BKWD = 0.3f;
 
     int turnStartValueLeft;
     int turnStartValueRight;
@@ -87,7 +86,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public float shovelLockServoPosition = LOCK_SERVO_POSITION_CLOSED;
     public float spinningServoPosition = SPINNING_SERVO_POSITION_STOP;
     public float capBallServoPosition = CAP_BALL_SERVO_POSITION_STOPPED;
-    public float ballClampPosition = BALL_CLAMP_DOWN;
+    public float ballClampServoPosition = BALL_CLAMP_SERVO_POSITION_STOPPED;
     public static int angleOffset = 0;
     ElapsedTime time = new ElapsedTime();
 
@@ -136,7 +135,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     @Override
     public void init_loop() {
 
-        ballClampServo.setPosition(ballClampPosition);
+        ballClampServo.setPosition(BALL_CLAMP_SERVO_POSITION_STOPPED);
         rightBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         leftBeaconServo.setPosition(BEACON_SERVO_POSITION_IN);
         collectionGateServo.setPosition(GATE_SERVO_POSITION_OPEN);
@@ -163,6 +162,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         leftBeaconServoIn();
         rightBeaconServoIn();
         capBallServoStop();
+        ballClampServoStop();
     }
 
     public void setPowerForLinearMove(float power) {
@@ -289,6 +289,21 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public void capBallServoBkwd() {
 
         capBallServoPosition = CAP_BALL_SERVO_POSITION_BKWD;
+    }
+
+    public void ballClampServoStop() {
+
+        ballClampServoPosition = BALL_CLAMP_SERVO_POSITION_STOPPED;
+    }
+
+    public void ballClampServoFwd() {
+
+        ballClampServoPosition = BALL_CLAMP_SERVO_POSITION_FWD;
+    }
+
+    public void ballClampServoBkwd() {
+
+        ballClampServoPosition = BALL_CLAMP_SERVO_POSITION_BKWD;
     }
 
     public void closeGate() {
