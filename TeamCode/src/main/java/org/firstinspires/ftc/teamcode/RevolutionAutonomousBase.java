@@ -27,6 +27,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_PUSH_BEACON,
         STATE_CHECK_BEACON,
         STATE_CHECK_BEACON_2S,
+        STATE_REPUSH_BEACON,
         STATE_LOAD_BALL,
         STATE_WAIT_FOR_BALL,
         STATE_START_BEACON_PATH,
@@ -479,30 +480,31 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     isSecondBeacon = true;
                     TurnOffAllDriveMotors();
-                    switchToNextState();
-
-                    startPath(new DrivePathSegment[] {
-
-                            new DrivePathSegment(0.0f),
-                    });
+                    switchToNextState(2);
 
                 } else if (!firstBeaconIsCorrect && !secondBeaconIsCorrect) {
 
                     TurnOffAllDriveMotors();
                     restartBeaconSequence();
 
-                    startPath(new DrivePathSegment[] {
+                } else {
 
-                            new DrivePathSegment(0.0f),
-                    });
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+                }
+
+                break;
+
+            case STATE_REPUSH_BEACON:
+
+                if (elapsedTimeForCurrentState.time() >= 1.0f) {
+
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
 
                 } else {
 
-                    startPath(new DrivePathSegment[] {
-
-                            new DrivePathSegment(1.2f, 0.5f, DrivePathSegment.LINEAR),
-                            new DrivePathSegment(-1.0f, 0.5f, DrivePathSegment.LINEAR),
-                    });
+                    setPowerForLinearMove(0.1f);
                 }
 
                 break;
@@ -679,6 +681,26 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         elapsedTimeForCurrentState.reset();
         stateIndex++;
+        stateStarted = false;
+
+        if (stateIndex >= stateList().length) {
+
+            stateIndex = stateList().length - 1;
+        }
+
+        if (stateIndex < 0) {
+
+            stateIndex = 0;
+        }
+
+        currentState = stateList()[stateIndex];
+        DbgLog.msg("State changed to " + currentState);
+    }
+
+    public void switchToNextState(int states) {
+
+        elapsedTimeForCurrentState.reset();
+        stateIndex += states;
         stateStarted = false;
 
         if (stateIndex >= stateList().length) {
