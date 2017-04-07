@@ -34,7 +34,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
     Servo ballClampServo;
 
     OpticalDistanceSensor lineSensor;
-    //ColorSensor rightBeaconSensor;
+    ColorSensor rightBeaconSensor;
     ColorSensor leftBeaconSensor;
 
     boolean isStrafingLeft = false;
@@ -110,7 +110,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         ballClampServo = hardwareMap.servo.get("ballClampServo");
 
         lineSensor = hardwareMap.opticalDistanceSensor.get("lineSensor");
-        //rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
+        rightBeaconSensor = hardwareMap.colorSensor.get("rightBeaconSensor");
         leftBeaconSensor = hardwareMap.colorSensor.get("leftBeaconSensor");
         //rightBumper = hardwareMap.touchSensor.get("rightBumper");
         //leftBumper = hardwareMap.touchSensor.get("leftBumper");
@@ -127,7 +127,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         turningGyro = hardwareMap.gyroSensor.get("gyroSensor");
 
         runWithoutEncoders();
-        //rightBeaconSensor.enableLed(false);
+        rightBeaconSensor.enableLed(false);
         leftBeaconSensor.enableLed(false);
         turningGyro.calibrate();
     }

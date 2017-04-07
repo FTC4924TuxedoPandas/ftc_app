@@ -26,6 +26,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_TURN_TO_BEACON,
         STATE_PUSH_BEACON,
         STATE_CHECK_BEACON,
+        STATE_CHECK_BEACON_2S,
         STATE_LOAD_BALL,
         STATE_WAIT_FOR_BALL,
         STATE_START_BEACON_PATH,
@@ -455,6 +456,53 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     TurnOffAllDriveMotors();
                     restartBeaconSequence();
+                }
+
+                break;
+
+            case STATE_CHECK_BEACON_2S:
+                boolean firstBeaconIsCorrect = false;
+                boolean secondBeaconIsCorrect = false;
+
+                if (isRed()) {
+
+                    firstBeaconIsCorrect = leftBeaconSensor.red() >= 3;
+                    secondBeaconIsCorrect = rightBeaconSensor.red() >= 3;
+
+                } else {
+
+                    firstBeaconIsCorrect = leftBeaconSensor.blue() >= 3;
+                    secondBeaconIsCorrect = rightBeaconSensor.blue() >= 3;
+                }
+
+                if (firstBeaconIsCorrect && secondBeaconIsCorrect) {
+
+                    isSecondBeacon = true;
+                    TurnOffAllDriveMotors();
+                    switchToNextState();
+
+                    startPath(new DrivePathSegment[] {
+
+                            new DrivePathSegment(0.0f),
+                    });
+
+                } else if (!firstBeaconIsCorrect && !secondBeaconIsCorrect) {
+
+                    TurnOffAllDriveMotors();
+                    restartBeaconSequence();
+
+                    startPath(new DrivePathSegment[] {
+
+                            new DrivePathSegment(0.0f),
+                    });
+
+                } else {
+
+                    startPath(new DrivePathSegment[] {
+
+                            new DrivePathSegment(1.2f, 0.5f, DrivePathSegment.LINEAR),
+                            new DrivePathSegment(-1.0f, 0.5f, DrivePathSegment.LINEAR),
+                    });
                 }
 
                 break;
