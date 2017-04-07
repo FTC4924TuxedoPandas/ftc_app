@@ -69,9 +69,9 @@ public abstract class RevolutionVelocityBase extends OpMode {
     public final float SPINNING_SERVO_POSITION_RIGHT = 0.6f;
     public final float SPINNING_SERVO_POSITION_STOP = 0.5f;
 
-    public final float BALL_CLAMP_SERVO_POSITION_FWD = 0.7f;
+    public final float BALL_CLAMP_SERVO_POSITION_FWD = 0.0f;
     public final float BALL_CLAMP_SERVO_POSITION_STOPPED = 0.5f;
-    public final float BALL_CLAMP_SERVO_POSITION_BKWD = 0.3f;
+    public final float BALL_CLAMP_SERVO_POSITION_BKWD = 1.0f;
 
     int turnStartValueLeft;
     int turnStartValueRight;
