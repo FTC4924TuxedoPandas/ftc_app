@@ -455,8 +455,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 } else {
 
-                    TurnOffAllDriveMotors();
-                    restartBeaconSequence();
+                    if (elapsedTimeForCurrentState.time() >= 3.0f) {
+
+                        TurnOffAllDriveMotors();
+                        restartBeaconSequence();
+                    }
                 }
 
                 break;
