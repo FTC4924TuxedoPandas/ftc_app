@@ -324,11 +324,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.05f, heading);
+                        setPowerForMecanumStrafe(0.1f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.05f, heading);
+                        setPowerForMecanumStrafe(-0.1f, heading);
                     }
                 }
 
@@ -340,7 +340,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     startPath(new DrivePathSegment[] {
 
-                            new DrivePathSegment(-1.0f, 0.5f, DrivePathSegment.LINEAR),
+                            new DrivePathSegment(-0.5f, 0.5f, DrivePathSegment.LINEAR),
                     });
 
                     stateStarted = true;

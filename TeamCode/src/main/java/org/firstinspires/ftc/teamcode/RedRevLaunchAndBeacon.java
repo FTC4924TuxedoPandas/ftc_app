@@ -13,12 +13,14 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
         launchPositioningPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(6.5f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(10.0f, 0.8f, DrivePathSegment.TURN),
                 new DrivePathSegment(0.25f),
         };
 
         beaconPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(2.0f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(0.0f, 0.8f, DrivePathSegment.TURN),
+                new DrivePathSegment(1.0f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(322.0f, 0.8f, DrivePathSegment.TURN),
                 new DrivePathSegment(11.0f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(286.0f, 0.8f, DrivePathSegment.TURN),
@@ -30,7 +32,6 @@ public class RedRevLaunchAndBeacon extends RevLaunchAndBeaconBase {
         leaveBeaconPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(-0.05f, 0.3f, DrivePathSegment.LINEAR),
-
         };
     }
 
