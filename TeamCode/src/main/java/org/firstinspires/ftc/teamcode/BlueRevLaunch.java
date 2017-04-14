@@ -15,8 +15,8 @@ public class BlueRevLaunch extends RevCornerBase {
                 new DrivePathSegment(10.0f),
                 new DrivePathSegment(2.00f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(36.0f, 0.5f, DrivePathSegment.TURN),
-                new DrivePathSegment(15.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(75.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(14.0f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(55.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
 
 
