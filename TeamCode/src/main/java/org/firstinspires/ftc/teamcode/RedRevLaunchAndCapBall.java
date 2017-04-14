@@ -15,7 +15,7 @@ public class RedRevLaunchAndCapBall extends RevCornerBase {
                 new DrivePathSegment(10.0f),
                 new DrivePathSegment(2.00f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(324.0f, 0.5f, DrivePathSegment.TURN),
-                new DrivePathSegment(12.0f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(14.0f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(330.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
 
