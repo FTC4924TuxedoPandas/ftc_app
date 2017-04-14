@@ -41,7 +41,7 @@ public class BlueRevLaunchAndRamp extends RevCornerBase {
 
     public float throwingPower() {
 
-        return 0.85f;
+        return 0.9f;
     }
 }
 
