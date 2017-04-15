@@ -16,7 +16,7 @@ public class RedRevLaunchAndRamp extends RevCornerBase {
                 new DrivePathSegment(2.00f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(324.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(14.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(330.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(325.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
         };
 

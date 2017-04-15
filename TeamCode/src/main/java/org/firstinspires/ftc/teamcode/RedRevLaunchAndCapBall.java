@@ -16,14 +16,14 @@ public class RedRevLaunchAndCapBall extends RevCornerBase {
                 new DrivePathSegment(2.00f, 0.8f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(324.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(14.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(330.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(325.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(1.0f),
 
         };
 
         postThrowingPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(315.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(320.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(9.0f, 0.8f, DrivePathSegment.LINEAR),
         };
 
@@ -41,6 +41,6 @@ public class RedRevLaunchAndCapBall extends RevCornerBase {
 
     public float throwingPower() {
 
-        return 0.9f;
+        return 0.7f;
     }
 }
