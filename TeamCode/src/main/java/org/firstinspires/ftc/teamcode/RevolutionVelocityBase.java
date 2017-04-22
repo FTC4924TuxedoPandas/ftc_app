@@ -229,7 +229,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
         backRightMotor.setPower(levels.backRightPower);
         backLeftMotor.setPower(levels.backLeftPower);
     }
-
+/*
     public int getRightPosition() {
 
         return frontRightMotor.getCurrentPosition();
@@ -239,7 +239,7 @@ public abstract class RevolutionVelocityBase extends OpMode {
 
         return frontLeftMotor.getCurrentPosition();
     }
-
+*/
     public boolean isPastTarget(int position, int target, float distanceToMove) {
 
         if (distanceToMove < 0) {

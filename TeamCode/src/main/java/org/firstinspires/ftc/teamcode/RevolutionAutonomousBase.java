@@ -738,8 +738,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                     segment.Angle -= 360;
                 }
 
-                turnStartValueLeft = getLeftPosition();
-                turnStartValueRight = getRightPosition();
+                turnStartValueLeft = getBackLeftPosition();
+                turnStartValueRight = getBackRightPosition();
 
                 runWithoutEncoders();
                 double currentAngle = heading;
@@ -855,7 +855,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         return false;
     }
-
+/*
     public int getRightPosition() {
 
         return frontRightMotor.getCurrentPosition();
@@ -865,13 +865,41 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         return frontLeftMotor.getCurrentPosition();
     }
+*/
+    public int getFrontRightPosition() {
 
+        return frontRightMotor.getCurrentPosition();
+    }
+
+    public int getFrontLeftPosition() {
+
+        return frontLeftMotor.getCurrentPosition();
+    }
+
+    public int getBackRightPosition() {
+
+        return backRightMotor.getCurrentPosition();
+    }
+
+    public int getBackLeftPosition() {
+
+        return backLeftMotor.getCurrentPosition();
+    }
+/*
     public void setEncoderTargetsToCurrentPosition() {
 
         currentEncoderTargets.frontLeftTarget = getLeftPosition();
         currentEncoderTargets.frontRightTarget = getRightPosition();
         currentEncoderTargets.backLeftTarget = getLeftPosition();
         currentEncoderTargets.backRightTarget = getRightPosition();
+    }
+*/
+    public void setEncoderTargetsToCurrentPosition() {
+
+        currentEncoderTargets.frontLeftTarget = getFrontLeftPosition();
+        currentEncoderTargets.frontRightTarget = getFrontRightPosition();
+        currentEncoderTargets.backLeftTarget = getBackLeftPosition();
+        currentEncoderTargets.backRightTarget = getBackRightPosition();
     }
 
     public boolean segmentComplete(int heading) {
@@ -949,7 +977,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         return elapsedTimeForCurrentSegment.time() >= segment.delayTime;
     }
 
-    public boolean linearMoveComplete() {
+ /*   public boolean linearMoveComplete() {
 
         int leftPosition = getLeftPosition();
         int leftTarget = currentEncoderTargets.frontLeftTarget;
@@ -960,6 +988,19 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                 isPositionClose(rightPosition, rightTarget)) ||
                 (isPastTarget(leftPosition, leftTarget, segment.LeftSideDistance) ||
                         isPastTarget(rightPosition, rightTarget, segment.LeftSideDistance));
+    } */
+
+    public boolean linearMoveComplete() {
+
+        int backLeftTarget = currentEncoderTargets.backLeftTarget;
+        int backRightTarget = currentEncoderTargets.backRightTarget;
+
+        return (isPositionClose(getBackRightPosition(), backRightTarget) ||
+                isPositionClose(getBackLeftPosition(), backLeftTarget)) ||
+                (
+                        isPastTarget(getBackRightPosition(), backRightTarget, segment.RightSideDistance) ||
+                        isPastTarget(getBackLeftPosition(), backLeftTarget, segment.LeftSideDistance)
+                );
     }
 
     public boolean isPositionClose(int position, int target) {
