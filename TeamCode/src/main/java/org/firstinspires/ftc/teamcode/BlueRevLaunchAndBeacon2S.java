@@ -14,17 +14,17 @@ public class BlueRevLaunchAndBeacon2S extends RevLaunchAndBeaconBase {
         launchPositioningPath = new DrivePathSegment[] {
 
                 new DrivePathSegment(8.5f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(17.0f, 0.8f, DrivePathSegment.TURN),
+                new DrivePathSegment(17.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(0.5f),
         };
 
         beaconPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(0.0f, 0.8f, DrivePathSegment.TURN),
+                new DrivePathSegment(0.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(-2.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(45.0f, 0.8f, DrivePathSegment.TURN),
-                new DrivePathSegment(13.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(90.0f, 0.8f, DrivePathSegment.TURN),
+                new DrivePathSegment(45.0f, 0.5f, DrivePathSegment.TURN),
+                new DrivePathSegment(12.0f, 0.8f, DrivePathSegment.LINEAR),
+                new DrivePathSegment(85.0f, 0.5f, DrivePathSegment.TURN),
                 new DrivePathSegment(13.0f, 0.4f, DrivePathSegment.LINEAR),
                 new DrivePathSegment(3.0f, 0.1f, DrivePathSegment.LINEAR),
         };

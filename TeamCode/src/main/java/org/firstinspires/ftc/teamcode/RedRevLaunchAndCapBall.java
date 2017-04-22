@@ -41,6 +41,6 @@ public class RedRevLaunchAndCapBall extends RevCornerBase {
 
     public float throwingPower() {
 
-        return 0.7f;
+        return 0.9f;
     }
 }
