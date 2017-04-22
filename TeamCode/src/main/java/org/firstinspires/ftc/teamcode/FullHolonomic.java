@@ -210,14 +210,14 @@ public class FullHolonomic extends RevolutionVelocityBase {
             throwStartTime = time.time();
             throwPower = 1.0f;
 
-        } else if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
+        } /* else if (d2BIsPressed() && ((time.time() - throwStartTime) > THROW_INPUT_DELAY)) {
 
             throwing = true;
             throwInterval = 0.4;
             throwStartTime = time.time();
             throwPower = 0.75f;
 
-        }
+        } */
 
         if (throwing && ((time.time() - throwStartTime) < throwInterval)) {
 
