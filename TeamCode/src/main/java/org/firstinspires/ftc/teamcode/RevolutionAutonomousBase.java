@@ -27,7 +27,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_PUSH_BEACON,
         STATE_CHECK_BEACON,
         STATE_CHECK_BEACON_2S,
-        STATE_REPUSH_BEACON,
         STATE_LOAD_BALL,
         STATE_WAIT_FOR_BALL,
         STATE_START_BEACON_PATH,
@@ -324,11 +323,11 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     if (isRed()) {
 
-                        setPowerForMecanumStrafe(0.1f, heading);
+                        setPowerForMecanumStrafe(0.2f, heading);
 
                     } else {
 
-                        setPowerForMecanumStrafe(-0.1f, heading);
+                        setPowerForMecanumStrafe(-0.2f, heading);
                     }
                 }
 
@@ -340,7 +339,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     startPath(new DrivePathSegment[] {
 
-                            new DrivePathSegment(-0.5f, 0.5f, DrivePathSegment.LINEAR),
+                            new DrivePathSegment(-1.0f, 0.5f, DrivePathSegment.LINEAR),
                     });
 
                     stateStarted = true;
@@ -383,7 +382,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                 } else {
 
-                    setPowerForLinearMove(0.6f);
+                    setPowerForLinearMove(1.0f);
                 }
 
                 break;
@@ -407,8 +406,6 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                         });
                     }
 
-
-
                     stateStarted = true;
                 }
 
@@ -422,7 +419,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
             case STATE_PUSH_BEACON:
 
-                if (elapsedTimeForCurrentState.time() >= 2.0f) {
+                if (elapsedTimeForCurrentState.time() >= 2.5f) {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
@@ -465,8 +462,9 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
                 break;
 
             case STATE_CHECK_BEACON_2S:
-                boolean firstBeaconIsCorrect = false;
-                boolean secondBeaconIsCorrect = false;
+
+                boolean firstBeaconIsCorrect;
+                boolean secondBeaconIsCorrect;
 
                 if (isRed()) {
 
@@ -483,31 +481,12 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     isSecondBeacon = true;
                     TurnOffAllDriveMotors();
-                    switchToNextState(2);
+                    switchToNextState();
 
-                } else if (!firstBeaconIsCorrect && !secondBeaconIsCorrect) {
+                } else {
 
                     TurnOffAllDriveMotors();
                     restartBeaconSequence();
-
-                } else {
-
-                    TurnOffAllDriveMotors();
-                    switchToNextState();
-                }
-
-                break;
-
-            case STATE_REPUSH_BEACON:
-
-                if (elapsedTimeForCurrentState.time() >= 1.0f) {
-
-                    TurnOffAllDriveMotors();
-                    switchToNextState();
-
-                } else {
-
-                    setPowerForLinearMove(0.1f);
                 }
 
                 break;
