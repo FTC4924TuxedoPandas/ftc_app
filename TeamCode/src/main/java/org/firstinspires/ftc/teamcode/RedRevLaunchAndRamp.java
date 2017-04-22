@@ -22,11 +22,11 @@ public class RedRevLaunchAndRamp extends RevCornerBase {
 
         postThrowingPath = new DrivePathSegment[] {
 
-                new DrivePathSegment(4.0f, 0.8f, DrivePathSegment.LINEAR),
-                new DrivePathSegment(-7.0f, 0.8f, DrivePathSegment.HOLONOMIC),
-                new DrivePathSegment(8.0f, 0.8f, DrivePathSegment.LINEAR),
+                //new DrivePathSegment(2.0f, 0.8f, DrivePathSegment.LINEAR),
+                //new DrivePathSegment(-10.0f, 0.5f, DrivePathSegment.HOLONOMIC),
                 new DrivePathSegment(260.0f, 0.5f, DrivePathSegment.TURN),
-                new DrivePathSegment(22.0f, 0.8f, DrivePathSegment.LINEAR),
+           /*     new DrivePathSegment(260.0f, 0.5f, DrivePathSegment.TURN), */
+                new DrivePathSegment(27.0f, 0.8f, DrivePathSegment.LINEAR),
         };
     }
     @Override
