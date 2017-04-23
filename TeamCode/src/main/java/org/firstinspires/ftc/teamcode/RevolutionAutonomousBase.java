@@ -21,6 +21,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
         STATE_FIND_WHITE_LINE,
         STATE_LINE_UP_TO_BEACON,
         STATE_BACK_UP,
+        STATE_BACK_UP_LESS,
         STATE_TURN_TO_ZERO,
         STATE_DRIVE_TO_BEACON,
         STATE_TURN_TO_BEACON,
@@ -122,6 +123,8 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
         telemetry.addData("currentState: ", currentState);
         telemetry.addData("Gyro", turningGyro.getHeading());
+        telemetry.addData("Left: ", leftBeaconSensor);
+        telemetry.addData("Right: ", rightBeaconSensor);
         //telemetry.addData("Target", segment.Angle);
         int heading = turningGyro.getHeading();
 
@@ -339,7 +342,7 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     startPath(new DrivePathSegment[] {
 
-                            new DrivePathSegment(-1.0f, 0.5f, DrivePathSegment.LINEAR),
+                            new DrivePathSegment(-1.25f, 0.4f, DrivePathSegment.LINEAR),
                     });
 
                     stateStarted = true;
@@ -349,6 +352,26 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     TurnOffAllDriveMotors();
                     switchToNextState();
+                }
+
+                break;
+
+            case STATE_BACK_UP_LESS:
+
+                if (!stateStarted) {
+
+                    startPath(new DrivePathSegment[] {
+
+                            new DrivePathSegment(-0.5f, 0.2f, DrivePathSegment.LINEAR),
+                    });
+
+                    stateStarted = true;
+                }
+
+                if (pathComplete(heading)) {
+
+                    TurnOffAllDriveMotors();
+                    restartBeaconSequence();
                 }
 
                 break;
@@ -481,12 +504,12 @@ public abstract class RevolutionAutonomousBase extends RevolutionVelocityBase {
 
                     isSecondBeacon = true;
                     TurnOffAllDriveMotors();
-                    switchToNextState();
+                    switchToNextState(2);
 
                 } else {
 
                     TurnOffAllDriveMotors();
-                    restartBeaconSequence();
+                    switchToNextState();
                 }
 
                 break;
